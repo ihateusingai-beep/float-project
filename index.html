@@ -3,8 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#667eea">
+    <meta name="description" content="浮力實驗學習平台 - 教育局示範項目">
+    <link rel="manifest" href="manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><rect fill='%23667eea' width='180' height='180' rx='40'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-size='100'>🌊</text></svg>">
     <title>浮力大發現 - 匡智張玉瓊晨輝學校</title>
     <style>
+        /* Print CSS for Learning Report */
+        @media print {
+            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+            body { background: white !important; font-size: 12pt; }
+            .header, .nav-tabs, .footer, .btn, .voice-btn, .sound-bubble, .object-shelf, .pool-container, .lab-objects, .lab-controls, .header-btns { display: none !important; }
+            .page { display: block !important; padding: 0 !important; max-width: 100% !important; }
+            .card { box-shadow: none !important; border: 1px solid #ddd !important; break-inside: avoid; margin-bottom: 15mm; }
+            .print-header { display: flex !important; justify-content: space-between; margin-bottom: 20px; border-bottom: 2px solid #667eea; padding-bottom: 15px; }
+            .print-section { margin-bottom: 20px; }
+            h1, h2, h3 { color: #1565C0 !important; }
+            .stat-card { display: inline-block; width: 48%; margin: 1%; padding: 15px; border: 1px solid #ddd; text-align: center; }
+            .badge-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+            .badge { padding: 10px; border: 1px solid #ddd; border-radius: 8px; text-align: center; }
+            .badge.locked { opacity: 0.4; }
+            .bar-chart-item { display: flex; align-items: center; margin: 5px 0; }
+            .bar { height: 20px; background: #2196F3; margin: 0 10px; }
+            table { width: 100%; border-collapse: collapse; }
+            th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+            th { background: #E3F2FD; }
+        }
         * {
             margin: 0;
             padding: 0;
@@ -677,12 +703,177 @@
             animation: spin 1s linear infinite;
         }
         
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+.voice-btn:active {
+            animation: pulse 0.3s ease;
+        }
+        
+        /* Challenge Mode Styles */
+        .challenge-timer {
+            font-size: 3em;
+            font-weight: bold;
+            color: var(--accent);
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .challenge-score {
+            font-size: 1.5em;
+            text-align: center;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .challenge-question {
+            background: var(--light);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+        
+        .challenge-objects {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .challenge-obj {
+            padding: 15px 25px;
+            background: white;
+            border: 3px solid var(--primary);
+            border-radius: 12px;
+            font-size: 1.5em;
+            cursor: pointer;
+            min-width: 80px;
+            text-align: center;
+            transition: all 0.2s;
+        }
+        
+        .challenge-obj:active {
+            transform: scale(0.95);
+            background: var(--light);
+        }
+        
+        /* Story Mode Styles */
+        .story-card {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .story-card:active {
+            transform: scale(0.98);
+        }
+        
+        .story-card h3 {
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        .story-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .story-card.locked {
+            opacity: 0.6;
+        }
+        
+        .story-ending {
+            text-align: center;
+            padding: 30px;
+        }
+        
+        .story-question {
+            background: var(--light);
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+        }
+        
+        .story-choices {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .story-choice {
+            padding: 15px;
+            background: white;
+            border: 2px solid var(--primary);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .story-choice:active {
+            background: var(--primary);
+            color: white;
+        }
+        
+        /* Badge Styles */
+        .badge-item {
+            text-align: center;
+            padding: 15px;
+            border-radius: 12px;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .badge-item .badge-icon {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+        
+        .badge-item .badge-name {
+            font-weight: bold;
+            color: var(--text);
+            margin-bottom: 5px;
+        }
+        
+        .badge-item .badge-desc {
+            font-size: 0.85em;
+            color: #666;
+        }
+        
+        .badge-item.locked {
+            opacity: 0.5;
+            background: #f0f0f0;
+        }
+        
+        .badge-item.locked .badge-icon {
+            filter: grayscale(100%);
+        }
+        
+        /* Class Stats Styles */
+        .student-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            background: white;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .student-row .name {
+            font-weight: bold;
+        }
+        
+        .student-row .stats {
+            color: #666;
+            font-size: 0.9em;
         }
         
         /* Responsive */
-        @media (max-width: 768px) {
+        @media (max-width: 600px) {
             .header {
                 flex-direction: column;
                 gap: 10px;
@@ -726,7 +917,12 @@
     <nav class="nav-tabs">
         <button class="nav-tab active" data-page="experiment">🧪 浮沉實驗</button>
         <button class="nav-tab" data-page="lab3d">🔬 3D Lab</button>
-        <button class="nav-tab" data-page="stats">📊 統計</button>
+        <button class="nav-tab" data-page="challenge">🎮 挑戰</button>
+        <button class="nav-tab" data-page="story">📚 故事</button>
+        <button class="nav-tab" data-page="badges">🏆 成就</button>
+        <button class="nav-tab" data-page="report">📋 報告</button>
+        <button class="nav-tab" data-page="class">📊 班別</button>
+        <button class="nav-tab" data-page="stats">📈 統計</button>
         <button class="nav-tab" data-page="settings">⚙️ 設置</button>
     </nav>
     
@@ -910,6 +1106,138 @@
         </div>
     </div>
     
+    <!-- Page: Challenge Mode -->
+    <div class="page" id="page-challenge">
+        <div class="card">
+            <div class="card-title">
+                <span>🎮</span>
+                <span>挑戰模式</span>
+            </div>
+            <div id="challenge-area">
+                <div id="challenge-start" style="text-align:center;padding:30px;">
+                    <p style="color:#666;margin-bottom:20px;">限時挑戰！看看你能取得多少分！</p>
+                    <button class="btn btn-primary btn-large" onclick="startChallenge()">🎯 開始挑戰</button>
+                    <div style="margin-top:20px;">
+                        <h4>🏆 排行榜</h4>
+                        <div id="leaderboard" style="margin-top:10px;text-align:left;max-width:300px;margin:10px auto;">
+                            <!-- Generated by JS -->
+                        </div>
+                    </div>
+                </div>
+                <div id="challenge-active" style="display:none;">
+                    <div class="challenge-timer" id="challenge-timer">60</div>
+                    <div class="challenge-score">分數: <span id="challenge-score">0</span></div>
+                    <div class="challenge-question" id="challenge-question"></div>
+                    <div class="challenge-objects" id="challenge-objects"></div>
+                </div>
+                <div id="challenge-result" style="display:none;text-align:center;padding:30px;">
+                    <h2>🎉 挑戰完成！</h2>
+                    <p style="font-size:2em;margin:20px 0;">得分: <span id="final-score">0</span></p>
+                    <input type="text" id="challenge-name" placeholder="輸入名字" style="padding:12px;border-radius:8px;border:2px solid #ddd;width:200px;margin-bottom:15px;">
+                    <button class="btn btn-primary" onclick="saveChallengeScore()">💾 保存分數</button>
+                    <button class="btn btn-secondary" onclick="resetChallenge()" style="margin-left:10px;">🔄 再玩一次</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Page: Story Mode -->
+    <div class="page" id="page-story">
+        <div class="card">
+            <div class="card-title">
+                <span>📚</span>
+                <span>情境故事</span>
+            </div>
+            <div id="story-content" style="padding:20px 0;">
+                <!-- Story content generated by JS -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- Page: Badges/Achievements -->
+    <div class="page" id="page-badges">
+        <div class="card">
+            <div class="card-title">
+                <span>🏆</span>
+                <span>成就系統</span>
+            </div>
+            <div class="badge-grid" id="badge-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:15px;padding:10px 0;">
+                <!-- Badges generated by JS -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- Page: Learning Report -->
+    <div class="page" id="page-report">
+        <div class="card">
+            <div class="card-title">
+                <span>📋</span>
+                <span>學習報告</span>
+            </div>
+            <div style="text-align:center;padding:20px;">
+                <p style="color:#666;margin-bottom:20px;">生成並列印您的學習報告</p>
+                <button class="btn btn-primary btn-large" onclick="generateReport()">🖨️ 生成報告</button>
+                <button class="btn btn-secondary btn-large" onclick="printReport()" style="margin-left:10px;">📄 列印報告</button>
+            </div>
+            <div id="report-content" style="display:none;">
+                <div class="print-header" style="display:none;">
+                    <div>
+                        <h2 style="color:#1565C0;">浮力大發現 - 學習報告</h2>
+                        <p id="report-student-name"></p>
+                    </div>
+                    <div style="text-align:right;">
+                        <p id="report-date"></p>
+                    </div>
+                </div>
+                <div id="report-stats" style="margin:20px 0;"></div>
+                <div id="report-history" style="margin:20px 0;"></div>
+                <div id="report-badges" style="margin:20px 0;"></div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Page: Class Statistics (Teacher) -->
+    <div class="page" id="page-class">
+        <div class="card">
+            <div class="card-title">
+                <span>📊</span>
+                <span>班別統計</span>
+            </div>
+            <div id="class-login" style="text-align:center;padding:30px;">
+                <p style="color:#666;margin-bottom:20px;">老師專區 - 需要密碼</p>
+                <input type="password" id="teacher-password" placeholder="輸入老師密碼" style="padding:12px;border-radius:8px;border:2px solid #ddd;width:200px;margin-bottom:15px;">
+                <button class="btn btn-primary" onclick="verifyTeacherPassword()">🔐 登入</button>
+                <p id="login-error" style="color:#f44336;margin-top:10px;display:none;">密碼錯誤！</p>
+            </div>
+            <div id="class-stats" style="display:none;">
+                <div style="margin-bottom:20px;">
+                    <button class="btn btn-secondary" onclick="exportClassData()">📤 匯出數據</button>
+                    <button class="btn btn-danger" onclick="logoutTeacher()">🚪 登出</button>
+                </div>
+                <h3>全班統計</h3>
+                <div class="stats-grid" style="margin-top:15px;">
+                    <div class="stat-card">
+                        <div class="icon">👥</div>
+                        <div class="value" id="total-students">0</div>
+                        <div class="label">學生人數</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="icon">🔬</div>
+                        <div class="value" id="class-experiments">0</div>
+                        <div class="label">全班實驗次數</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="icon">🌊</div>
+                        <div class="value" id="class-float-rate">0%</div>
+                        <div class="label">全班浮起率</div>
+                    </div>
+                </div>
+                <h3 style="margin-top:20px;">學生列表</h3>
+                <div id="student-list" style="margin-top:15px;"></div>
+            </div>
+        </div>
+    </div>
+    
     <!-- Footer -->
     <div class="footer">
         <p>匡智張玉瓊晨輝學校 © 2024 | 浮力大發現</p>
@@ -992,9 +1320,19 @@
             updateStats();
             renderHistory();
             updateWaterDensityDisplay();
+            renderStories();
+            renderBadges();
+            showLeaderboard();
             
             if (voiceOn && state.voiceEnabled) {
                 setTimeout(() => speak(VOICE_PROMPTS.welcome[Math.floor(Math.random() * 3)]), 1000);
+            }
+            
+            // Register service worker for PWA
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('service-worker.js')
+                    .then(reg => console.log('Service Worker registered'))
+                    .catch(err => console.log('Service Worker registration failed:', err));
             }
         }
         
@@ -1285,7 +1623,7 @@
             }, 1100);
         }
         
-        function recordExperiment(obj, willFloat) {
+function recordExperiment(obj, willFloat) {
             const studentName = document.getElementById('studentName').value.trim() || '匿名學生';
             const result = willFloat ? '浮' : '沉';
             
@@ -1293,11 +1631,15 @@
             state.experiments.push({
                 objectId: obj.id,
                 objectName: obj.name,
+                objectIcon: obj.icon,
                 density: obj.density,
                 result: result,
                 student: studentName,
-                timestamp: Date.now()
+                time: Date.now()
             });
+            
+            // Save to class data
+            saveStudentData(studentName);
             
             // Update object stats
             if (!state.objectStats[obj.id]) {
@@ -1308,6 +1650,7 @@
             saveState();
             updateStats();
             renderHistory();
+            checkBadgeConditions();
             
             // Show voice
             if (voiceOn && state.voiceEnabled) {
@@ -1315,8 +1658,24 @@
                 speak(prompts[Math.floor(Math.random() * prompts.length)]);
             }
             
-            // Show result bubble
+            // Unlock badge if first experiment
+            if (state.experiments.length === 1) {
+                unlockBadge('first_exp');
+            }
+            
             showSoundBubble(willFloat ? '🌊 浮起了！' : '📉 下沉了...');
+        }
+        
+        function saveStudentData(name) {
+            const allData = JSON.parse(localStorage.getItem('allStudentsData') || '{}');
+            if (!allData[name]) {
+                allData[name] = { experiments: [] };
+            }
+            const latestExp = state.experiments[state.experiments.length - 1];
+            if (latestExp && latestExp.student === name) {
+                allData[name].experiments.push(latestExp);
+            }
+            localStorage.setItem('allStudentsData', JSON.stringify(allData));
         }
         
         function showSoundBubble(text) {
@@ -1714,6 +2073,550 @@
                 camera.updateProjectionMatrix();
                 renderer.setSize(container.clientWidth, container.clientHeight);
             }
+        }
+        
+        // ============ Challenge Mode ============
+        const CHALLENGE_TIME = 60;
+        let challengeTimer = null;
+        let challengeScore = 0;
+        let challengeTimeLeft = CHALLENGE_TIME;
+        let challengeQuestions = [];
+        let currentChallengeIndex = 0;
+        
+        function startChallenge() {
+            document.getElementById('challenge-start').style.display = 'none';
+            document.getElementById('challenge-active').style.display = 'block';
+            document.getElementById('challenge-result').style.display = 'none';
+            
+            challengeScore = 0;
+            challengeTimeLeft = CHALLENGE_TIME;
+            document.getElementById('challenge-score').textContent = '0';
+            document.getElementById('challenge-timer').textContent = CHALLENGE_TIME;
+            
+            // Generate questions
+            challengeQuestions = generateChallengeQuestions(10);
+            currentChallengeIndex = 0;
+            
+            showChallengeQuestion();
+            
+            challengeTimer = setInterval(() => {
+                challengeTimeLeft--;
+                document.getElementById('challenge-timer').textContent = challengeTimeLeft;
+                
+                if (challengeTimeLeft <= 10) {
+                    document.getElementById('challenge-timer').style.color = '#f44336';
+                }
+                
+                if (challengeTimeLeft <= 0) {
+                    endChallenge();
+                }
+            }, 1000);
+        }
+        
+        function generateChallengeQuestions(count) {
+            const questions = [];
+            const objects = [
+                { name: '木塊', icon: '🟫', density: 0.6 },
+                { name: '石頭', icon: '🪨', density: 2.5 },
+                { name: '保麗龍', icon: '◻️', density: 0.3 },
+                { name: '蘋果', icon: '🍎', density: 0.9 },
+                { name: '汽水罐', icon: '🥫', density: 1.1 },
+                { name: '香蕉', icon: '🍌', density: 0.7 },
+                { name: '葡萄', icon: '🍇', density: 1.0 },
+                { name: '雞蛋', icon: '🥚', density: 1.1 }
+            ];
+            
+            for (let i = 0; i < count; i++) {
+                const q = i % 3; // 3 question types
+                if (q === 0) {
+                    // "Will it float?" question
+                    const obj = objects[Math.floor(Math.random() * objects.length)];
+                    questions.push({
+                        type: 'float',
+                        text: `${obj.icon} ${obj.name}會浮起嗎？`,
+                        answer: obj.density < 1 ? '浮' : '沉',
+                        correct: obj.density < 1,
+                        obj: obj
+                    });
+                } else if (q === 1) {
+                    // "Which floats?" question
+                    const shuffled = [...objects].sort(() => Math.random() - 0.5).slice(0, 4);
+                    const floaters = shuffled.filter(o => o.density < 1);
+                    if (floaters.length > 0) {
+                        questions.push({
+                            type: 'which',
+                            text: '邊個會浮起身？',
+                            options: shuffled.map(o => o.icon + ' ' + o.name),
+                            answer: floaters[0].name,
+                            correct: floaters[0],
+                            obj: floaters[0]
+                        });
+                    } else {
+                        questions.push({
+                            type: 'float',
+                            text: `${shuffled[0].icon} ${shuffled[0].name}會浮起嗎？`,
+                            answer: '沉',
+                            correct: false,
+                            obj: shuffled[0]
+                        });
+                    }
+                } else {
+                    // Sort by density
+                    const sorted = [...objects].sort((a, b) => a.density - b.density);
+                    questions.push({
+                        type: 'sort',
+                        text: '邊個最輕？',
+                        options: shuffled.map(o => o.icon + ' ' + o.name),
+                        answer: sorted[0].name,
+                        correct: sorted[0],
+                        obj: sorted[0]
+                    });
+                }
+            }
+            return questions;
+        }
+        
+        function showChallengeQuestion() {
+            if (currentChallengeIndex >= challengeQuestions.length) {
+                currentChallengeIndex = 0;
+            }
+            
+            const q = challengeQuestions[currentChallengeIndex];
+            document.getElementById('challenge-question').textContent = q.text;
+            
+            const container = document.getElementById('challenge-objects');
+            if (q.type === 'float') {
+                container.innerHTML = `
+                    <div class="challenge-obj" onclick="answerChallenge('浮', ${q.correct})">🌊 浮</div>
+                    <div class="challenge-obj" onclick="answerChallenge('沉', ${!q.correct})">📉 沉</div>
+                `;
+            } else if (q.type === 'which' || q.type === 'sort') {
+                const objs = [
+                    { name: '木塊', icon: '🟫', density: 0.6 },
+                    { name: '石頭', icon: '🪨', density: 2.5 },
+                    { name: '蘋果', icon: '🍎', density: 0.9 },
+                    { name: '汽水罐', icon: '🥫', density: 1.1 }
+                ].sort(() => Math.random() - 0.5);
+                
+                container.innerHTML = objs.map(o => `
+                    <div class="challenge-obj" onclick="answerChallengeObject('${o.name}', ${o.density < 1})">${o.icon}</div>
+                `).join('');
+            }
+        }
+        
+        function answerChallenge(answer, isCorrect) {
+            if (isCorrect) {
+                challengeScore += 10;
+                document.getElementById('challenge-score').textContent = challengeScore;
+                playSound('success');
+            } else {
+                playSound('error');
+            }
+            currentChallengeIndex++;
+            showChallengeQuestion();
+        }
+        
+        function answerChallengeObject(name, willFloat) {
+            // Check if correct
+            const correct = (willFloat && state.waterDensity >= 1) || (!willFloat && state.waterDensity < 1);
+            if (correct) {
+                challengeScore += 15;
+                document.getElementById('challenge-score').textContent = challengeScore;
+                playSound('success');
+            } else {
+                playSound('error');
+            }
+            currentChallengeIndex++;
+            showChallengeQuestion();
+        }
+        
+        function endChallenge() {
+            clearInterval(challengeTimer);
+            document.getElementById('challenge-active').style.display = 'none';
+            document.getElementById('challenge-result').style.display = 'block';
+            document.getElementById('final-score').textContent = challengeScore;
+        }
+        
+        function saveChallengeScore() {
+            const name = document.getElementById('challenge-name').value.trim() || '匿名';
+            const studentName = document.getElementById('studentName').value.trim() || name;
+            
+            const scores = JSON.parse(localStorage.getItem('challengeScores') || '[]');
+            scores.push({
+                name: studentName,
+                score: challengeScore,
+                date: new Date().toISOString()
+            });
+            scores.sort((a, b) => b.score - a.score);
+            scores.splice(10); // Keep top 10
+            localStorage.setItem('challengeScores', JSON.stringify(scores));
+            
+            alert('已保存分數！');
+            showLeaderboard();
+        }
+        
+        function showLeaderboard() {
+            const scores = JSON.parse(localStorage.getItem('challengeScores') || '[]');
+            const container = document.getElementById('leaderboard');
+            
+            if (scores.length === 0) {
+                container.innerHTML = '<p style="color:#666;text-align:center;">還沒有分數</p>';
+                return;
+            }
+            
+            container.innerHTML = scores.map((s, i) => `
+                <div style="display:flex;justify-content:space-between;padding:8px;background:${i < 3 ? '#E3F2FD' : 'white'};border-radius:8px;margin-bottom:5px;">
+                    <span>${i + 1}. ${s.name}</span>
+                    <span style="font-weight:bold;">${s.score}分</span>
+                </div>
+            `).join('');
+        }
+        
+        function resetChallenge() {
+            document.getElementById('challenge-start').style.display = 'block';
+            document.getElementById('challenge-active').style.display = 'none';
+            document.getElementById('challenge-result').style.display = 'none';
+            document.getElementById('challenge-timer').style.color = 'var(--accent)';
+            showLeaderboard();
+        }
+        
+        function playSound(type) {
+            if (!state.voiceEnabled) return;
+            const ctx = new (window.AudioContext || window.webkitAudioContext)();
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            
+            if (type === 'success') {
+                osc.frequency.value = 880;
+                gain.gain.value = 0.3;
+            } else {
+                osc.frequency.value = 220;
+                gain.gain.value = 0.3;
+            }
+            
+            osc.start();
+            setTimeout(() => { osc.stop(); }, 200);
+        }
+        
+        // ============ Story Mode ============
+        const STORIES = [
+            {
+                id: 1,
+                title: '🏠 小木屋的秘密',
+                desc: '小明的木屋為什麼能浮在水面上？',
+                locked: false,
+                content: `小明住在海邊的木屋裡。一天，狂風暴雨來襲，木屋竟然漂流了起來！
+                
+問題：為什麼木屋能浮在水上？
+
+A) 木頭很輕，密度小
+B) 木頭很大
+C) 水會推動木頭`
+            },
+            {
+                id: 2,
+                title: '🚢 船為何不沉？',
+                desc: '這麼大的船為什麼不會沉下去？',
+                locked: false,
+                content: `碼頭邊停著一艘大貨船，它裝滿了貨物，但仍然浮在水面上。
+                
+問題：大船那麼重，為什麼不沉？
+
+A) 船中間是空的
+B) 船是用特殊材料做的
+C) 海水比較鹹`
+            },
+            {
+                id: 3,
+                title: '🥚 雞蛋的沉浮',
+                desc: '如何讓雞蛋浮起來？',
+                locked: false,
+                content: `廚房裡有一個雞蛋，它放到水裡就沉下去了...
+                
+問題：如何讓雞蛋浮起來？
+
+A) 加鹽到水裡
+B) 把雞蛋煮熟
+C) 把水加點糖`
+            }
+        ];
+        
+        let currentStory = null;
+        let currentStoryStep = 0;
+        
+        function renderStories() {
+            const container = document.getElementById('story-content');
+            container.innerHTML = STORIES.map(s => `
+                <div class="story-card ${s.locked ? 'locked' : ''}" onclick="${s.locked ? '' : `loadStory(${s.id})`}">
+                    <h3>${s.title}</h3>
+                    <p>${s.desc}</p>
+                    ${s.locked ? '<p style="color:#f44336;">🔒 需要先完成其他故事</p>' : ''}
+                </div>
+            `).join('');
+        }
+        
+        function loadStory(id) {
+            const story = STORIES.find(s => s.id === id);
+            if (!story) return;
+            
+            currentStory = story;
+            currentStoryStep = 0;
+            showStoryStep();
+        }
+        
+        function showStoryStep() {
+            const container = document.getElementById('story-content');
+            if (!currentStory) {
+                renderStories();
+                return;
+            }
+            
+            if (currentStoryStep === 0) {
+                container.innerHTML = `
+                    <div style="background:#E3F2FD;padding:20px;border-radius:12px;margin-bottom:20px;">
+                        <h3 style="color:#1565C0;">${currentStory.title}</h3>
+                        <p style="white-space:pre-line;line-height:1.8;">${currentStory.content.split('\n\n')[0]}</p>
+                    </div>
+                    <div class="story-question">
+                        ${currentStory.content.split('\n\n')[1]}
+                        <div class="story-choices">
+                            ${currentStory.content.split('\n\n')[2].split('\n').map((choice, i) => `
+                                <div class="story-choice" onclick="answerStory(${i})">${choice}</div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    <button class="btn btn-secondary" onclick="resetStory()">↩️ 返回</button>
+                `;
+            } else {
+                // Story ending
+                container.innerHTML = `
+                    <div class="story-ending">
+                        <h2 style="color:#4CAF50;">🎉 故事完成！</h2>
+                        <p style="margin:20px 0;">${currentStoryStep === 1 ? '你答對了！' : '繼續探索吧！'}</p>
+                        <button class="btn btn-primary" onclick="resetStory()">🔄 再讀一次</button>
+                    </div>
+                `;
+                
+                // Unlock badge
+                if (currentStoryStep === 1) {
+                    unlockBadge('explorer');
+                }
+            }
+        }
+        
+        function answerStory(choice) {
+            currentStoryStep = 1; // Correct answer for demo
+            showStoryStep();
+        }
+        
+        function resetStory() {
+            currentStory = null;
+            currentStoryStep = 0;
+            renderStories();
+        }
+        
+        // ============ Badges/Achievements ============
+        const BADGES = [
+            { id: 'first_exp', name: '初試身手', icon: '🔬', desc: '完成第一個實驗', unlocked: false },
+            { id: 'float_5', name: '浮出水面', icon: '🌊', desc: '讓5個物品浮起', unlocked: false },
+            { id: 'sink_5', name: '沉著應對', icon: '📉', desc: '讓5個物品下沉', unlocked: false },
+            { id: 'all_objects', name: '全能科學家', icon: '🧪', desc: '實驗所有物品', unlocked: false },
+            { id: 'story_all', name: '故事達人', icon: '📚', desc: '完成所有故事', unlocked: false },
+            { id: 'challenge_100', name: '挑戰高手', icon: '🏆', desc: '挑戰模式取得100分', unlocked: false }
+        ];
+        
+        function renderBadges() {
+            const container = document.getElementById('badge-grid');
+            const userBadges = JSON.parse(localStorage.getItem('userBadges') || '[]');
+            
+            // Update badge unlock status
+            const badges = BADGES.map(b => ({
+                ...b,
+                unlocked: userBadges.includes(b.id)
+            }));
+            
+            container.innerHTML = badges.map(b => `
+                <div class="badge-item ${b.unlocked ? '' : 'locked'}">
+                    <div class="badge-icon">${b.icon}</div>
+                    <div class="badge-name">${b.name}</div>
+                    <div class="badge-desc">${b.desc}</div>
+                    ${b.unlocked ? '<p style="color:#4CAF50;">✓ 已獲得</p>' : '<p style="color:#999;">🔒 未獲得</p>'}
+                </div>
+            `).join('');
+        }
+        
+        function unlockBadge(badgeId) {
+            const userBadges = JSON.parse(localStorage.getItem('userBadges') || '[]');
+            if (!userBadges.includes(badgeId)) {
+                userBadges.push(badgeId);
+                localStorage.setItem('userBadges', JSON.stringify(userBadges));
+            }
+            renderBadges();
+        }
+        
+        function checkBadgeConditions() {
+            // Check first experiment
+            if (state.experiments.length >= 1) unlockBadge('first_exp');
+            
+            // Check float count
+            const floatCount = state.experiments.filter(e => e.result === '浮').length;
+            if (floatCount >= 5) unlockBadge('float_5');
+            
+            // Check sink count
+            const sinkCount = state.experiments.filter(e => e.result === '沉').length;
+            if (sinkCount >= 5) unlockBadge('sink_5');
+            
+            // Check all objects
+            const uniqueObjects = [...new Set(state.experiments.map(e => e.objectId))];
+            if (uniqueObjects.length >= OBJECTS.length) unlockBadge('all_objects');
+            
+            // Check challenge score
+            const scores = JSON.parse(localStorage.getItem('challengeScores') || '[]');
+            if (scores.some(s => s.score >= 100)) unlockBadge('challenge_100');
+        }
+        
+        // ============ Learning Report ============
+        function generateReport() {
+            const name = document.getElementById('studentName').value.trim() || '學生';
+            const date = new Date().toLocaleDateString('zh-Hant');
+            
+            // Stats
+            const total = state.experiments.length;
+            const floatCount = state.experiments.filter(e => e.result === '浮').length;
+            const sinkCount = state.experiments.filter(e => e.result === '沉').length;
+            const rate = total > 0 ? Math.round((floatCount / total) * 100) : 0;
+            
+            // Object stats
+            const objectStats = {};
+            state.experiments.forEach(exp => {
+                if (!objectStats[exp.objectId]) {
+                    objectStats[exp.objectId] = { float: 0, sink: 0 };
+                }
+                objectStats[exp.objectId][exp.result === '浮' ? 'float' : 'sink']++;
+            });
+            
+            const reportStats = document.getElementById('report-stats');
+            reportStats.innerHTML = `
+                <h3>📊 學習統計</h3>
+                <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:15px;">
+                    <div class="stat-card"><div class="icon">🔬</div><div class="value">${total}</div><div class="label">總實驗次數</div></div>
+                    <div class="stat-card"><div class="icon">🌊</div><div class="value">${floatCount}</div><div class="label">浮起次數</div></div>
+                    <div class="stat-card"><div class="icon">📉</div><div class="value">${sinkCount}</div><div class="label">下沉次數</div></div>
+                    <div class="stat-card"><div class="icon">📈</div><div class="value">${rate}%</div><div class="label">成功率</div></div>
+                </div>
+            `;
+            
+            const reportHistory = document.getElementById('report-history');
+            reportHistory.innerHTML = `
+                <h3>📝 實驗記錄</h3>
+                <table style="margin-top:15px;width:100%;">
+                    <tr><th>物品</th><th>結果</th><th>時間</th></tr>
+                    ${state.experiments.slice(-10).map(e => `
+                        <tr>
+                            <td>${e.objectIcon} ${e.objectName}</td>
+                            <td><span class="result-${e.result === '浮' ? 'float' : 'sink'}">${e.result}</span></td>
+                            <td>${new Date(e.time).toLocaleTimeString()}</td>
+                        </tr>
+                    `).join('')}
+                </table>
+            `;
+            
+            const reportBadges = document.getElementById('report-badges');
+            const userBadges = JSON.parse(localStorage.getItem('userBadges') || '[]');
+            const badges = BADGES.map(b => ({ ...b, unlocked: userBadges.includes(b.id) }));
+            
+            reportBadges.innerHTML = `
+                <h3>🏆 成就</h3>
+                <div class="badge-grid" style="margin-top:15px;">
+                    ${badges.map(b => `
+                        <div class="badge ${b.unlocked ? '' : 'locked'}">
+                            <div style="font-size:2em;">${b.icon}</div>
+                            <div>${b.name}</div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            
+            document.getElementById('report-student-name').textContent = `學生：${name}`;
+            document.getElementById('report-date').textContent = `日期：${date}`;
+            document.getElementById('report-content').style.display = 'block';
+        }
+        
+        function printReport() {
+            generateReport();
+            document.querySelector('.print-header').style.display = 'flex';
+            window.print();
+            document.querySelector('.print-header').style.display = 'none';
+        }
+        
+        // ============ Class Statistics ============
+        let isTeacherLoggedIn = false;
+        const TEACHER_PASSWORD = 'teacher2024'; // In production, use server-side auth
+        
+        function verifyTeacherPassword() {
+            const pw = document.getElementById('teacher-password').value;
+            if (pw === TEACHER_PASSWORD) {
+                isTeacherLoggedIn = true;
+                document.getElementById('class-login').style.display = 'none';
+                document.getElementById('class-stats').style.display = 'block';
+                loadClassStats();
+            } else {
+                document.getElementById('login-error').style.display = 'block';
+                setTimeout(() => {
+                    document.getElementById('login-error').style.display = 'none';
+                }, 3000);
+            }
+        }
+        
+        function loadClassStats() {
+            // Load all students' data
+            const allData = JSON.parse(localStorage.getItem('allStudentsData') || '{}');
+            const students = Object.keys(allData);
+            
+            let totalExperiments = 0;
+            let totalFloat = 0;
+            
+            students.forEach(name => {
+                const data = allData[name];
+                totalExperiments += data.experiments?.length || 0;
+                totalFloat += data.experiments?.filter(e => e.result === '浮').length || 0;
+            });
+            
+            document.getElementById('total-students').textContent = students.length;
+            document.getElementById('class-experiments').textContent = totalExperiments;
+            document.getElementById('class-float-rate').textContent = 
+                totalExperiments > 0 ? Math.round((totalFloat / totalExperiments) * 100) + '%' : '0%';
+            
+            // Student list
+            const listContainer = document.getElementById('student-list');
+            listContainer.innerHTML = students.map(name => {
+                const data = allData[name];
+                return `
+                    <div class="student-row">
+                        <span class="name">👤 ${name}</span>
+                        <span class="stats">實驗 ${data.experiments?.length || 0} 次</span>
+                    </div>
+                `;
+            }).join('') || '<p style="color:#666;text-align:center;">還沒有學生數據</p>';
+        }
+        
+        function exportClassData() {
+            const allData = JSON.parse(localStorage.getItem('allStudentsData') || '{}');
+            const blob = new Blob([JSON.stringify(allData, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'class_data_' + new Date().toISOString().split('T')[0] + '.json';
+            a.click();
+        }
+        
+        function logoutTeacher() {
+            isTeacherLoggedIn = false;
+            document.getElementById('class-login').style.display = 'block';
+            document.getElementById('class-stats').style.display = 'none';
+            document.getElementById('teacher-password').value = '';
         }
         
         // ============ Start ============

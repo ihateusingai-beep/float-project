@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>浮力大發現 - 離線模式</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Microsoft JhengHei", sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        .icon { font-size: 80px; margin-bottom: 20px; }
+        h1 { font-size: 2em; margin-bottom: 15px; }
+        p { font-size: 1.2em; opacity: 0.9; margin-bottom: 30px; max-width: 400px; }
+        .btn {
+            padding: 15px 30px;
+            background: white;
+            color: #667eea;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .btn:active { transform: scale(0.95); }
+    </style>
+</head>
+<body>
+    <div class="icon">🌊</div>
+    <h1>浮力大發現</h1>
+    <p>目前離線狀態，但所有實驗功能仍然可以正常運作！</p>
+    <button class="btn" onclick="window.location.reload()">🔄 重新連接</button>
+</body>
+</html>
