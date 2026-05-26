@@ -1,0 +1,1730 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>浮力大發現 - 匡智張玉瓊晨輝學校</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        :root {
+            --primary: #2196F3;
+            --secondary: #4CAF50;
+            --accent: #FF9800;
+            --danger: #f44336;
+            --dark: #1565C0;
+            --light: #E3F2FD;
+            --text: #333;
+            --bg: #f5f5f5;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Microsoft JhengHei", sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: var(--text);
+            overflow-x: hidden;
+        }
+        
+        /* Header */
+        .header {
+            background: rgba(255,255,255,0.95);
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .logo {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo-icon {
+            font-size: 1.8em;
+        }
+        
+        .header-btns {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        /* Buttons */
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            min-height: 48px;
+            touch-action: manipulation;
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: var(--secondary);
+            color: white;
+        }
+        
+        .btn-accent {
+            background: var(--accent);
+            color: white;
+        }
+        
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+        
+        .btn:hover, .btn:active {
+            transform: scale(0.95);
+            opacity: 0.9;
+        }
+        
+        .btn-large {
+            padding: 18px 30px;
+            font-size: 1.2em;
+            min-height: 60px;
+        }
+        
+        /* Student Name Input */
+        .student-input {
+            padding: 12px 16px;
+            border: 2px solid var(--primary);
+            border-radius: 12px;
+            font-size: 1em;
+            width: 180px;
+            background: white;
+        }
+        
+        /* Navigation Tabs */
+        .nav-tabs {
+            display: flex;
+            background: rgba(255,255,255,0.9);
+            padding: 10px;
+            gap: 8px;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .nav-tab {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 10px;
+            font-size: 0.95em;
+            font-weight: bold;
+            cursor: pointer;
+            white-space: nowrap;
+            min-height: 48px;
+            flex-shrink: 0;
+        }
+        
+        .nav-tab.active {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .nav-tab:not(.active) {
+            background: white;
+            color: var(--text);
+        }
+        
+        /* Pages */
+        .page {
+            display: none;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .page.active {
+            display: block;
+        }
+        
+        /* Card */
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+        
+        .card-title {
+            font-size: 1.3em;
+            color: var(--primary);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        /* Pool Experiment */
+        .pool-container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+            aspect-ratio: 1;
+            background: linear-gradient(180deg, #81D4FA 0%, #29B6F6 50%, #0288D1 100%);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 8px solid #01579B;
+            touch-action: none;
+        }
+        
+        .water {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 70%;
+            background: linear-gradient(180deg, rgba(255,255,255,0.3) 0%, rgba(33,150,243,0.5) 100%);
+            transition: height 0.5s ease;
+        }
+        
+        .water-surface {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 10px;
+            background: rgba(255,255,255,0.5);
+            animation: wave 2s ease-in-out infinite;
+        }
+        
+        @keyframes wave {
+            0%, 100% { transform: translateX(-5px) scaleY(1); }
+            50% { transform: translateX(5px) scaleY(0.5); }
+        }
+        
+        .object-item {
+            position: absolute;
+            cursor: grab;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 12px;
+            font-weight: bold;
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            user-select: none;
+            touch-action: none;
+            transition: transform 0.2s;
+        }
+        
+        .object-item:active {
+            cursor: grabbing;
+            transform: scale(1.1);
+        }
+        
+        .object-icon {
+            font-size: 40px;
+            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.3));
+        }
+        
+        .object-density {
+            background: rgba(0,0,0,0.5);
+            padding: 2px 6px;
+            border-radius: 6px;
+            margin-top: 4px;
+        }
+        
+        /* Object Shelf */
+        .object-shelf {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 12px;
+            margin-top: 20px;
+        }
+        
+        .shelf-item {
+            background: linear-gradient(145deg, #fff, #e6e6e6);
+            border-radius: 16px;
+            padding: 15px;
+            text-align: center;
+            cursor: grab;
+            transition: all 0.3s;
+            border: 3px solid transparent;
+            min-height: 100px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .shelf-item:active {
+            cursor: grabbing;
+            transform: scale(0.95);
+            border-color: var(--primary);
+        }
+        
+        .shelf-item .icon {
+            font-size: 36px;
+        }
+        
+        .shelf-item .name {
+            font-size: 0.9em;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .shelf-item .density {
+            font-size: 0.75em;
+            color: #666;
+        }
+        
+        /* Info Panel */
+        .info-panel {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px;
+            margin-top: 20px;
+        }
+        
+        .info-box {
+            background: linear-gradient(135deg, var(--light), white);
+            border-radius: 16px;
+            padding: 15px;
+            text-align: center;
+            border: 2px solid var(--primary);
+        }
+        
+        .info-box .value {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        .info-box .label {
+            font-size: 0.85em;
+            color: #666;
+        }
+        
+        /* 3D Lab */
+        #lab3d-container {
+            width: 100%;
+            height: 400px;
+            border-radius: 20px;
+            overflow: hidden;
+            background: linear-gradient(180deg, #1a237e 0%, #4a148c 100%);
+            position: relative;
+        }
+        
+        #lab3d-canvas {
+            width: 100%;
+            height: 100%;
+        }
+        
+        .lab-controls {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .lab-objects {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .lab-obj {
+            background: white;
+            border-radius: 12px;
+            padding: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+        
+        .lab-obj:hover, .lab-obj:active {
+            border-color: var(--accent);
+            transform: scale(0.95);
+        }
+        
+        .lab-obj .icon {
+            font-size: 32px;
+        }
+        
+        .lab-obj .info {
+            font-size: 0.8em;
+            margin-top: 5px;
+        }
+        
+        .density-legend {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 10px;
+            font-size: 0.85em;
+        }
+        
+        /* Statistics */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .stat-card .icon {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .stat-card .value {
+            font-size: 2em;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        .stat-card .label {
+            font-size: 0.9em;
+            color: #666;
+        }
+        
+        .chart-container {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        
+        .bar-chart {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            height: 200px;
+            padding: 20px 0;
+        }
+        
+        .bar-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+            max-width: 80px;
+        }
+        
+        .bar {
+            width: 40px;
+            background: linear-gradient(180deg, var(--primary), var(--dark));
+            border-radius: 8px 8px 0 0;
+            transition: height 0.5s ease;
+            min-height: 10px;
+        }
+        
+        .bar-label {
+            margin-top: 8px;
+            font-size: 0.8em;
+            text-align: center;
+            color: #666;
+        }
+        
+        .bar-value {
+            font-size: 0.9em;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+        
+        /* Projection Mode */
+        .projection-mode .header,
+        .projection-mode .nav-tabs,
+        .projection-mode .footer {
+            display: none !important;
+        }
+        
+        .projection-mode .page {
+            padding: 10px;
+        }
+        
+        .projection-mode .pool-container {
+            max-width: 800px;
+        }
+        
+        .projection-mode .card {
+            box-shadow: none;
+            background: transparent;
+        }
+        
+        .projection-exit {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: rgba(0,0,0,0.8) !important;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 12px;
+            font-size: 1.1em;
+        }
+        
+        /* Settings Panel */
+        .settings-group {
+            margin-bottom: 20px;
+        }
+        
+        .settings-label {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .toggle-switch {
+            position: relative;
+            width: 60px;
+            height: 34px;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: 0.4s;
+            border-radius: 34px;
+        }
+        
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: 0.4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .toggle-slider {
+            background-color: var(--primary);
+        }
+        
+        input:checked + .toggle-slider:before {
+            transform: translateX(26px);
+        }
+        
+        .setting-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px;
+            background: var(--light);
+            border-radius: 12px;
+            margin-bottom: 10px;
+        }
+        
+        .setting-text {
+            font-size: 1em;
+        }
+        
+        /* Sound indicator */
+        .sound-bubble {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.85);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 25px;
+            font-size: 1.1em;
+            z-index: 200;
+            display: none;
+            animation: fadeInOut 3s ease;
+            max-width: 90%;
+            text-align: center;
+        }
+        
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translateX(-50%) translateY(20px); }
+            15% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            85% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            100% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+        }
+        
+        /* History Log */
+        .history-list {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .history-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: var(--light);
+            border-radius: 12px;
+            margin-bottom: 8px;
+        }
+        
+        .history-item .student {
+            font-weight: bold;
+            color: var(--primary);
+            min-width: 80px;
+        }
+        
+        .history-item .action {
+            flex: 1;
+        }
+        
+        .history-item .result {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: bold;
+        }
+        
+        .result-float {
+            background: var(--secondary);
+            color: white;
+        }
+        
+        .result-sink {
+            background: var(--danger);
+            color: white;
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: rgba(255,255,255,0.8);
+            font-size: 0.9em;
+        }
+        
+        /* Voice Button Animation */
+        .voice-btn {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        /* Loading */
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 200px;
+        }
+        
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid var(--light);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .header-btns {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .student-input {
+                width: 100%;
+            }
+            
+            #lab3d-container {
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">
+            <span class="logo-icon">🌊</span>
+            <span>浮力大發現</span>
+        </div>
+        <div class="header-btns">
+            <input type="text" class="student-input" id="studentName" placeholder="學生名字" maxlength="20">
+            <button class="btn btn-accent voice-btn" onclick="toggleVoice()">
+                <span id="voiceIcon">🔊</span>
+                <span id="voiceText">語音</span>
+            </button>
+            <button class="btn btn-secondary" onclick="toggleProjection()">
+                📺 投影
+            </button>
+        </div>
+    </header>
+    
+    <!-- Navigation -->
+    <nav class="nav-tabs">
+        <button class="nav-tab active" data-page="experiment">🧪 浮沉實驗</button>
+        <button class="nav-tab" data-page="lab3d">🔬 3D Lab</button>
+        <button class="nav-tab" data-page="stats">📊 統計</button>
+        <button class="nav-tab" data-page="settings">⚙️ 設置</button>
+    </nav>
+    
+    <!-- Page: Experiment -->
+    <div class="page active" id="page-experiment">
+        <div class="card">
+            <div class="card-title">
+                <span>🌊</span>
+                <span>浮力實驗池</span>
+            </div>
+            <p style="color:#666;margin-bottom:15px;">拖拽物品到水裡，觀察浮沉現象！水的密度是 1 g/cm³</p>
+            
+            <div class="pool-container" id="pool">
+                <div class="water" id="water">
+                    <div class="water-surface"></div>
+                </div>
+                <div id="pool-objects"></div>
+            </div>
+            
+            <div class="object-shelf" id="objectShelf">
+                <!-- Objects will be generated by JS -->
+            </div>
+            
+            <div class="info-panel">
+                <div class="info-box">
+                    <div class="value" id="densityValue">-</div>
+                    <div class="label">物品密度 (g/cm³)</div>
+                </div>
+                <div class="info-box">
+                    <div class="value" id="waterDensity">1.0</div>
+                    <div class="label">水的密度</div>
+                </div>
+                <div class="info-box">
+                    <div class="value" id="resultText">-</div>
+                    <div class="label">實驗結果</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-title">
+                <span>📝</span>
+                <span>實驗紀錄</span>
+            </div>
+            <div class="history-list" id="historyList">
+                <p style="color:#999;text-align:center;">還沒有實驗紀錄</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Page: 3D Lab -->
+    <div class="page" id="page-lab3d">
+        <div class="card">
+            <div class="card-title">
+                <span>🔬</span>
+                <span>3D 實驗室</span>
+            </div>
+            <p style="color:#666;margin-bottom:15px;">立體實驗室！拖拽物品到水池，縮放旋轉視角</p>
+            
+            <div id="lab3d-container">
+                <canvas id="lab3d-canvas"></canvas>
+                <div class="density-legend">
+                    <div>💧 水的密度: 1.0</div>
+                    <div id="lab-status">選擇一個物品</div>
+                </div>
+                <div class="lab-controls">
+                    <button class="btn btn-primary" onclick="labResetView()">🔄 重置視角</button>
+                    <button class="btn btn-secondary" onclick="labToggleRotate()">🔁 自動旋轉</button>
+                    <button class="btn btn-accent" onclick="labClearPool()">🗑️ 清除</button>
+                </div>
+            </div>
+            
+            <div class="lab-objects" id="labObjects">
+                <!-- Generated by JS -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- Page: Statistics -->
+    <div class="page" id="page-stats">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="icon">🔬</div>
+                <div class="value" id="totalExperiments">0</div>
+                <div class="label">總實驗次數</div>
+            </div>
+            <div class="stat-card">
+                <div class="icon">🌊</div>
+                <div class="value" id="floatCount">0</div>
+                <div class="label">浮起次數</div>
+            </div>
+            <div class="stat-card">
+                <div class="icon">📉</div>
+                <div class="value" id="sinkCount">0</div>
+                <div class="label">下沉次數</div>
+            </div>
+            <div class="stat-card">
+                <div class="icon">📈</div>
+                <div class="value" id="successRate">0%</div>
+                <div class="label">成功率</div>
+            </div>
+        </div>
+        
+        <div class="chart-container">
+            <h3 style="margin-bottom:15px;">📊 物品實驗統計</h3>
+            <div class="bar-chart" id="barChart">
+                <!-- Generated by JS -->
+            </div>
+        </div>
+        
+        <div class="card" style="margin-top:20px;">
+            <div class="card-title">
+                <span>🏆</span>
+                <span>學習進度</span>
+            </div>
+            <div id="progressText" style="color:#666;text-align:center;padding:20px;">
+                加油！繼續實驗！
+            </div>
+        </div>
+    </div>
+    
+    <!-- Page: Settings -->
+    <div class="page" id="page-settings">
+        <div class="card">
+            <div class="card-title">
+                <span>⚙️</span>
+                <span>設置</span>
+            </div>
+            
+            <div class="settings-group">
+                <div class="settings-label">🔊 聲音設置</div>
+                <div class="setting-row">
+                    <span class="setting-text">開啟語音提示</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="voiceEnabled" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                <div class="setting-row">
+                    <span class="setting-text">粵語朗讀</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="cantoneseVoice" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </div>
+            
+            <div class="settings-group">
+                <div class="settings-label">🎯 實驗設置</div>
+                <div class="setting-row">
+                    <span class="setting-text">水密度 (g/cm³)</span>
+                    <input type="number" id="waterDensitySetting" value="1.0" min="0.1" max="2" step="0.1" 
+                           style="width:80px;padding:8px;border-radius:8px;border:2px solid #ddd;" 
+                           onchange="updateWaterDensity()">
+                </div>
+            </div>
+            
+            <div class="settings-group">
+                <div class="settings-label">👤 友誼模式</div>
+                <div class="setting-row">
+                    <span class="setting-text">顯示學生名字</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="showStudentName" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </div>
+            
+            <div class="settings-group">
+                <div class="settings-label">📺 投影模式</div>
+                <button class="btn btn-secondary btn-large" onclick="toggleProjection()" style="width:100%;">
+                    📺 進入投影模式
+                </button>
+            </div>
+            
+            <div class="settings-group">
+                <button class="btn btn-danger" onclick="clearAllData()" style="width:100%;">
+                    🗑️ 清除所有數據
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <div class="footer">
+        <p>匡智張玉瓊晨輝學校 © 2024 | 浮力大發現</p>
+        <p style="margin-top:5px;">🌊 用心探索水的秘密</p>
+    </div>
+    
+    <!-- Sound Bubble -->
+    <div class="sound-bubble" id="soundBubble"></div>
+    
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <script>
+        // ============ Configuration ============
+        const OBJECTS = [
+            { id: 'wood', name: '木塊', icon: '🟫', density: 0.6, color: 0x8B4513, geometry: 'box' },
+            { id: 'stone', name: '石頭', icon: '🪨', density: 2.5, color: 0x808080, geometry: 'sphere' },
+            { id: 'foam', name: '保麗龍', icon: '◻️', density: 0.3, color: 0xFFFFFF, geometry: 'box' },
+            { id: 'apple', name: '蘋果', icon: '🍎', density: 0.9, color: 0xFF0000, geometry: 'sphere' },
+            { id: 'can', name: '汽水罐', icon: '🥫', density: 1.1, color: 0xFF0000, geometry: 'cylinder' },
+            { id: 'banana', name: '香蕉', icon: '🍌', density: 0.7, color: 0xFFFF00, geometry: 'cylinder' },
+            { id: 'grape', name: '葡萄', icon: '🍇', density: 1.0, color: 0x800080, geometry: 'sphere' },
+            { id: 'egg', name: '雞蛋', icon: '🥚', density: 1.1, color: 0xFFFFDD, geometry: 'sphere' }
+        ];
+        
+        // Cantonese voice prompts
+        const VOICE_PROMPTS = {
+            float: [
+                '物件浮起喇！好嘢！',
+                '浮咗！真係估你唔到！',
+                '夠晒輕，梗係浮啦！'
+            ],
+            sink: [
+                '物件沉咗落去...',
+                '太重喇，沉咗...',
+                '物件好重會沉，落少少水試試'
+            ],
+            welcome: [
+                '你好！歡迎嚟到浮力實驗室！',
+                '等我哋一齊探索浮力嘅秘密！',
+                '記住：密度細過水就會浮！'
+            ],
+            tryObject: [
+                '試下拖件物件入水！',
+                '邊件最輕呢？試下保麗龍！',
+                '石頭好重，試下放落水！'
+            ]
+        };
+        
+        // ============ State ============
+        let state = {
+            voiceEnabled: true,
+            cantoneseVoice: true,
+            waterDensity: 1.0,
+            showStudentName: true,
+            experiments: [],
+            objectStats: {}
+        };
+        
+        let currentPage = 'experiment';
+        let selectedObject = null;
+        let voiceOn = true;
+        let poolObjects = [];
+        let poolObjectIdCounter = 0;
+        
+        // 3D Lab State
+        let scene, camera, renderer, controls;
+        let labObjects = [];
+        let labWater;
+        let isRotating = false;
+        let labSelectedObj = null;
+        
+        // ============ Initialization ============
+        function init() {
+            loadState();
+            setupEventListeners();
+            renderObjectShelf();
+            renderLabObjects();
+            init3DLab();
+            updateStats();
+            renderHistory();
+            updateWaterDensityDisplay();
+            
+            if (voiceOn && state.voiceEnabled) {
+                setTimeout(() => speak(VOICE_PROMPTS.welcome[Math.floor(Math.random() * 3)]), 1000);
+            }
+        }
+        
+        function loadState() {
+            const saved = localStorage.getItem('floatProjectState');
+            if (saved) {
+                state = { ...state, ...JSON.parse(saved) };
+                document.getElementById('voiceEnabled').checked = state.voiceEnabled;
+                document.getElementById('cantoneseVoice').checked = state.cantoneseVoice;
+                document.getElementById('waterDensitySetting').value = state.waterDensity;
+                document.getElementById('showStudentName').checked = state.showStudentName;
+            }
+            voiceOn = state.voiceEnabled;
+        }
+        
+        function saveState() {
+            localStorage.setItem('floatProjectState', JSON.stringify(state));
+        }
+        
+        function setupEventListeners() {
+            // Navigation
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const page = tab.dataset.page;
+                    showPage(page);
+                });
+            });
+            
+            // Settings
+            document.getElementById('voiceEnabled').addEventListener('change', (e) => {
+                state.voiceEnabled = e.target.checked;
+                voiceOn = e.target.checked;
+                saveState();
+            });
+            
+            document.getElementById('cantoneseVoice').addEventListener('change', (e) => {
+                state.cantoneseVoice = e.target.checked;
+                saveState();
+            });
+            
+            document.getElementById('showStudentName').addEventListener('change', (e) => {
+                state.showStudentName = e.target.checked;
+                saveState();
+            });
+            
+            // Pool drag and drop
+            const pool = document.getElementById('pool');
+            pool.addEventListener('dragover', (e) => e.preventDefault());
+            pool.addEventListener('drop', handlePoolDrop);
+            
+            // Student name
+            document.getElementById('studentName').addEventListener('change', saveStudentName);
+        }
+        
+        function saveStudentName() {
+            const name = document.getElementById('studentName').value.trim();
+            localStorage.setItem('floatProjectStudent', name);
+        }
+        
+        function showPage(pageName) {
+            currentPage = pageName;
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(`page-${pageName}`).classList.add('active');
+            document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+            document.querySelector(`[data-page="${pageName}"]`).classList.add('active');
+            
+            if (pageName === 'lab3d') {
+                setTimeout(resize3DLab, 100);
+            }
+        }
+        
+        // ============ Object Shelf ============
+        function renderObjectShelf() {
+            const shelf = document.getElementById('objectShelf');
+            shelf.innerHTML = OBJECTS.map(obj => `
+                <div class="shelf-item" draggable="true" data-id="${obj.id}">
+                    <span class="icon">${obj.icon}</span>
+                    <span class="name">${obj.name}</span>
+                    <span class="density">密度: ${obj.density}</span>
+                </div>
+            `).join('');
+            
+            shelf.querySelectorAll('.shelf-item').forEach(item => {
+                item.addEventListener('dragstart', handleDragStart);
+                item.addEventListener('touchstart', handleTouchStart, { passive: false });
+            });
+        }
+        
+        function handleDragStart(e) {
+            e.dataTransfer.setData('text/plain', e.target.dataset.id);
+        }
+        
+        // Touch handling for iPad
+        let touchDragObject = null;
+        let touchClone = null;
+        
+        function handleTouchStart(e) {
+            e.preventDefault();
+            const touch = e.touches[0];
+            const target = e.currentTarget;
+            touchDragObject = target;
+            
+            // Create visual clone
+            touchClone = target.cloneNode(true);
+            touchClone.style.position = 'fixed';
+            touchClone.style.pointerEvents = 'none';
+            touchClone.style.opacity = '0.8';
+            touchClone.style.zIndex = '1000';
+            touchClone.style.transform = 'scale(1.1)';
+            document.body.appendChild(touchClone);
+            
+            updateClonePosition(touch);
+            
+            document.addEventListener('touchmove', handleTouchMove, { passive: false });
+            document.addEventListener('touchend', handleTouchEnd);
+        }
+        
+        function handleTouchMove(e) {
+            e.preventDefault();
+            const touch = e.touches[0];
+            updateClonePosition(touch);
+        }
+        
+        function updateClonePosition(touch) {
+            if (touchClone) {
+                touchClone.style.left = (touch.clientX - 50) + 'px';
+                touchClone.style.top = (touch.clientY - 50) + 'px';
+            }
+        }
+        
+        function handleTouchEnd(e) {
+            document.removeEventListener('touchmove', handleTouchMove);
+            document.removeEventListener('touchend', handleTouchEnd);
+            
+            if (touchClone) {
+                document.body.removeChild(touchClone);
+                touchClone = null;
+            }
+            
+            const touch = e.changedTouches[0];
+            const pool = document.getElementById('pool');
+            const poolRect = pool.getBoundingClientRect();
+            
+            if (touch.clientX >= poolRect.left && touch.clientX <= poolRect.right &&
+                touch.clientY >= poolRect.top && touch.clientY <= poolRect.bottom) {
+                if (touchDragObject) {
+                    addObjectToPool(touchDragObject.dataset.id, touch.clientX - poolRect.left, touch.clientY - poolRect.top);
+                }
+            }
+            
+            touchDragObject = null;
+        }
+        
+        // ============ Pool Experiment ============
+        function handlePoolDrop(e) {
+            e.preventDefault();
+            const objectId = e.dataTransfer.getData('text/plain');
+            const rect = e.currentTarget.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            addObjectToPool(objectId, x, y);
+        }
+        
+        function addObjectToPool(objectId, x, y) {
+            const obj = OBJECTS.find(o => o.id === objectId);
+            if (!obj) return;
+            
+            const id = poolObjectIdCounter++;
+            const pool = document.getElementById('pool');
+            const poolRect = pool.getBoundingClientRect();
+            
+            // Clamp position
+            x = Math.max(30, Math.min(poolRect.width - 30, x));
+            y = Math.max(30, Math.min(poolRect.height - 30, y));
+            
+            const element = document.createElement('div');
+            element.className = 'object-item';
+            element.id = `pool-obj-${id}`;
+            element.innerHTML = `
+                <span class="object-icon">${obj.icon}</span>
+                <span class="object-density">${obj.density}</span>
+            `;
+            element.style.left = x + 'px';
+            element.style.top = y + 'px';
+            element.style.transform = 'translate(-50%, -50%)';
+            
+            // Make draggable in pool
+            element.addEventListener('mousedown', startDragInPool);
+            element.addEventListener('touchstart', startDragInPoolTouch, { passive: false });
+            
+            pool.appendChild(element);
+            
+            // Animate to water level
+            setTimeout(() => {
+                animateObjectSink(id, obj);
+            }, 300);
+            
+            // Show voice prompt
+            if (voiceOn && state.voiceEnabled) {
+                setTimeout(() => {
+                    speak(state.cantoneseVoice ? 
+                        VOICE_PROMPTS.tryObject[Math.floor(Math.random() * 3)] : 
+                        'Try dropping the object in water!');
+                }, 500);
+            }
+        }
+        
+        let dragInPool = null;
+        let dragOffset = { x: 0, y: 0 };
+        
+        function startDragInPool(e) {
+            e.preventDefault();
+            dragInPool = e.currentTarget;
+            const rect = dragInPool.getBoundingClientRect();
+            dragOffset.x = e.clientX - rect.left;
+            dragOffset.y = e.clientY - rect.top;
+            
+            document.addEventListener('mousemove', dragInPoolMove);
+            document.addEventListener('mouseup', stopDragInPool);
+        }
+        
+        function startDragInPoolTouch(e) {
+            e.preventDefault();
+            const touch = e.touches[0];
+            dragInPool = e.currentTarget;
+            const rect = dragInPool.getBoundingClientRect();
+            dragOffset.x = touch.clientX - rect.left;
+            dragOffset.y = touch.clientY - rect.top;
+            
+            document.addEventListener('touchmove', dragInPoolMoveTouch, { passive: false });
+            document.addEventListener('touchend', stopDragInPoolTouch);
+        }
+        
+        function dragInPoolMove(e) {
+            if (!dragInPool) return;
+            const pool = document.getElementById('pool');
+            const poolRect = pool.getBoundingClientRect();
+            const x = e.clientX - poolRect.left - dragOffset.x + 25;
+            const y = e.clientY - poolRect.top - dragOffset.y + 25;
+            dragInPool.style.left = Math.max(30, Math.min(poolRect.width - 30, x)) + 'px';
+            dragInPool.style.top = Math.max(30, Math.min(poolRect.height - 30, y)) + 'px';
+        }
+        
+        function dragInPoolMoveTouch(e) {
+            e.preventDefault();
+            if (!dragInPool) return;
+            const touch = e.touches[0];
+            const pool = document.getElementById('pool');
+            const poolRect = pool.getBoundingClientRect();
+            const x = touch.clientX - poolRect.left - dragOffset.x + 25;
+            const y = touch.clientY - poolRect.top - dragOffset.y + 25;
+            dragInPool.style.left = Math.max(30, Math.min(poolRect.width - 30, x)) + 'px';
+            dragInPool.style.top = Math.max(30, Math.min(poolRect.height - 30, y)) + 'px';
+        }
+        
+        function stopDragInPool() {
+            document.removeEventListener('mousemove', dragInPoolMove);
+            document.removeEventListener('mouseup', stopDragInPool);
+            dragInPool = null;
+        }
+        
+        function stopDragInPoolTouch() {
+            document.removeEventListener('touchmove', dragInPoolMoveTouch);
+            document.removeEventListener('touchend', stopDragInPoolTouch);
+            dragInPool = null;
+        }
+        
+        function animateObjectSink(poolObjId, obj) {
+            const element = document.getElementById(`pool-obj-${poolObjId}`);
+            if (!element) return;
+            
+            const pool = document.getElementById('pool');
+            const poolHeight = pool.offsetHeight;
+            const waterLevel = poolHeight * 0.3;
+            
+            // Calculate final position based on density
+            const waterDensity = state.waterDensity;
+            const willFloat = obj.density < waterDensity;
+            const finalY = willFloat ? waterLevel : poolHeight - 30;
+            
+            element.style.transition = 'top 1s ease-in-out';
+            element.style.top = finalY + 'px';
+            
+            // Record experiment after animation
+            setTimeout(() => {
+                recordExperiment(obj, willFloat);
+                element.style.transition = 'none';
+            }, 1100);
+        }
+        
+        function recordExperiment(obj, willFloat) {
+            const studentName = document.getElementById('studentName').value.trim() || '匿名學生';
+            const result = willFloat ? '浮' : '沉';
+            
+            // Update stats
+            state.experiments.push({
+                objectId: obj.id,
+                objectName: obj.name,
+                density: obj.density,
+                result: result,
+                student: studentName,
+                timestamp: Date.now()
+            });
+            
+            // Update object stats
+            if (!state.objectStats[obj.id]) {
+                state.objectStats[obj.id] = { float: 0, sink: 0 };
+            }
+            state.objectStats[obj.id][willFloat ? 'float' : 'sink']++;
+            
+            saveState();
+            updateStats();
+            renderHistory();
+            
+            // Show voice
+            if (voiceOn && state.voiceEnabled) {
+                const prompts = willFloat ? VOICE_PROMPTS.float : VOICE_PROMPTS.sink;
+                speak(prompts[Math.floor(Math.random() * prompts.length)]);
+            }
+            
+            // Show result bubble
+            showSoundBubble(willFloat ? '🌊 浮起了！' : '📉 下沉了...');
+        }
+        
+        function showSoundBubble(text) {
+            const bubble = document.getElementById('soundBubble');
+            bubble.textContent = text;
+            bubble.style.display = 'block';
+            setTimeout(() => {
+                bubble.style.display = 'none';
+            }, 3000);
+        }
+        
+        // ============ Statistics ============
+        function updateStats() {
+            const total = state.experiments.length;
+            const floats = state.experiments.filter(e => e.result === '浮').length;
+            const sinks = total - floats;
+            const rate = total > 0 ? Math.round((floats / total) * 100) : 0;
+            
+            document.getElementById('totalExperiments').textContent = total;
+            document.getElementById('floatCount').textContent = floats;
+            document.getElementById('sinkCount').textContent = sinks;
+            document.getElementById('successRate').textContent = rate + '%';
+            
+            // Update progress text
+            const progressText = document.getElementById('progressText');
+            if (total === 0) {
+                progressText.textContent = '開始你的第一個實驗吧！🌟';
+            } else if (total < 5) {
+                progressText.textContent = '做得很好！繼續探索！💪';
+            } else if (total < 10) {
+                progressText.textContent = '你已經完成 ' + total + ' 個實驗！太棒了！🎉';
+            } else {
+                progressText.textContent = '你是浮力小達人了！🏆';
+            }
+            
+            renderBarChart();
+        }
+        
+        function renderBarChart() {
+            const chart = document.getElementById('barChart');
+            const maxCount = Math.max(1, ...Object.values(state.objectStats).map(s => s.float + s.sink));
+            
+            chart.innerHTML = OBJECTS.slice(0, 6).map(obj => {
+                const stats = state.objectStats[obj.id] || { float: 0, sink: 0 };
+                const total = stats.float + stats.sink;
+                const height = total > 0 ? (total / maxCount) * 150 : 10;
+                return `
+                    <div class="bar-item">
+                        <div class="bar-value">${total}</div>
+                        <div class="bar" style="height:${height}px;"></div>
+                        <div class="bar-label">${obj.icon}<br>${obj.name}</div>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        function renderHistory() {
+            const list = document.getElementById('historyList');
+            const recent = state.experiments.slice(-10).reverse();
+            
+            if (recent.length === 0) {
+                list.innerHTML = '<p style="color:#999;text-align:center;">還沒有實驗紀錄</p>';
+                return;
+            }
+            
+            list.innerHTML = recent.map(exp => `
+                <div class="history-item">
+                    ${state.showStudentName ? `<span class="student">${exp.student}</span>` : ''}
+                    <span class="action">${exp.objectName} (密度: ${exp.density})</span>
+                    <span class="result ${exp.result === '浮' ? 'result-float' : 'result-sink'}">${exp.result}</span>
+                </div>
+            `).join('');
+        }
+        
+        // ============ Settings ============
+        function updateWaterDensity() {
+            const value = parseFloat(document.getElementById('waterDensitySetting').value);
+            state.waterDensity = Math.max(0.1, Math.min(2, value));
+            saveState();
+            updateWaterDensityDisplay();
+        }
+        
+        function updateWaterDensityDisplay() {
+            document.getElementById('waterDensity').textContent = state.waterDensity.toFixed(1);
+        }
+        
+        function clearAllData() {
+            if (confirm('確定要清除所有數據嗎？')) {
+                state = {
+                    voiceEnabled: true,
+                    cantoneseVoice: true,
+                    waterDensity: 1.0,
+                    showStudentName: true,
+                    experiments: [],
+                    objectStats: {}
+                };
+                saveState();
+                location.reload();
+            }
+        }
+        
+        function toggleProjection() {
+            document.body.classList.toggle('projection-mode');
+            const btn = document.querySelector('[onclick="toggleProjection()"]');
+            if (document.body.classList.contains('projection-mode')) {
+                btn.innerHTML = '❌ 退出投影';
+                // Add exit button
+                if (!document.querySelector('.projection-exit')) {
+                    const exitBtn = document.createElement('button');
+                    exitBtn.className = 'btn projection-exit';
+                    exitBtn.onclick = toggleProjection;
+                    exitBtn.textContent = '❌ 退出投影';
+                    document.body.appendChild(exitBtn);
+                }
+            } else {
+                btn.innerHTML = '📺 投影';
+                const exitBtn = document.querySelector('.projection-exit');
+                if (exitBtn) exitBtn.remove();
+            }
+        }
+        
+        function toggleVoice() {
+            voiceOn = !voiceOn;
+            state.voiceEnabled = voiceOn;
+            document.getElementById('voiceIcon').textContent = voiceOn ? '🔊' : '🔇';
+            document.getElementById('voiceText').textContent = voiceOn ? '語音' : '靜音';
+            saveState();
+            
+            if (voiceOn && state.voiceEnabled) {
+                speak('語音開啟喇！');
+            }
+        }
+        
+        // ============ Voice ============
+        function speak(text) {
+            if (!voiceOn || !state.voiceEnabled) return;
+            
+            // Use Web Speech API
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = state.cantoneseVoice ? 'zh-HK' : 'zh-CN';
+                utterance.rate = 0.9;
+                utterance.pitch = 1.1;
+                speechSynthesis.speak(utterance);
+            }
+            
+            showSoundBubble(text);
+        }
+        
+        // ============ 3D Lab ============
+        function init3DLab() {
+            const container = document.getElementById('lab3d-container');
+            const canvas = document.getElementById('lab3d-canvas');
+            
+            // Scene
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x1a237e);
+            
+            // Camera
+            camera = new THREE.PerspectiveCamera(60, container.clientWidth / container.clientHeight, 0.1, 1000);
+            camera.position.set(0, 8, 12);
+            camera.lookAt(0, 0, 0);
+            
+            // Renderer
+            renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            
+            // Lights
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+            scene.add(ambientLight);
+            
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            directionalLight.position.set(5, 10, 5);
+            scene.add(directionalLight);
+            
+            // Pool
+            const poolGeometry = new THREE.BoxGeometry(10, 4, 10);
+            const poolMaterial = new THREE.MeshPhongMaterial({ 
+                color: 0x1565C0, 
+                transparent: true, 
+                opacity: 0.7,
+                side: THREE.DoubleSide
+            });
+            const pool = new THREE.Mesh(poolGeometry, poolMaterial);
+            pool.position.y = -2;
+            scene.add(pool);
+            
+            // Water surface
+            const waterGeometry = new THREE.PlaneGeometry(9.5, 9.5);
+            const waterMaterial = new THREE.MeshPhongMaterial({ 
+                color: 0x42A5F5, 
+                transparent: true, 
+                opacity: 0.5,
+                side: THREE.DoubleSide
+            });
+            labWater = new THREE.Mesh(waterGeometry, waterMaterial);
+            labWater.rotation.x = -Math.PI / 2;
+            labWater.position.y = -0.5;
+            scene.add(labWater);
+            
+            // Grid helper
+            const gridHelper = new THREE.GridHelper(12, 12, 0xffffff, 0x444444);
+            scene.add(gridHelper);
+            
+            // Touch controls
+            let isDragging = false;
+            let previousTouch = null;
+            
+            canvas.addEventListener('touchstart', (e) => {
+                if (e.touches.length === 1) {
+                    isDragging = true;
+                    previousTouch = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+                }
+            });
+            
+            canvas.addEventListener('touchmove', (e) => {
+                if (!isDragging) return;
+                e.preventDefault();
+                
+                const touch = e.touches[0];
+                const deltaX = touch.clientX - previousTouch.x;
+                const deltaY = touch.clientY - previousTouch.y;
+                
+                camera.position.x += deltaX * 0.05;
+                camera.position.y += deltaY * 0.05;
+                camera.lookAt(0, 0, 0);
+                
+                previousTouch = { x: touch.clientX, y: touch.clientY };
+            });
+            
+            canvas.addEventListener('touchend', () => {
+                isDragging = false;
+                previousTouch = null;
+            });
+            
+            // Mouse controls
+            canvas.addEventListener('mousedown', (e) => {
+                isDragging = true;
+                previousTouch = { x: e.clientX, y: e.clientY };
+            });
+            
+            canvas.addEventListener('mousemove', (e) => {
+                if (!isDragging) return;
+                
+                const deltaX = e.clientX - previousTouch.x;
+                const deltaY = e.clientY - previousTouch.y;
+                
+                camera.position.x += deltaX * 0.05;
+                camera.position.y += deltaY * 0.05;
+                camera.lookAt(0, 0, 0);
+                
+                previousTouch = { x: e.clientX, y: e.clientY };
+            });
+            
+            canvas.addEventListener('mouseup', () => {
+                isDragging = false;
+                previousTouch = null;
+            });
+            
+            // Mouse wheel zoom
+            canvas.addEventListener('wheel', (e) => {
+                e.preventDefault();
+                camera.position.z += e.deltaY * 0.01;
+                camera.position.z = Math.max(5, Math.min(25, camera.position.z));
+            });
+            
+            // Animation loop
+            function animate() {
+                requestAnimationFrame(animate);
+                
+                if (isRotating) {
+                    camera.position.x = Math.sin(Date.now() * 0.001) * 12;
+                    camera.position.z = Math.cos(Date.now() * 0.001) * 12;
+                    camera.lookAt(0, 0, 0);
+                }
+                
+                // Animate lab objects
+                labObjects.forEach(obj => {
+                    if (obj.userData.floating !== undefined) {
+                        obj.position.y = obj.userData.targetY + Math.sin(Date.now() * 0.003 + obj.userData.phase) * 0.2;
+                    }
+                });
+                
+                renderer.render(scene, camera);
+            }
+            animate();
+        }
+        
+        function renderLabObjects() {
+            const container = document.getElementById('labObjects');
+            container.innerHTML = OBJECTS.map(obj => `
+                <div class="lab-obj" data-id="${obj.id}" ontouchstart="labSelectObject('${obj.id}')" onclick="labSelectObject('${obj.id}')">
+                    <span class="icon">${obj.icon}</span>
+                    <div class="info">
+                        <div>${obj.name}</div>
+                        <div style="color:#666;font-size:0.75em;">密度: ${obj.density}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function labSelectObject(objectId) {
+            const obj = OBJECTS.find(o => o.id === objectId);
+            if (!obj) return;
+            
+            labSelectedObj = obj;
+            document.getElementById('lab-status').textContent = `已選擇: ${obj.name} (密度: ${obj.density})`;
+            
+            // Create 3D object
+            let geometry;
+            switch (obj.geometry) {
+                case 'box':
+                    geometry = new THREE.BoxGeometry(1, 1, 1);
+                    break;
+                case 'sphere':
+                    geometry = new THREE.SphereGeometry(0.6, 32, 32);
+                    break;
+                case 'cylinder':
+                    geometry = new THREE.CylinderGeometry(0.4, 0.4, 1.2, 32);
+                    break;
+                default:
+                    geometry = new THREE.BoxGeometry(1, 1, 1);
+            }
+            
+            const material = new THREE.MeshPhongMaterial({ color: obj.color });
+            const mesh = new THREE.Mesh(geometry, material);
+            
+            // Position based on density
+            const waterDensity = state.waterDensity;
+            const willFloat = obj.density < waterDensity;
+            const targetY = willFloat ? 0 : -1.5;
+            
+            mesh.position.set(
+                (Math.random() - 0.5) * 6,
+                2,
+                (Math.random() - 0.5) * 6
+            );
+            
+            mesh.userData = {
+                objectId: obj.id,
+                density: obj.density,
+                floating: willFloat,
+                targetY: targetY,
+                phase: Math.random() * Math.PI * 2
+            };
+            
+            scene.add(mesh);
+            labObjects.push(mesh);
+            
+            // Animate drop
+            const startY = mesh.position.y;
+            const dropAnimation = () => {
+                if (mesh.position.y > targetY) {
+                    mesh.position.y -= 0.1;
+                    requestAnimationFrame(dropAnimation);
+                } else {
+                    mesh.position.y = targetY;
+                    // Record experiment
+                    setTimeout(() => {
+                        recordExperiment(obj, willFloat);
+                    }, 500);
+                }
+            };
+            setTimeout(dropAnimation, 100);
+            
+            document.getElementById('lab-status').textContent = willFloat ? 
+                `🌊 ${obj.name} 浮起了！` : 
+                `📉 ${obj.name} 下沉了...`;
+        }
+        
+        function labResetView() {
+            camera.position.set(0, 8, 12);
+            camera.lookAt(0, 0, 0);
+        }
+        
+        function labToggleRotate() {
+            isRotating = !isRotating;
+        }
+        
+        function labClearPool() {
+            labObjects.forEach(obj => {
+                scene.remove(obj);
+                obj.geometry.dispose();
+                obj.material.dispose();
+            });
+            labObjects = [];
+            document.getElementById('lab-status').textContent = '已清除，選擇一件物品';
+        }
+        
+        function resize3DLab() {
+            const container = document.getElementById('lab3d-container');
+            if (camera && renderer) {
+                camera.aspect = container.clientWidth / container.clientHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(container.clientWidth, container.clientHeight);
+            }
+        }
+        
+        // ============ Start ============
+        init();
+        
+        // Handle resize
+        window.addEventListener('resize', () => {
+            if (currentPage === 'lab3d') {
+                resize3DLab();
+            }
+        });
+    </script>
+</body>
+</html>
