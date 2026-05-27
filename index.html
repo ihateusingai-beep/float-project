@@ -530,46 +530,8 @@
         }
         @keyframes spin { to { transform: rotate(360deg); } }
         
-        /* Challenge Mode */
-        .challenge-timer {
-            font-size: 3em;
-            font-weight: bold;
-            color: var(--accent);
-            text-align: center;
-            padding: 20px;
-        }
-        .challenge-score { font-size: 1.5em; text-align: center; color: var(--primary); margin-bottom: 20px; }
-        .challenge-question {
-            background: var(--light);
-            padding: 20px;
-            border-radius: 12px;
-            text-align: center;
-            font-size: 1.2em;
-            margin-bottom: 20px;
-        }
-        .challenge-objects {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            justify-content: center;
-            padding: 20px;
-        }
-        .challenge-obj {
-            padding: 15px 25px;
-            background: white;
-            border: 3px solid var(--primary);
-            border-radius: 12px;
-            font-size: 1.5em;
-            cursor: pointer;
-            min-width: 80px;
-            text-align: center;
-            transition: all 0.2s;
-        }
-        .challenge-obj:active { transform: scale(0.95); background: var(--light); }
-        
         /* Story Mode */
         .story-card {
-            background: white;
             border-radius: 16px;
             padding: 20px;
             margin-bottom: 20px;
@@ -1580,7 +1542,7 @@
     <nav class="nav-tabs">
         <button class="nav-tab" data-page="experiment">🌊 浮沉實驗</button>
         <button class="nav-tab" data-page="science-lab">🔬 估下佢</button>
-        <button class="nav-tab" data-page="challenge">🎯 挑戰</button>
+
         <button class="nav-tab" data-page="story">📚 故事</button>
         <button class="nav-tab" data-page="badges">🏆 成就</button>
         <button class="nav-tab" data-page="parent">👨‍👩‍👧 家長</button>
@@ -1750,35 +1712,7 @@
         </div>
     </div>
     
-    <!-- Page: Challenge Mode -->
-    <div class="page" id="page-challenge">
-        <div class="card">
-            <div class="card-title"><span>🎯</span><span>挑戰模式</span></div>
-            <div id="challenge-area">
-                <div id="challenge-start" style="text-align:center;padding:30px;">
-                    <p style="color:#666;margin-bottom:20px;">限時挑戰！看看你能取得多少分！</p>
-                    <button class="btn btn-primary btn-large" onclick="startChallenge()">🎯 開始挑戰</button>
-                    <div style="margin-top:20px;">
-                        <h4>🏆 排行榜</h4>
-                        <div id="leaderboard" style="margin-top:10px;text-align:left;max-width:300px;margin:10px auto;"></div>
-                    </div>
-                </div>
-                <div id="challenge-active" style="display:none;">
-                    <div class="challenge-timer" id="challenge-timer">60</div>
-                    <div class="challenge-score">分數: <span id="challenge-score">0</span></div>
-                    <div class="challenge-question" id="challenge-question"></div>
-                    <div class="challenge-objects" id="challenge-objects"></div>
-                </div>
-                <div id="challenge-result" style="display:none;text-align:center;padding:30px;">
-                    <h2>🎉 挑戰完成！</h2>
-                    <p style="font-size:2em;margin:20px 0;">得分: <span id="final-score">0</span></p>
-                    <input type="text" id="challenge-name" placeholder="輸入名字" style="padding:12px;border-radius:8px;border:2px solid #ddd;width:200px;margin-bottom:15px;">
-                    <button class="btn btn-primary" onclick="saveChallengeScore()">💾 保存分數</button>
-                    <button class="btn btn-secondary" onclick="resetChallenge()" style="margin-left:10px;">🔄 再玩一次</button>
-                </div>
-            </div>
-        </div>
-    </div>
+
     
     <!-- Page: Story Mode -->
     <div class="page" id="page-story">
@@ -2176,7 +2110,7 @@
             { id: 'sink_5', name: '沉著應對', icon: '📉', desc: '讓5個物品下沉', unlocked: false },
             { id: 'all_objects', name: '全能科學家', icon: '🧪', desc: '實驗所有物品', unlocked: false },
             { id: 'story_all', name: '故事達人', icon: '📚', desc: '完成所有故事', unlocked: false },
-            { id: 'challenge_100', name: '挑戰高手', icon: '🏆', desc: '挑戰模式取得100分', unlocked: false },
+            
             { id: 'battle_winner', name: '對戰冠軍', icon: '👑', desc: '在對戰模式獲得第一名', unlocked: false },
             { id: 'ar_explorer', name: 'AR探索者', icon: '📱', desc: '使用AR模式完成實驗', unlocked: false }
         ];
@@ -3146,190 +3080,6 @@
             else { osc.frequency.value = 220; gain.gain.value = 0.3; }
             osc.start();
             setTimeout(() => osc.stop(), 200);
-        }
-        
-        // ============ Challenge Mode ============
-        const CHALLENGE_TIME = 60;
-        let challengeTimer = null;
-        let challengeScore = 0;
-        let challengeTimeLeft = CHALLENGE_TIME;
-        let challengeQuestions = [];
-        let currentChallengeIndex = 0;
-        
-        function startChallenge() {
-            document.getElementById('challenge-start').style.display = 'none';
-            document.getElementById('challenge-active').style.display = 'block';
-            document.getElementById('challenge-result').style.display = 'none';
-            
-            challengeScore = 0;
-            challengeTimeLeft = CHALLENGE_TIME;
-            document.getElementById('challenge-score').textContent = '0';
-            document.getElementById('challenge-timer').textContent = CHALLENGE_TIME;
-            
-            challengeQuestions = generateChallengeQuestions(10);
-            currentChallengeIndex = 0;
-            
-            showChallengeQuestion();
-            
-            challengeTimer = setInterval(() => {
-                challengeTimeLeft--;
-                document.getElementById('challenge-timer').textContent = challengeTimeLeft;
-                if (challengeTimeLeft <= 10) document.getElementById('challenge-timer').style.color = '#f44336';
-                if (challengeTimeLeft <= 0) endChallenge();
-            }, 1000);
-        }
-        
-        function generateChallengeQuestions(count) {
-            const questions = [];
-            const objects = [
-                { name: '木塊', icon: '🟫', density: 0.6 },
-                { name: '石頭', icon: '🪨', density: 2.5 },
-                { name: '發泡膠', icon: '◻️', density: 0.3 },
-                { name: '蘋果', icon: '🍎', density: 0.9 },
-                { name: '汽水罐', icon: '🥫', density: 1.1 },
-                { name: '香蕉', icon: '🍌', density: 0.7 },
-                { name: '葡萄', icon: '🍇', density: 1.0 },
-                { name: '雞蛋', icon: '🥚', density: 1.1 }
-            ];
-            
-            for (let i = 0; i < count; i++) {
-                const q = i % 3;
-                if (q === 0) {
-                    const obj = objects[Math.floor(Math.random() * objects.length)];
-                    questions.push({
-                        type: 'float',
-                        text: `${obj.icon} ${obj.name}會浮起嗎？`,
-                        answer: obj.density < 1 ? '浮' : '沉',
-                        correct: obj.density < 1,
-                        obj
-                    });
-                } else if (q === 1) {
-                    const shuffled = [...objects].sort(() => Math.random() - 0.5).slice(0, 4);
-                    const floaters = shuffled.filter(o => o.density < 1);
-                    if (floaters.length > 0) {
-                        questions.push({
-                            type: 'which',
-                            text: '邊個會浮起身？',
-                            options: shuffled.map(o => o.icon + ' ' + o.name),
-                            answer: floaters[0].name,
-                            correct: floaters[0],
-                            obj: floaters[0]
-                        });
-                    }
-                } else {
-                    const sorted = [...objects].sort((a, b) => a.density - b.density);
-                    questions.push({
-                        type: 'sort',
-                        text: '邊個最輕？',
-                        options: shuffled.map(o => o.icon + ' ' + o.name),
-                        answer: sorted[0].name,
-                        correct: sorted[0],
-                        obj: sorted[0]
-                    });
-                }
-            }
-            return questions;
-        }
-        
-        function showChallengeQuestion() {
-            if (currentChallengeIndex >= challengeQuestions.length) currentChallengeIndex = 0;
-            const q = challengeQuestions[currentChallengeIndex];
-            document.getElementById('challenge-question').textContent = q.text;
-            
-            const container = document.getElementById('challenge-objects');
-            if (q.type === 'float') {
-                container.innerHTML = `
-                    <div class="challenge-obj" onclick="answerChallenge('浮', ${q.correct})">🌊 浮</div>
-                    <div class="challenge-obj" onclick="answerChallenge('沉', ${!q.correct})">📉 沉</div>
-                `;
-            } else if (q.type === 'which' || q.type === 'sort') {
-                const objs = [
-                    { name: '木塊', icon: '🟫', density: 0.6 },
-                    { name: '石頭', icon: '🪨', density: 2.5 },
-                    { name: '蘋果', icon: '🍎', density: 0.9 },
-                    { name: '汽水罐', icon: '🥫', density: 1.1 }
-                ].sort(() => Math.random() - 0.5);
-                
-                container.innerHTML = objs.map(o => `
-                    <div class="challenge-obj" onclick="answerChallengeObject('${o.name}', ${o.density < 1})">${o.icon}</div>
-                `).join('');
-            }
-        }
-        
-        function answerChallenge(answer, isCorrect) {
-            if (isCorrect) {
-                challengeScore += 10;
-                document.getElementById('challenge-score').textContent = challengeScore;
-                playSound('success');
-            } else {
-                playSound('error');
-            }
-            currentChallengeIndex++;
-            showChallengeQuestion();
-        }
-        
-        function answerChallengeObject(name, willFloat) {
-            // Get object density based on name
-            const densityMap = { '木塊': 0.6, '石頭': 2.5, '蘋果': 0.9, '汽水罐': 1.1 };
-            const objectDensity = densityMap[name] || 1.0;
-            // Correct: prediction matches actual physics with current water density
-            const correct = (willFloat && objectDensity < state.waterDensity) || (!willFloat && objectDensity >= state.waterDensity);
-            if (correct) {
-                challengeScore += 15;
-                document.getElementById('challenge-score').textContent = challengeScore;
-                playSound('success');
-            } else {
-                playSound('error');
-            }
-            currentChallengeIndex++;
-            showChallengeQuestion();
-        }
-        
-        function endChallenge() {
-            clearInterval(challengeTimer);
-            document.getElementById('challenge-active').style.display = 'none';
-            document.getElementById('challenge-result').style.display = 'block';
-            document.getElementById('final-score').textContent = challengeScore;
-        }
-        
-        function saveChallengeScore() {
-            const name = document.getElementById('challenge-name').value.trim() || '匿名';
-            const studentName = document.getElementById('studentName').value.trim() || name;
-            
-            const scores = JSON.parse(localStorage.getItem('challengeScores') || '[]');
-            scores.push({ name: studentName, score: challengeScore, date: new Date().toISOString() });
-            scores.sort((a, b) => b.score - a.score);
-            scores.splice(10);
-            localStorage.setItem('challengeScores', JSON.stringify(scores));
-            
-            alert('已保存分數！');
-            showLeaderboard();
-        }
-        
-        function showLeaderboard() {
-            const scores = JSON.parse(localStorage.getItem('challengeScores') || '[]');
-            const container = document.getElementById('leaderboard');
-            
-            if (scores.length === 0) {
-                container.innerHTML = '<p style="color:#666;text-align:center;">還沒有分數</p>';
-                return;
-            }
-            
-            container.innerHTML = scores.map((s, i) => `
-                <div style="display:flex;justify-content:space-between;padding:8px;background:${i < 3 ? '#E3F2FD' : 'white'};border-radius:8px;margin-bottom:5px;">
-                    <span>${i + 1}. ${s.name}</span>
-                    <span style="font-weight:bold;">${s.score}分</span>
-                </div>
-            `).join('');
-        }
-        
-        function resetChallenge() {
-            document.getElementById('challenge-start').style.display = 'block';
-            document.getElementById('challenge-active').style.display = 'none';
-            document.getElementById('challenge-result').style.display = 'none';
-            document.getElementById('challenge-timer').style.color = 'var(--accent)';
-            showLeaderboard();
-        }
         
         // ============ Story Mode ============
         let currentStory = null;
