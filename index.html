@@ -1579,23 +1579,13 @@
     
     <!-- Navigation -->
     <nav class="nav-tabs">
-        <button class="nav-tab" data-page="experiment">🧪 浮沉實驗</button>
-        <button class="nav-tab" data-page="science-lab">🔬 科學實驗室</button>
-        <button class="nav-tab" data-page="lab3d">🔬 3D Lab</button>
-        <button class="nav-tab" data-page="ar">📱 AR實境</button>
-        <button class="nav-tab" data-page="battle">🎮 對戰</button>
+        <button class="nav-tab" data-page="experiment">🌊 浮沉實驗</button>
+        <button class="nav-tab" data-page="science-lab">🔬 估下佢</button>
         <button class="nav-tab" data-page="challenge">🎯 挑戰</button>
         <button class="nav-tab" data-page="story">📚 故事</button>
         <button class="nav-tab" data-page="badges">🏆 成就</button>
-        <button class="nav-tab" data-page="tutorial">🎬 教程</button>
-        <button class="nav-tab" data-page="custom">🖼️ 自定義</button>
         <button class="nav-tab" data-page="parent">👨‍👩‍👧 家長</button>
-        <button class="nav-tab" data-page="errors">❌ 錯誤分析</button>
         <button class="nav-tab" data-page="report">📋 報告</button>
-        <button class="nav-tab" data-page="dashboard">📊 儀表板</button>
-        <button class="nav-tab" data-page="class">📊 班別</button>
-        <button class="nav-tab" data-page="sync">🌐 同步</button>
-        <button class="nav-tab" data-page="ai">🤖 AI助教</button>
         <button class="nav-tab" data-page="settings">⚙️ 設置</button>
     </nav>
     
@@ -1603,7 +1593,7 @@
     <div class="page active" id="page-experiment">
         <div class="card">
             <div class="card-title"><span>🌊</span><span>浮力實驗池</span></div>
-            <p style="color:#666;margin-bottom:15px;">拖拽物品到水裡，觀察浮沉現象！水的密度是 1 g/cm³</p>
+            <p style="color:#666;margin-bottom:15px;">拖拽物品到水裡，睇下件嘢係會浮定會沉！</p>
             
             <div class="pool-container" id="pool">
                 <div class="water" id="water"><div class="water-surface"></div></div>
@@ -1615,11 +1605,11 @@
             <div class="info-panel">
                 <div class="info-box">
                     <div class="value" id="densityValue">-</div>
-                    <div class="label">物品密度 (g/cm³)</div>
+                    <div class="label">物品輕定重</div>
                 </div>
                 <div class="info-box">
                     <div class="value" id="waterDensity">1.0</div>
-                    <div class="label">水的密度</div>
+                    <div class="label">水的輕定重</div>
                 </div>
                 <div class="info-box">
                     <div class="value" id="resultText">-</div>
@@ -1636,157 +1626,31 @@
         </div>
     </div>
     
-    <!-- Page: Science Lab -->
+    <!-- Page: Science Lab (Simplified) -->
     <div class="page" id="page-science-lab">
         <div class="card">
-            <div class="card-title"><span>🔬</span><span>科學實驗室</span></div>
-            <p style="color:#666;margin-bottom:15px;">控制變量，進行公平實驗！</p>
+            <div class="card-title"><span>🔬</span><span>浮沉預測</span></div>
+            <p style="color:#666;margin-bottom:15px;">估下佢！然後試下驗證！</p>
             
-            <!-- Variable Control Panel -->
-            <div class="var-panel">
-                <div class="var-panel-title">🔬 變量控制面板</div>
-                
-                <div class="var-row">
-                    <div class="var-label">💧 水量</div>
-                    <button class="var-lock-btn unlocked" id="lock-water-amount" onclick="toggleLock('waterAmount')">🔓</button>
-                    <input type="range" class="var-slider" id="var-water-amount" min="50" max="500" value="200" step="10" oninput="updateVariable('waterAmount')">
-                    <div class="var-value" id="val-water-amount">200 ml</div>
-                </div>
-                
-                <div class="var-row">
-                    <div class="var-label">🌡️ 水溫</div>
-                    <button class="var-lock-btn unlocked" id="lock-water-temp" onclick="toggleLock('waterTemp')">🔓</button>
-                    <input type="range" class="var-slider" id="var-water-temp" min="5" max="95" value="25" step="1" oninput="updateVariable('waterTemp')">
-                    <div class="var-value" id="val-water-temp">25°C</div>
-                </div>
-                
-                <div class="var-row">
-                    <div class="var-label">🧂 鹽度</div>
-                    <button class="var-lock-btn unlocked" id="lock-salt" onclick="toggleLock('salt')">🔓</button>
-                    <input type="range" class="var-slider" id="var-salt" min="0" max="100" value="0" step="1" oninput="updateVariable('salt')">
-                    <div class="var-value" id="val-salt">0 g</div>
-                </div>
-                
-                <div class="var-row">
-                    <div class="var-label">⚖️ 重量</div>
-                    <button class="var-lock-btn unlocked" id="lock-weight" onclick="toggleLock('weight')">🔓</button>
-                    <input type="range" class="var-slider" id="var-weight" min="10" max="500" value="100" step="10" oninput="updateVariable('weight')">
-                    <div class="var-value" id="val-weight">100 g</div>
-                </div>
-                
-                <div class="var-row">
-                    <div class="var-label">📏 大小</div>
-                    <button class="var-lock-btn unlocked" id="lock-size" onclick="toggleLock('size')">🔓</button>
-                    <div class="size-toggle" id="size-toggle">
-                        <button class="size-btn" onclick="setSize('small')">小</button>
-                        <button class="size-btn active" onclick="setSize('medium')">中</button>
-                        <button class="size-btn" onclick="setSize('large')">大</button>
-                    </div>
-                </div>
-                
-                <div style="display:flex;gap:10px;margin-top:15px;flex-wrap:wrap;">
-                    <button class="btn btn-secondary" onclick="unlockAll()">🔓 解鎖全部</button>
-                    <button class="btn btn-primary" onclick="startScienceExperiment()">▶️ 開始實驗</button>
-                </div>
-            </div>
-            
-            <!-- Water Density Calculation -->
-            <div class="density-calc" id="density-calc">
-                <div class="density-calc-title">💧 當前水密度計算</div>
-                <div class="density-calc-row">
-                    <span>水溫影響：</span><span id="temp-effect">ρ = 1000 × (1 - 25/100) = 0.75 g/cm³</span>
-                </div>
-                <div class="density-calc-row">
-                    <span>鹽度影響：</span><span id="salt-effect">+ 0 g/ml × 0.8 = 0 g/cm³</span>
-                </div>
-                <div class="density-calc-row">
-                    <span>水密度：</span><span id="calc-water-density">ρ = 1.0 g/cm³</span>
-                </div>
-                <div class="density-calc-result">
-                    預期結果：<span id="expected-result">待計算</span>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Dual Pool Experiment -->
-        <div class="card" id="dual-pool-card" style="display:none;">
-            <div class="card-title"><span>⚖️</span><span>對照實驗</span></div>
-            <div class="fair-mode-indicator" id="fair-mode-indicator">單一變量實驗模式</div>
-            
-            <div class="dual-pool-container">
-                <div class="pool-side">
-                    <div class="pool-label control">🅰️ 對照組（標準）</div>
-                    <div class="pool-container-small" id="control-pool">
-                        <div class="water"><div class="water-surface"></div></div>
-                        <div id="control-pool-objects"></div>
-                    </div>
-                    <div class="info-panel" style="margin-top:10px;">
-                        <div class="info-box" style="padding:10px;">
-                            <div class="value" id="control-density" style="font-size:1.2em;">-</div>
-                            <div class="label" style="font-size:0.8em;">水密度</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="pool-side">
-                    <div class="pool-label experiment">🅱️ 實驗組（變量）</div>
-                    <div class="pool-container-small" id="experiment-pool">
-                        <div class="water"><div class="water-surface"></div></div>
-                        <div id="experiment-pool-objects"></div>
-                    </div>
-                    <div class="info-panel" style="margin-top:10px;">
-                        <div class="info-box" style="padding:10px;">
-                            <div class="value" id="experiment-density" style="font-size:1.2em;">-</div>
-                            <div class="label" style="font-size:0.8em;">水密度</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div style="text-align:center;margin-top:20px;">
-                <div id="dual-result" style="padding:20px;font-size:1.3em;font-weight:bold;"></div>
-            </div>
-        </div>
-        
-        <!-- Hypothesis Challenge -->
-        <div class="card" id="hypothesis-card">
-            <div class="card-title"><span>🧪</span><span>假設驗證挑戰</span></div>
             <div class="hypothesis-card">
-                <div class="hypothesis-question" id="hypothesis-question">我猜想：放入水中會___</div>
+                <div class="hypothesis-question" id="hypothesis-question">估下呢件嘢放落水會___？</div>
                 <div class="predict-buttons">
                     <button class="predict-btn" id="predict-float" onclick="makePrediction('浮')">🌊 浮</button>
                     <button class="predict-btn" id="predict-sink" onclick="makePrediction('沉')">📉 沉</button>
                 </div>
             </div>
-            <button class="btn btn-accent btn-large btn-full" onclick="startHypothesisTest()">🧪 進行實驗驗證</button>
-            <div class="prediction-result" id="prediction-result" style="display:none;"></div>
+            
+            <div style="text-align:center;margin-top:20px;">
+                <button class="btn btn-accent btn-large" onclick="showQuickResult()">🔍 睇結果</button>
+            </div>
+            
+            <div class="prediction-result" id="quick-result" style="display:none;margin-top:20px;text-align:center;"></div>
         </div>
         
-        <!-- Experiment Records -->
         <div class="card">
-            <div class="card-title"><span>📊</span><span>實驗記錄表</span></div>
-            <div style="max-height:400px;overflow-y:auto;">
-                <table class="record-table" id="science-record-table">
-                    <thead>
-                        <tr>
-                            <th>時間</th>
-                            <th>學生</th>
-                            <th>水量</th>
-                            <th>水溫</th>
-                            <th>鹽度</th>
-                            <th>重量</th>
-                            <th>大小</th>
-                            <th>水密度</th>
-                            <th>預測</th>
-                            <th>結果</th>
-                        </tr>
-                    </thead>
-                    <tbody id="science-records-body">
-                    </tbody>
-                </table>
-            </div>
-            <div style="margin-top:15px;display:flex;gap:10px;">
-                <button class="btn btn-secondary" onclick="exportScienceRecords()">📤 導出記錄</button>
-                <button class="btn btn-danger" onclick="clearScienceRecords()">🗑️ 清除記錄</button>
+            <div class="card-title"><span>📝</span><span>實驗記錄</span></div>
+            <div id="simple-records" style="text-align:center;padding:20px;">
+                <p style="color:#666;">仲未有任何記錄</p>
             </div>
         </div>
     </div>
@@ -1800,7 +1664,7 @@
             <div id="lab3d-container">
                 <canvas id="lab3d-canvas"></canvas>
                 <div class="density-legend">
-                    <div>💧 水的密度: <span id="lab-water-density">1.0</span></div>
+                    <div>💧 水的輕定重: <span id="lab-water-density">1.0</span></div>
                     <div id="lab-status">選擇一個物品</div>
                 </div>
                 <div class="lab-controls">
@@ -2206,7 +2070,7 @@
             <div class="settings-group">
                 <div class="settings-label">🎯 實驗設置</div>
                 <div class="setting-row">
-                    <span class="setting-text">水密度 (g/cm³)</span>
+                    <span class="setting-text">水的輕定重</span>
                     <input type="number" id="waterDensitySetting" value="1.0" min="0.1" max="2" step="0.1" style="width:80px;padding:8px;border-radius:8px;border:2px solid #ddd;" onchange="updateWaterDensity()">
                 </div>
             </div>
@@ -2317,9 +2181,9 @@
         ];
         
         const STORIES = [
-            { id: 1, title: '🏠 小木屋的秘密', desc: '小明的木屋為什麼能浮在水面上？', locked: false, content: `小明住在海邊的木屋裡。一天，狂風暴雨來襲，木屋竟然漂流了起來！\n\n問題：為什麼木屋能浮在水上？\n\nA) 木頭很輕，密度小\nB) 木頭很大\nC) 水會推動木頭` },
-            { id: 2, title: '🚢 船為何不沉？', desc: '這麼大的船為什麼不會沉下去？', locked: false, content: `碼頭邊停著一艘大貨船，它裝滿了貨物，但仍然浮在水面上。\n\n問題：大船那麼重，為什麼不沉？\n\nA) 船中間是空的\nB) 船是用特殊材料做的\nC) 海水比較鹹` },
-            { id: 3, title: '🥚 雞蛋的沉浮', desc: '如何讓雞蛋浮起來？', locked: false, content: `廚房裡有一個雞蛋，它放到水裡就沉下去了...\n\n問題：如何讓雞蛋浮起來？\n\nA) 加鹽到水裡\nB) 把雞蛋煮熟\nC) 把水加點糖` }
+            { id: 1, title: '🏠 木屋浮起來', desc: '木屋點解可以浮喺水面？', locked: false, content: `小明間木屋喺海邊。有一日，暴風雨好大！🌧️ 木屋竟然漂走咗！\n\n問題：點解木屋可以浮喺水面？\n\nA) 木頭好輕\nB) 木頭好大\nC) 水會推木頭` },
+            { id: 2, title: '🚢 大船唔會沉', desc: '大船係咪好重？', locked: false, content: `港口有艘大貨船🚢，入面裝滿晒貨。但係佢仲係浮喺水面！\n\n問題：大船咁重，點解唔沉落去？\n\nA) 船中間係空的\nB) 船用特別野做\nC) 海水比較鹹` },
+            { id: 3, title: '🥚 雞蛋搞乜', desc: '雞蛋放入水會點？', locked: false, content: `廚房有隻雞蛋🥚，放入水就沉落去...\n\n\n問題：點樣可以令雞蛋浮起身？\n\nA) 加鹽落水\nB) 煮熟隻蛋\nC) 加糖落水` }
         ];
         
         // ============ State ============
@@ -2477,7 +2341,7 @@
                 <div class="shelf-item" draggable="true" data-id="${obj.id}" data-custom="${obj.custom ? 'true' : 'false'}">
                     <span class="icon">${obj.icon}</span>
                     <span class="name">${obj.name}</span>
-                    <span class="density">密度: ${obj.density}</span>
+                    <span class="density">輕定重: ${obj.density}</span>
                 </div>
             `).join('');
             
@@ -2587,7 +2451,7 @@
             element.id = `pool-obj-${id}`;
             element.innerHTML = `
                 <span class="object-icon">${obj.icon}</span>
-                <span class="object-density">${obj.density}</span>
+                    <span class="density">輕定重: ${obj.density}</span>
             `;
             element.style.left = x + 'px';
             element.style.top = y + 'px';
@@ -4363,7 +4227,34 @@ ss="label">總實驗次數</div></div>
             
             // Show hypothesis question
             document.getElementById('hypothesis-question').innerHTML = 
-                `我猜想：這個物體放入改變過的水中會<span style="color:var(--accent);font-weight:bold;">${prediction}</span>`;
+                `估下呢件嘢放落水會<span style="color:var(--accent);font-weight:bold;">${prediction}</span>？`;
+        }
+        
+        function showQuickResult() {
+            // Use random object for demo
+            const objs = [
+                { name: '木塊', icon: '🟫', density: 0.6 },
+                { name: '石頭', icon: '🪨', density: 2.5 },
+                { name: '蘋果', icon: '🍎', density: 0.9 },
+                { name: '汽水罐', icon: '🥫', density: 1.1 }
+            ];
+            const obj = objs[Math.floor(Math.random() * objs.length)];
+            const willFloat = obj.density < 1.0;
+            const actualResult = willFloat ? '浮' : '沉';
+            const isCorrect = currentHypothesisPrediction === actualResult;
+            
+            const resultDiv = document.getElementById('quick-result');
+            resultDiv.style.display = 'block';
+            resultDiv.className = 'prediction-result ' + (isCorrect ? 'prediction-correct' : 'prediction-wrong');
+            resultDiv.innerHTML = `
+                <div style="font-size:2em;margin-bottom:10px;">${isCorrect ? '✅' : '❌'}</div>
+                <div style="font-size:1.3em;">${obj.icon} ${obj.name} 放落水會${actualResult}！</div>
+                <div style="margin-top:10px;font-size:1.1em;">${isCorrect ? '你估啱喇！勁！' : '唔緊要，再試過！'}</div>
+            `;
+            
+            if (voiceOn && state.voiceEnabled) {
+                speak(isCorrect ? '你估啱喇！好叻！' : '加油！再試過！');
+            }
         }
         
         function startHypothesisTest() {
