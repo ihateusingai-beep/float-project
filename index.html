@@ -2349,7 +2349,27 @@
             shelf.querySelectorAll('.shelf-item').forEach(item => {
                 item.addEventListener('dragstart', handleDragStart);
                 item.addEventListener('touchstart', handleTouchStart, { passive: false });
+                item.addEventListener('click', handleItemSelect);
             });
+        }
+        
+        function handleItemSelect(e) {
+            const id = e.currentTarget.dataset.id;
+            const custom = e.currentTarget.dataset.custom === 'true';
+            const obj = findObject(id, custom);
+            if (!obj) return;
+            
+            selectedObject = obj;
+            updateInfoPanel(obj);
+        }
+        
+        function updateInfoPanel(obj) {
+            const waterDensity = state.waterDensity;
+            const willFloat = obj.density < waterDensity;
+            
+            document.getElementById('densityValue').textContent = obj.density;
+            document.getElementById('waterDensity').textContent = waterDensity.toFixed(1);
+            document.getElementById('resultText').textContent = willFloat ? '🌊 浮' : '📉 沉';
         }
         
         function handleDragStart(e) {
@@ -2439,6 +2459,10 @@
         function addObjectToPool(objectId, x, y, isCustom = false) {
             const obj = findObject(objectId, isCustom);
             if (!obj) return;
+            
+            // Update info panel when object is added
+            selectedObject = obj;
+            updateInfoPanel(obj);
             
             const id = poolObjectIdCounter++;
             const pool = document.getElementById('pool');
