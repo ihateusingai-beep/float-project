@@ -163,7 +163,7 @@
             <div class="info-panel">
                 <div class="info-box">
                     <div class="value" id="densityValue">-</div>
-                    <div class="label">物件夠唔夠力浮</div>
+                    <div class="label">物件浮得起</div>
                 </div>
                 <div class="info-box">
                     <div class="value" id="waterDensity">1.0</div>
@@ -597,7 +597,7 @@
                 speak(prompts[Math.floor(Math.random() * prompts.length)]);
             }
 
-            showSoundBubble(willFloat ? '✅ 夠力浮起了！' : '❌ 唔夠力沉下去了...');
+            showSoundBubble(willFloat ? '✅ 浮得起喇！' : '❌ 沉落去了...');
         }
 
         function updateInfoPanel(obj) {
@@ -605,7 +605,7 @@
             const willFloat = obj.density < waterDensity;
             document.getElementById('densityValue').textContent = obj.density;
             document.getElementById('waterDensity').textContent = waterDensity.toFixed(1);
-            document.getElementById('resultText').textContent = willFloat ? '✅ 夠力浮' : '❌ 唔夠力沉';
+            document.getElementById('resultText').textContent = willFloat ? '✅ 浮得起' : '❌ 沉落去';
         }
 
         function renderHistory() {
@@ -621,7 +621,7 @@
                 <div class="history-item">
                     <img src="assets/images/${exp.objectIcon}" alt="${exp.objectName}" style="width:36px;height:36px;object-fit:contain;vertical-align:middle;margin-right:6px;" onerror="this.remove()">
                     <span class="action">${exp.objectName}</span>
-                    <span class="result ${exp.isFloat !== undefined ? (exp.isFloat ? 'result-float' : 'result-sink') : (exp.result === '浮' ? 'result-float' : 'result-sink')}">${exp.isFloat !== undefined ? (exp.isFloat ? '✅夠力浮' : '❌唔夠力沉') : exp.result}</span>
+                    <span class="result ${exp.isFloat !== undefined ? (exp.isFloat ? 'result-float' : 'result-sink') : (exp.result === '浮' ? 'result-float' : 'result-sink')}">${exp.isFloat !== undefined ? (exp.isFloat ? '✅浮得起' : '❌沉落去') : exp.result}</span>
                 </div>
             `).join('');
         }
