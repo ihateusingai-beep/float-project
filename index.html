@@ -627,6 +627,303 @@
         .student-row .name { font-weight: bold; }
         .student-row .stats { color: #666; font-size: 0.9em; }
         
+        /* ============ SCIENCE LAB STYLES ============ */
+        
+        /* Variable Control Panel */
+        .var-panel {
+            background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 3px solid var(--primary);
+        }
+        
+        .var-panel-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: var(--dark);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .var-row {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .var-label {
+            min-width: 100px;
+            font-weight: bold;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .var-lock-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: none;
+            font-size: 1.2em;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 44px;
+            touch-action: manipulation;
+        }
+        
+        .var-lock-btn.unlocked { background: #E8F5E9; color: var(--secondary); }
+        .var-lock-btn.locked { background: var(--danger); color: white; }
+        
+        .var-slider {
+            flex: 1;
+            min-width: 150px;
+            height: 44px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: #E0E0E0;
+            border-radius: 22px;
+            outline: none;
+        }
+        
+        .var-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 44px;
+            height: 44px;
+            background: var(--primary);
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+        }
+        
+        .var-slider::-moz-range-thumb {
+            width: 44px;
+            height: 44px;
+            background: var(--primary);
+            border-radius: 50%;
+            cursor: pointer;
+            border: none;
+        }
+        
+        .var-slider:disabled {
+            opacity: 0.5;
+            background: #BDBDBD;
+        }
+        
+        .var-slider:disabled::-webkit-slider-thumb {
+            background: #9E9E9E;
+        }
+        
+        .var-value {
+            min-width: 80px;
+            text-align: center;
+            font-weight: bold;
+            color: var(--dark);
+            font-size: 1.1em;
+        }
+        
+        /* Size Toggle */
+        .size-toggle {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .size-btn {
+            padding: 12px 20px;
+            border: 3px solid var(--light);
+            border-radius: 12px;
+            background: white;
+            font-weight: bold;
+            cursor: pointer;
+            min-height: 48px;
+            min-width: 60px;
+            touch-action: manipulation;
+            transition: all 0.2s;
+        }
+        
+        .size-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        /* Fair Experiment Mode */
+        .fair-mode-indicator {
+            background: var(--accent);
+            color: white;
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+        
+        .var-status-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+        
+        .var-status-locked { background: var(--danger); color: white; }
+        .var-status-unlocked { background: var(--secondary); color: white; }
+        
+        /* Dual Pool Experiment */
+        .dual-pool-container {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .pool-side {
+            flex: 1;
+            min-width: 280px;
+            max-width: 400px;
+        }
+        
+        .pool-label {
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.1em;
+            padding: 10px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .pool-label.control { background: #E3F2FD; color: var(--primary); }
+        .pool-label.experiment { background: #FFF3E0; color: var(--accent); }
+        
+        .pool-container-small {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 1;
+            background: linear-gradient(180deg, #81D4FA 0%, #29B6F6 50%, #0288D1 100%);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 6px solid #01579B;
+        }
+        
+        /* Hypothesis Challenge */
+        .hypothesis-card {
+            background: linear-gradient(135deg, #FFF8E1 0%, #FFECB3 100%);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 3px solid var(--accent);
+        }
+        
+        .hypothesis-question {
+            font-size: 1.3em;
+            color: var(--dark);
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .predict-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .predict-btn {
+            padding: 18px 30px;
+            border: 3px solid var(--primary);
+            border-radius: 12px;
+            background: white;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            min-height: 60px;
+            min-width: 120px;
+            touch-action: manipulation;
+            transition: all 0.2s;
+        }
+        
+        .predict-btn:active { transform: scale(0.95); }
+        .predict-btn.selected { background: var(--primary); color: white; }
+        
+        .prediction-result {
+            text-align: center;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 15px;
+        }
+        
+        .prediction-correct { background: var(--secondary); color: white; }
+        .prediction-wrong { background: var(--danger); color: white; }
+        
+        /* Experiment Record Table */
+        .record-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9em;
+        }
+        
+        .record-table th {
+            background: var(--primary);
+            color: white;
+            padding: 12px 8px;
+            text-align: left;
+        }
+        
+        .record-table td {
+            padding: 10px 8px;
+            border-bottom: 1px solid #E0E0E0;
+        }
+        
+        .record-table tr:nth-child(even) { background: var(--light); }
+        
+        .record-empty {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+        }
+        
+        /* Water Density Calculation Display */
+        .density-calc {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            margin-top: 15px;
+            border: 2px solid var(--teal);
+        }
+        
+        .density-calc-title {
+            font-weight: bold;
+            color: var(--teal);
+            margin-bottom: 10px;
+        }
+        
+        .density-calc-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+        }
+        
+        .density-calc-result {
+            font-weight: bold;
+            font-size: 1.2em;
+            color: var(--dark);
+            text-align: center;
+            padding: 10px;
+            background: var(--light);
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+        
         /* ============ NEW FEATURES STYLES ============ */
         
         /* AR Mode */
@@ -1282,7 +1579,8 @@
     
     <!-- Navigation -->
     <nav class="nav-tabs">
-        <button class="nav-tab active" data-page="experiment">🧪 浮沉實驗</button>
+        <button class="nav-tab" data-page="experiment">🧪 浮沉實驗</button>
+        <button class="nav-tab" data-page="science-lab">🔬 科學實驗室</button>
         <button class="nav-tab" data-page="lab3d">🔬 3D Lab</button>
         <button class="nav-tab" data-page="ar">📱 AR實境</button>
         <button class="nav-tab" data-page="battle">🎮 對戰</button>
@@ -1334,6 +1632,161 @@
             <div class="card-title"><span>📝</span><span>實驗紀錄</span></div>
             <div class="history-list" id="historyList">
                 <p style="color:#999;text-align:center;">還沒有實驗紀錄</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Page: Science Lab -->
+    <div class="page" id="page-science-lab">
+        <div class="card">
+            <div class="card-title"><span>🔬</span><span>科學實驗室</span></div>
+            <p style="color:#666;margin-bottom:15px;">控制變量，進行公平實驗！</p>
+            
+            <!-- Variable Control Panel -->
+            <div class="var-panel">
+                <div class="var-panel-title">🔬 變量控制面板</div>
+                
+                <div class="var-row">
+                    <div class="var-label">💧 水量</div>
+                    <button class="var-lock-btn unlocked" id="lock-water-amount" onclick="toggleLock('waterAmount')">🔓</button>
+                    <input type="range" class="var-slider" id="var-water-amount" min="50" max="500" value="200" step="10" oninput="updateVariable('waterAmount')">
+                    <div class="var-value" id="val-water-amount">200 ml</div>
+                </div>
+                
+                <div class="var-row">
+                    <div class="var-label">🌡️ 水溫</div>
+                    <button class="var-lock-btn unlocked" id="lock-water-temp" onclick="toggleLock('waterTemp')">🔓</button>
+                    <input type="range" class="var-slider" id="var-water-temp" min="5" max="95" value="25" step="1" oninput="updateVariable('waterTemp')">
+                    <div class="var-value" id="val-water-temp">25°C</div>
+                </div>
+                
+                <div class="var-row">
+                    <div class="var-label">🧂 鹽度</div>
+                    <button class="var-lock-btn unlocked" id="lock-salt" onclick="toggleLock('salt')">🔓</button>
+                    <input type="range" class="var-slider" id="var-salt" min="0" max="100" value="0" step="1" oninput="updateVariable('salt')">
+                    <div class="var-value" id="val-salt">0 g</div>
+                </div>
+                
+                <div class="var-row">
+                    <div class="var-label">⚖️ 重量</div>
+                    <button class="var-lock-btn unlocked" id="lock-weight" onclick="toggleLock('weight')">🔓</button>
+                    <input type="range" class="var-slider" id="var-weight" min="10" max="500" value="100" step="10" oninput="updateVariable('weight')">
+                    <div class="var-value" id="val-weight">100 g</div>
+                </div>
+                
+                <div class="var-row">
+                    <div class="var-label">📏 大小</div>
+                    <button class="var-lock-btn unlocked" id="lock-size" onclick="toggleLock('size')">🔓</button>
+                    <div class="size-toggle" id="size-toggle">
+                        <button class="size-btn" onclick="setSize('small')">小</button>
+                        <button class="size-btn active" onclick="setSize('medium')">中</button>
+                        <button class="size-btn" onclick="setSize('large')">大</button>
+                    </div>
+                </div>
+                
+                <div style="display:flex;gap:10px;margin-top:15px;flex-wrap:wrap;">
+                    <button class="btn btn-secondary" onclick="unlockAll()">🔓 解鎖全部</button>
+                    <button class="btn btn-primary" onclick="startScienceExperiment()">▶️ 開始實驗</button>
+                </div>
+            </div>
+            
+            <!-- Water Density Calculation -->
+            <div class="density-calc" id="density-calc">
+                <div class="density-calc-title">💧 當前水密度計算</div>
+                <div class="density-calc-row">
+                    <span>水溫影響：</span><span id="temp-effect">ρ = 1000 × (1 - 25/100) = 0.75 g/cm³</span>
+                </div>
+                <div class="density-calc-row">
+                    <span>鹽度影響：</span><span id="salt-effect">+ 0 g/ml × 0.8 = 0 g/cm³</span>
+                </div>
+                <div class="density-calc-row">
+                    <span>水密度：</span><span id="calc-water-density">ρ = 1.0 g/cm³</span>
+                </div>
+                <div class="density-calc-result">
+                    預期結果：<span id="expected-result">待計算</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Dual Pool Experiment -->
+        <div class="card" id="dual-pool-card" style="display:none;">
+            <div class="card-title"><span>⚖️</span><span>對照實驗</span></div>
+            <div class="fair-mode-indicator" id="fair-mode-indicator">單一變量實驗模式</div>
+            
+            <div class="dual-pool-container">
+                <div class="pool-side">
+                    <div class="pool-label control">🅰️ 對照組（標準）</div>
+                    <div class="pool-container-small" id="control-pool">
+                        <div class="water"><div class="water-surface"></div></div>
+                        <div id="control-pool-objects"></div>
+                    </div>
+                    <div class="info-panel" style="margin-top:10px;">
+                        <div class="info-box" style="padding:10px;">
+                            <div class="value" id="control-density" style="font-size:1.2em;">-</div>
+                            <div class="label" style="font-size:0.8em;">水密度</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pool-side">
+                    <div class="pool-label experiment">🅱️ 實驗組（變量）</div>
+                    <div class="pool-container-small" id="experiment-pool">
+                        <div class="water"><div class="water-surface"></div></div>
+                        <div id="experiment-pool-objects"></div>
+                    </div>
+                    <div class="info-panel" style="margin-top:10px;">
+                        <div class="info-box" style="padding:10px;">
+                            <div class="value" id="experiment-density" style="font-size:1.2em;">-</div>
+                            <div class="label" style="font-size:0.8em;">水密度</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="text-align:center;margin-top:20px;">
+                <div id="dual-result" style="padding:20px;font-size:1.3em;font-weight:bold;"></div>
+            </div>
+        </div>
+        
+        <!-- Hypothesis Challenge -->
+        <div class="card" id="hypothesis-card">
+            <div class="card-title"><span>🧪</span><span>假設驗證挑戰</span></div>
+            <div class="hypothesis-card">
+                <div class="hypothesis-question" id="hypothesis-question">我猜想：放入水中會___</div>
+                <div class="predict-buttons">
+                    <button class="predict-btn" id="predict-float" onclick="makePrediction('浮')">🌊 浮</button>
+                    <button class="predict-btn" id="predict-sink" onclick="makePrediction('沉')">📉 沉</button>
+                </div>
+            </div>
+            <button class="btn btn-accent btn-large btn-full" onclick="startHypothesisTest()">🧪 進行實驗驗證</button>
+            <div class="prediction-result" id="prediction-result" style="display:none;"></div>
+        </div>
+        
+        <!-- Experiment Records -->
+        <div class="card">
+            <div class="card-title"><span>📊</span><span>實驗記錄表</span></div>
+            <div style="max-height:400px;overflow-y:auto;">
+                <table class="record-table" id="science-record-table">
+                    <thead>
+                        <tr>
+                            <th>時間</th>
+                            <th>學生</th>
+                            <th>水量</th>
+                            <th>水溫</th>
+                            <th>鹽度</th>
+                            <th>重量</th>
+                            <th>大小</th>
+                            <th>水密度</th>
+                            <th>預測</th>
+                            <th>結果</th>
+                        </tr>
+                    </thead>
+                    <tbody id="science-records-body">
+                    </tbody>
+                </table>
+            </div>
+            <div style="margin-top:15px;display:flex;gap:10px;">
+                <button class="btn btn-secondary" onclick="exportScienceRecords()">📤 導出記錄</button>
+                <button class="btn btn-danger" onclick="clearScienceRecords()">🗑️ 清除記錄</button>
             </div>
         </div>
     </div>
@@ -1846,7 +2299,10 @@
             sink: ['物件沉咗落去...', '太重喇，沉咗...', '物件好重會沉落去...'],
             welcome: ['你好！歡迎嚟到浮力實驗室！', '等我哋一齊探索浮力嘅秘密！', '記住：密度細過水就會浮！'],
             tryObject: ['試下拖件物件入水！', '邊件最輕呢？試下保麗龍！', '石頭好重，試下放落水！'],
-            battleTurn: ['到你喇！快啲答！', '時間到！準備好了嗎？', '一於Answer!}
+            battleTurn: ['到你喇！快啲答！', '時間到！準備好了嗎？', '一於Answer!'],
+            hypothesisCorrect: ['恭喜你答對了！', '估中喇！你好叻！', '預測正確！繼續加油！'],
+            hypothesisWrong: ['預測有誤，再想想！', '唔係呢樣...再試多次！', '唔緊要，再諗清楚！'],
+            fairMode: ['公平實驗模式啟動！', '單一變量實驗，記得比較！', '鎖定變量，保持公平！']
         };
         
         const BADGES = [
@@ -1924,6 +2380,8 @@
             renderHeatmap();
             renderProgressChart();
             generateQRCode();
+            loadScienceRecords();
+            if (document.getElementById('temp-effect')) calculateWaterDensity();
             
             if (voiceOn && state.voiceEnabled) {
                 setTimeout(() => speak(VOICE_PROMPTS.welcome[Math.floor(Math.random() * 3)]), 1000);
@@ -3723,6 +4181,255 @@ ss="label">總實驗次數</div></div>
             document.getElementById('class-login').style.display = 'block';
             document.getElementById('class-stats').style.display = 'none';
             document.getElementById('teacher-password').value = '';
+        }
+        
+        // ============ Science Lab Functions ============
+        
+        // Variable Control State
+        let scienceVars = {
+            waterAmount: { value: 200, locked: false, unit: 'ml', id: 'waterAmount' },
+            waterTemp: { value: 25, locked: false, unit: '°C', id: 'waterTemp' },
+            salt: { value: 0, locked: false, unit: 'g', id: 'salt' },
+            weight: { value: 100, locked: false, unit: 'g', id: 'weight' },
+            size: { value: 'medium', locked: false, id: 'size' }
+        };
+        
+        let currentHypothesisPrediction = null;
+        let scienceRecords = [];
+        
+        function toggleLock(varName) {
+            scienceVars[varName].locked = !scienceVars[varName].locked;
+            const btn = document.getElementById('lock-' + varName);
+            if (scienceVars[varName].locked) {
+                btn.className = 'var-lock-btn locked';
+                btn.textContent = '🔒';
+            } else {
+                btn.className = 'var-lock-btn unlocked';
+                btn.textContent = '🔓';
+            }
+            updateSliderState();
+        }
+        
+        function updateSliderState() {
+            Object.keys(scienceVars).forEach(key => {
+                const sliderId = 'var-' + key;
+                const slider = document.getElementById(sliderId);
+                if (slider) {
+                    slider.disabled = scienceVars[key].locked;
+                }
+            });
+        }
+        
+        function unlockAll() {
+            Object.keys(scienceVars).forEach(key => {
+                scienceVars[key].locked = false;
+                const btn = document.getElementById('lock-' + key);
+                if (btn) {
+                    btn.className = 'var-lock-btn unlocked';
+                    btn.textContent = '🔓';
+                }
+            });
+            updateSliderState();
+        }
+        
+        function updateVariable(varName) {
+            const slider = document.getElementById('var-' + varName);
+            const valDisplay = document.getElementById('val-' + varName);
+            if (slider && valDisplay) {
+                scienceVars[varName].value = parseFloat(slider.value);
+                valDisplay.textContent = slider.value + ' ' + scienceVars[varName].unit;
+            }
+            calculateWaterDensity();
+        }
+        
+        function setSize(size) {
+            scienceVars.size.value = size;
+            document.querySelectorAll('.size-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            calculateWaterDensity();
+        }
+        
+        function calculateWaterDensity() {
+            // Check if elements exist (might not be on science-lab page)
+            if (!document.getElementById('temp-effect')) return null;
+            
+            const temp = scienceVars.waterTemp.value;
+            const saltGrams = scienceVars.salt.value;
+            const waterML = scienceVars.waterAmount.value;
+            
+            // Temperature effect: ρ = 1000 × (1 - T/500) - simplified linear approximation from 4°C max
+            const tempEffect = 1000 * (1 - (temp - 4) / 96);
+            const tempDensity = Math.max(950, Math.min(1000, tempEffect));
+            
+            // Salt effect: ρ = 1000 + 0.8 × salt_g / water_ml
+            const saltDensity = saltGrams > 0 ? 1000 + 0.8 * saltGrams / waterML * 1000 : 1000;
+            
+            // Combined water density
+            const waterDensity = saltGrams > 0 ? saltDensity : tempDensity;
+            
+            // Calculate object density based on weight and size
+            const sizeMultipliers = { small: 0.5, medium: 1, large: 2 };
+            const volume = sizeMultipliers[scienceVars.size.value];
+            const objectDensity = scienceVars.weight.value / volume;
+            
+            // Update display
+            document.getElementById('temp-effect').textContent = 
+                `ρ = 1000 × (1 - ${temp}/100) ≈ ${(tempDensity / 1000).toFixed(3)} g/cm³`;
+            document.getElementById('salt-effect').textContent = 
+                saltGrams > 0 ? `+ ${saltGrams}g / ${waterML}ml × 0.8 = +${(0.8 * saltGrams / waterML * 1000).toFixed(3)} g/cm³` : '+ 0 g/cm³';
+            document.getElementById('calc-water-density').textContent = 
+                `ρ = ${(waterDensity / 1000).toFixed(3)} g/cm³`;
+            
+            // Expected result
+            const willFloat = objectDensity < waterDensity / 1000;
+            document.getElementById('expected-result').textContent = willFloat ? '🌊 物體會浮' : '📉 物體會沉';
+            document.getElementById('expected-result').style.color = willFloat ? 'var(--secondary)' : 'var(--danger)';
+            
+            return { waterDensity: waterDensity / 1000, objectDensity: objectDensity / 1000, willFloat };
+        }
+        
+        function startScienceExperiment() {
+            const result = calculateWaterDensity();
+            showSoundBubble(result.willFloat ? '🌊 開始實驗！物體會浮！' : '📉 開始實驗！物體會沉！');
+            
+            if (voiceOn && state.voiceEnabled) {
+                speak(result.willFloat ? ' object will float!' : ' object will sink!');
+            }
+        }
+        
+        function makePrediction(prediction) {
+            currentHypothesisPrediction = prediction;
+            document.querySelectorAll('.predict-btn').forEach(btn => btn.classList.remove('selected'));
+            document.getElementById('predict-' + prediction.toLowerCase()).classList.add('selected');
+            
+            // Show hypothesis question
+            document.getElementById('hypothesis-question').innerHTML = 
+                `我猜想：這個物體放入改變過的水中會<span style="color:var(--accent);font-weight:bold;">${prediction}</span>`;
+        }
+        
+        function startHypothesisTest() {
+            if (!currentHypothesisPrediction) {
+                showSoundBubble('請先預測結果！');
+                return;
+            }
+            
+            const result = calculateWaterDensity();
+            const actualResult = result.willFloat ? '浮' : '沉';
+            const isCorrect = currentHypothesisPrediction === actualResult;
+            
+            const resultDiv = document.getElementById('prediction-result');
+            resultDiv.style.display = 'block';
+            resultDiv.className = 'prediction-result ' + (isCorrect ? 'prediction-correct' : 'prediction-wrong');
+            resultDiv.innerHTML = `
+                <div style="font-size:1.5em;margin-bottom:10px;">${isCorrect ? '🎉' : '😮'}</div>
+                <div>你的預測：${currentHypothesisPrediction}</div>
+                <div>實際結果：${actualResult}</div>
+                <div style="margin-top:10px;font-weight:bold;">${isCorrect ? '預測正確！+15分！' : '預測錯誤，再試一次！'}</div>
+            `;
+            
+            // Record experiment
+            recordScienceExperiment(actualResult);
+            
+            if (voiceOn && state.voiceEnabled) {
+                const prompts = isCorrect ? VOICE_PROMPTS.hypothesisCorrect : VOICE_PROMPTS.hypothesisWrong;
+                speak(state.cantoneseVoice ? prompts[Math.floor(Math.random() * prompts.length)] : (isCorrect ? 'Correct!' : 'Try again!'));
+            }
+        }
+        
+        function recordScienceExperiment(actualResult) {
+            const studentName = document.getElementById('studentName').value.trim() || '匿名學生';
+            const result = calculateWaterDensity();
+            
+            const record = {
+                time: new Date().toLocaleString('zh-HK'),
+                student: studentName,
+                waterAmount: scienceVars.waterAmount.value,
+                waterTemp: scienceVars.waterTemp.value,
+                salt: scienceVars.salt.value,
+                weight: scienceVars.weight.value,
+                size: scienceVars.size.value,
+                waterDensity: result.waterDensity.toFixed(3),
+                prediction: currentHypothesisPrediction || '-',
+                result: actualResult,
+                correct: currentHypothesisPrediction === actualResult
+            };
+            
+            scienceRecords.push(record);
+            saveScienceRecords();
+            renderScienceRecords();
+            
+            // Update fair mode indicator
+            checkFairMode();
+        }
+        
+        function checkFairMode() {
+            const lockedCount = Object.values(scienceVars).filter(v => v.locked).length;
+            const indicator = document.getElementById('fair-mode-indicator');
+            if (lockedCount >= 4) {
+                indicator.textContent = '✅ 公平實驗模式：只有一個變量在改變！';
+                indicator.style.background = 'var(--secondary)';
+            } else if (lockedCount > 0) {
+                indicator.textContent = `⚠️ ${5 - lockedCount}個變量可調整`;
+                indicator.style.background = 'var(--accent)';
+            } else {
+                indicator.textContent = '❌ 所有變量都可調整';
+                indicator.style.background = '#9E9E9E';
+            }
+        }
+        
+        function saveScienceRecords() {
+            localStorage.setItem('scienceLabRecords', JSON.stringify(scienceRecords));
+        }
+        
+        function loadScienceRecords() {
+            const saved = localStorage.getItem('scienceLabRecords');
+            if (saved) {
+                scienceRecords = JSON.parse(saved);
+                renderScienceRecords();
+            }
+        }
+        
+        function renderScienceRecords() {
+            const tbody = document.getElementById('science-records-body');
+            if (!tbody) return;
+            
+            if (scienceRecords.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="10" class="record-empty">暫無實驗記錄</td></tr>';
+                return;
+            }
+            
+            tbody.innerHTML = scienceRecords.map(r => `
+                <tr>
+                    <td>${r.time}</td>
+                    <td>${r.student}</td>
+                    <td>${r.waterAmount}ml</td>
+                    <td>${r.waterTemp}°C</td>
+                    <td>${r.salt}g</td>
+                    <td>${r.weight}g</td>
+                    <td>${r.size}</td>
+                    <td>${r.waterDensity}</td>
+                    <td>${r.prediction}</td>
+                    <td style="font-weight:bold;color:${r.result === '浮' ? 'var(--secondary)' : 'var(--danger)'}">${r.result}</td>
+                </tr>
+            `).join('');
+        }
+        
+        function exportScienceRecords() {
+            const blob = new Blob([JSON.stringify(scienceRecords, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'science_lab_records_' + new Date().toISOString().split('T')[0] + '.json';
+            a.click();
+        }
+        
+        function clearScienceRecords() {
+            if (confirm('確定要清除所有科學實驗記錄嗎？')) {
+                scienceRecords = [];
+                saveScienceRecords();
+                renderScienceRecords();
+                showSoundBubble('已清除所有記錄');
+            }
         }
         
         // ============ Start ============
