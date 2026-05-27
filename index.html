@@ -3028,9 +3028,6 @@
             updateStats();
             renderHistory();
             updateWaterDensityDisplay();
-            renderStories();
-            renderBadges();
-            showLeaderboard();
             renderTutorials();
             renderCustomObjects();
             renderErrorAnalysis();
@@ -3094,8 +3091,6 @@
             
             // Update nav tabs
             document.querySelector('[data-page="experiment"]').innerHTML = t.navExperiment;
-            document.querySelector('[data-page="science-lab"]').innerHTML = t.navScienceLab;
-            document.querySelector('[data-page="story"]').innerHTML = t.navStory;
             document.querySelector('[data-page="parent"]').innerHTML = t.navParent;
             document.querySelector('[data-page="report"]').innerHTML = t.navReport;
             document.querySelector('[data-page="settings"]').innerHTML = t.navSettings;
@@ -3125,18 +3120,6 @@
                 if (noHistory) noHistory.textContent = t.noHistory;
             }
             
-            // Update science lab page
-            const scienceLabPage = document.getElementById('page-science-lab');
-            if (scienceLabPage) {
-                scienceLabPage.querySelector('.card-title span:last-child').textContent = t.scienceLabTitle;
-                scienceLabPage.querySelector('p').textContent = t.scienceLabDesc;
-                const hypQuestion = document.getElementById('hypothesis-question');
-                if (hypQuestion) hypQuestion.textContent = t.hypothesisQuestion;
-                document.getElementById('predict-float').innerHTML = t.predictFloat;
-                document.getElementById('predict-sink').innerHTML = t.predictSink;
-                document.querySelector('.btn-accent').textContent = t.seeResult;
-            }
-            
             // Update lab3d page
             const lab3dPage = document.getElementById('page-lab3d');
             if (lab3dPage) {
@@ -3149,12 +3132,6 @@
             if (arPage) {
                 arPage.querySelector('.card-title span:last-child').textContent = t.arTitle;
                 arPage.querySelector('p').textContent = t.arDesc;
-            }
-            
-            // Update story page
-            const storyPage = document.getElementById('page-story');
-            if (storyPage) {
-                storyPage.querySelector('.card-title span:last-child').textContent = t.storyTitle;
             }
             
             // Update badges page
