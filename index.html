@@ -557,6 +557,275 @@
             padding-bottom: 10px;
         }
 
+        /* Interactive Learning Objectives */
+        .objective-btn {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 15px;
+            background: rgba(255,255,255,0.15);
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            text-align: left;
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        .objective-btn:hover, .objective-btn:active {
+            background: rgba(255,255,255,0.25);
+            border-color: rgba(255,255,255,0.6);
+            transform: scale(0.98);
+        }
+
+        .objective-btn.selected {
+            background: rgba(255,255,255,0.3);
+            border-color: #FFD700;
+            box-shadow: 0 0 15px rgba(255,215,0,0.4);
+        }
+
+        .objective-btn .objective-icon { font-size: 1.5em; flex-shrink: 0; }
+        .objective-btn .objective-content { flex: 1; }
+        .objective-btn .objective-cantonese { font-size: 1em; margin-bottom: 4px; }
+        .objective-btn .objective-english { font-size: 0.8em; opacity: 0.8; font-style: italic; }
+        .objective-btn .start-btn {
+            background: #FFD700;
+            color: #1565C0;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 16px;
+            font-weight: bold;
+            font-size: 0.9em;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        /* Teacher Demo Mode */
+        .teacher-demo-banner {
+            background: linear-gradient(135deg, #FF9800 0%, #F57C00 100%);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            color: white;
+            text-align: center;
+            display: none;
+        }
+
+        .teacher-demo-banner.active { display: block; }
+
+        .teacher-demo-banner h3 { margin-bottom: 10px; font-size: 1.3em; }
+        .teacher-demo-banner p { margin-bottom: 15px; opacity: 0.9; }
+
+        .teacher-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .teacher-step {
+            background: rgba(255,255,255,0.95);
+            color: #333;
+            border-radius: 12px;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            opacity: 0.5;
+            transition: all 0.3s;
+        }
+
+        .teacher-step.current {
+            opacity: 1;
+            transform: scale(1.02);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .teacher-step.completed { opacity: 0.7; background: #E8F5E9; }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2em;
+            flex-shrink: 0;
+        }
+
+        .teacher-step.completed .step-number { background: var(--secondary); }
+        .teacher-step.current .step-number { background: #FF9800; }
+
+        .step-content { flex: 1; }
+        .step-content strong { display: block; margin-bottom: 4px; color: var(--primary); }
+
+        /* Density Comparison Tool */
+        .compare-tool {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            margin-top: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .compare-tool-title {
+            font-size: 1.2em;
+            color: var(--primary);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .compare-selection {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .compare-item {
+            background: var(--light);
+            border: 3px solid transparent;
+            border-radius: 12px;
+            padding: 12px;
+            text-align: center;
+            cursor: pointer;
+            min-width: 80px;
+            transition: all 0.3s;
+        }
+
+        .compare-item:hover { border-color: var(--primary); }
+        .compare-item.selected { border-color: var(--accent); background: #FFF3E0; }
+
+        .compare-item .icon { font-size: 2em; display: block; margin-bottom: 5px; }
+        .compare-item .name { font-size: 0.85em; font-weight: bold; }
+        .compare-item .density-label { font-size: 0.75em; color: #666; }
+
+        .compare-chart {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            height: 180px;
+            padding: 20px;
+            background: linear-gradient(180deg, #E3F2FD 0%, white 100%);
+            border-radius: 12px;
+            margin-top: 15px;
+        }
+
+        .compare-bar {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            width: 60px;
+        }
+
+        .compare-bar .bar-fill {
+            width: 40px;
+            border-radius: 8px 8px 0 0;
+            transition: height 0.5s ease;
+            position: relative;
+        }
+
+        .compare-bar.floating .bar-fill { background: linear-gradient(180deg, #4CAF50, #81C784); }
+        .compare-bar.sinking .bar-fill { background: linear-gradient(180deg, #f44336, #E57373); }
+
+        .compare-bar .bar-value {
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 0.8em;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .compare-bar .item-name { font-size: 0.85em; font-weight: bold; text-align: center; }
+        .compare-bar .item-result { font-size: 0.75em; padding: 2px 8px; border-radius: 6px; color: white; margin-top: 4px; }
+        .compare-bar.floating .item-result { background: #4CAF50; }
+        .compare-bar.sinking .item-result { background: #f44336; }
+
+        .water-line {
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #2196F3;
+            top: 50%;
+        }
+
+        .water-label {
+            position: absolute;
+            left: 10px;
+            color: #2196F3;
+            font-weight: bold;
+            font-size: 0.85em;
+        }
+
+        /* Knowledge Reinforcement Cards */
+        .knowledge-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .knowledge-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 16px;
+            padding: 20px;
+            color: white;
+            text-align: center;
+        }
+
+        .knowledge-card h4 {
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .knowledge-card p {
+            font-size: 0.95em;
+            line-height: 1.5;
+            opacity: 0.9;
+        }
+
+        .knowledge-card .mastery {
+            margin-top: 15px;
+            padding: 10px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 10px;
+        }
+
+        .mastery-bar {
+            height: 8px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 4px;
+            margin-top: 8px;
+            overflow: hidden;
+        }
+
+        .mastery-fill {
+            height: 100%;
+            background: #FFD700;
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
         .objective-item {
             display: flex;
             align-items: flex-start;
@@ -1756,37 +2025,49 @@
     
     <!-- Page: Experiment -->
     <div class="page active" id="page-experiment">
+        <!-- Teacher Demo Mode Banner -->
+        <div class="teacher-demo-banner" id="teacherDemoBanner">
+            <h3>👨‍🏫 老師示範模式</h3>
+            <p id="teacherDemoObjective">選擇學習目標開始示範</p>
+            <div class="teacher-steps" id="teacherSteps"></div>
+            <button class="btn btn-accent" onclick="nextTeacherStep()" style="margin-top:15px;">▶ 下一步</button>
+            <button class="btn btn-secondary" onclick="exitTeacherDemo()" style="margin-top:15px;margin-left:10px;">❌ 離開示範模式</button>
+        </div>
+
         <!-- Learning Objectives Banner -->
-        <div class="learning-objectives">
-            <div class="learning-objectives-title">📋 今日學習目標</div>
+        <div class="learning-objectives" id="learningObjectives">
+            <div class="learning-objectives-title">📋 今日學習目標 <button class="btn btn-accent" onclick="enterTeacherDemo()" style="margin-left:auto;padding:8px 16px;font-size:0.9em;">👨‍🏫 老師示範</button></div>
             
-            <div class="objective-item">
+            <button class="objective-btn" onclick="selectObjective(1)" data-objective="1">
                 <span class="objective-icon">💧</span>
                 <div class="objective-content">
                     <div class="objective-cantonese">以水為例子，描述水對物體施加向上推升的力，稱為<strong>浮力</strong></div>
                     <div class="objective-english">Buoyancy / Upward Force</div>
                 </div>
-            </div>
+                <button class="start-btn" onclick="event.stopPropagation();startObjectiveExperiment(1)">▶ 開始實驗</button>
+            </button>
             
-            <div class="objective-item">
+            <button class="objective-btn" onclick="selectObjective(2)" data-objective="2">
                 <span class="objective-icon">🌊</span>
                 <div class="objective-content">
                     <div class="objective-cantonese">辨別物體在水中的浮沉現象</div>
                     <div class="objective-english">Float vs Sink</div>
                 </div>
-            </div>
+                <button class="start-btn" onclick="event.stopPropagation();startObjectiveExperiment(2)">▶ 開始實驗</button>
+            </button>
             
-            <div class="objective-item">
+            <button class="objective-btn" onclick="selectObjective(3)" data-objective="3">
                 <span class="objective-icon">🧪</span>
                 <div class="objective-content">
                     <div class="objective-cantonese">辨別不同物料的一些物理特性（例如：可否浮於水面）</div>
                     <div class="objective-english">Physical Properties</div>
                 </div>
-            </div>
+                <button class="start-btn" onclick="event.stopPropagation();startObjectiveExperiment(3)">▶ 開始實驗</button>
+            </button>
         </div>
 
         <div class="card">
-            <div class="card-title"><span>🌊</span><span>浮力實驗池</span></div>
+            <div class="card-title"><span>🌊</span><span>浮力實驗池</span> <button class="btn btn-purple" onclick="showCompareTool()" style="margin-left:auto;padding:8px 16px;font-size:0.85em;">📊 密度比較</button></div>
             <p style="color:#666;margin-bottom:15px;">拖拽物品到水裡，睇下件嘢係會浮定會沉！</p>
             
             <div class="pool-container" id="pool">
@@ -1817,6 +2098,34 @@
             <div class="card-title"><span>📝</span><span>實驗紀錄</span></div>
             <div class="history-list" id="historyList">
                 <p style="color:#999;text-align:center;">還沒有實驗紀錄</p>
+            </div>
+        </div>
+
+        <!-- Knowledge Reinforcement Cards -->
+        <div class="knowledge-cards" id="knowledgeCards" style="display:none;">
+            <div class="knowledge-card">
+                <h4>💧 目標一：浮力</h4>
+                <p id="knowledgeCard1">完成實驗後，這裡會顯示你學到了什麼</p>
+                <div class="mastery">
+                    <span>掌握程度</span>
+                    <div class="mastery-bar"><div class="mastery-fill" id="mastery1" style="width:0%"></div></div>
+                </div>
+            </div>
+            <div class="knowledge-card">
+                <h4>🌊 目標二：浮沉</h4>
+                <p id="knowledgeCard2">完成實驗後，這裡會顯示你學到了什麼</p>
+                <div class="mastery">
+                    <span>掌握程度</span>
+                    <div class="mastery-bar"><div class="mastery-fill" id="mastery2" style="width:0%"></div></div>
+                </div>
+            </div>
+            <div class="knowledge-card">
+                <h4>🧪 目標三：物料特性</h4>
+                <p id="knowledgeCard3">完成實驗後，這裡會顯示你學到了什麼</p>
+                <div class="mastery">
+                    <span>掌握程度</span>
+                    <div class="mastery-bar"><div class="mastery-fill" id="mastery3" style="width:0%"></div></div>
+                </div>
             </div>
         </div>
     </div>
@@ -2418,7 +2727,297 @@
         let syncPeers = [];
         let isServer = false;
         let wsServer = null;
-        
+
+        // Teacher Demo State
+        let teacherDemoActive = false;
+        let currentObjective = null;
+        let teacherStep = 0;
+
+        // Compare Tool State
+        let compareSelected = [];
+
+        // Knowledge Cards State
+        let objectiveCompletion = { 1: 0, 2: 0, 3: 0 };
+
+        // ============ Teacher Demo Mode ============
+        function enterTeacherDemo() {
+            teacherDemoActive = true;
+            document.getElementById('teacherDemoBanner').classList.add('active');
+            document.getElementById('learningObjectives').style.display = 'none';
+            speak('老師示範模式啟動，請選擇學習目標');
+        }
+
+        function exitTeacherDemo() {
+            teacherDemoActive = false;
+            currentObjective = null;
+            teacherStep = 0;
+            document.getElementById('teacherDemoBanner').classList.remove('active');
+            document.getElementById('learningObjectives').style.display = 'block';
+            document.getElementById('teacherSteps').innerHTML = '';
+        }
+
+        function selectObjective(num) {
+            document.querySelectorAll('.objective-btn').forEach(btn => btn.classList.remove('selected'));
+            document.querySelector(`[data-objective="${num}"]`).classList.add('selected');
+            currentObjective = num;
+            speak('你選擇了目標' + num);
+        }
+
+        function startObjectiveExperiment(num) {
+            currentObjective = num;
+            teacherStep = 0;
+
+            const objectives = {
+                1: { name: '浮力', icon: '💧', steps: [
+                    { title: '選擇物品', instruction: '請選擇一件物品放入水中', object: '木塊', prompt: '呢個係木塊，密度係0.6，輕過水所以會浮' },
+                    { title: '放入水中', instruction: '將物品放入實驗池', action: 'demo-drop' },
+                    { title: '解釋浮力', instruction: '注意物品受到的向上的力', prompt: '水向上托住件嘢，呢個力叫做浮力！' },
+                    { title: '總結', instruction: '完成實驗', prompt: '所以浮力就係水向上推升物件既力！' }
+                ]},
+                2: { name: '浮沉', icon: '🌊', steps: [
+                    { title: '選擇兩個物品', instruction: '請選擇蘋果和石頭', objects: ['蘋果', '石頭'], prompt: '蘋果密度0.9，石頭密度2.5' },
+                    { title: '同時放入', instruction: '將兩個物品同時放入水中', action: 'demo-compare' },
+                    { title: '觀察結果', instruction: '注意兩件物品既浮沉情況', prompt: '蘋果浮起、石頭沉落去！' },
+                    { title: '解釋', instruction: '解釋點解會咁', prompt: '因為蘋果密度細過水，石頭密度大過水' }
+                ]},
+                3: { name: '物料特性', icon: '🧪', steps: [
+                    { title: '選擇三件物品', instruction: '選擇木、膠、金属三種物料', objects: ['木塊', '膠球', '鐵塊'], prompt: '木密度0.6、膠密度0.95、鐵密度7.8' },
+                    { title: '預測', instruction: '預測邊件會浮邊件會沉', prompt: '木會浮、膠可能浮、鐵會沉' },
+                    { title: '實驗驗證', instruction: '將物品放入水中', action: 'demo-compare' },
+                    { title: '總結特性', instruction: '總結三種物料的特性', prompt: '不同物料有不同密度，所以有既浮有既沉！' }
+                ]}
+            };
+
+            const obj = objectives[num];
+            document.getElementById('teacherDemoObjective').textContent = `${obj.icon} 目標${num}：${obj.name}`;
+
+            const stepsContainer = document.getElementById('teacherSteps');
+            stepsContainer.innerHTML = obj.steps.map((step, i) => `
+                <div class="teacher-step ${i === 0 ? 'current' : ''}" id="teacherStep${i}">
+                    <div class="step-number">${i + 1}</div>
+                    <div class="step-content">
+                        <strong>${step.title}</strong>
+                        <span>${step.instruction}</span>
+                    </div>
+                </div>
+            `).join('');
+
+            speak(obj.steps[0].prompt);
+        }
+
+        function nextTeacherStep() {
+            const objectives = {
+                1: { steps: [
+                    { prompt: '呢個係木塊，密度係0.6，輕過水所以會浮' },
+                    { action: 'demo-drop' },
+                    { prompt: '水向上托住件嘢，呢個力叫做浮力！' },
+                    { prompt: '所以浮力就係水向上推升物件既力！' }
+                ]},
+                2: { steps: [
+                    { prompt: '蘋果密度0.9，石頭密度2.5' },
+                    { action: 'demo-compare' },
+                    { prompt: '蘋果浮起、石頭沉落去！' },
+                    { prompt: '因為蘋果密度細過水，石頭密度大過水' }
+                ]},
+                3: { steps: [
+                    { prompt: '木密度0.6、膠密度0.95、鐵密度7.8' },
+                    { prompt: '木會浮、膠可能浮、鐵會沉' },
+                    { action: 'demo-compare' },
+                    { prompt: '不同物料有不同密度，所以有既浮有既沉！' }
+                ]}
+            };
+
+            const steps = objectives[currentObjective].steps;
+            const currentStepEl = document.getElementById(`teacherStep${teacherStep}`);
+            if (currentStepEl) currentStepEl.classList.remove('current');
+            if (currentStepEl) currentStepEl.classList.add('completed');
+
+            teacherStep++;
+            if (teacherStep >= steps.length) {
+                completeTeacherDemo();
+                return;
+            }
+
+            const nextStepEl = document.getElementById(`teacherStep${teacherStep}`);
+            if (nextStepEl) nextStepEl.classList.add('current');
+
+            const step = steps[teacherStep];
+            if (step.prompt) speak(step.prompt);
+            if (step.action === 'demo-drop') simulateDemoDrop();
+            if (step.action === 'demo-compare') simulateDemoCompare();
+        }
+
+        function simulateDemoDrop() {
+            const pool = document.getElementById('pool');
+            const demoObj = document.createElement('div');
+            demoObj.className = 'object-item';
+            demoObj.style.cssText = 'left:50%;top:20%;transform:translateX(-50%);';
+            demoObj.innerHTML = '<span class="object-icon">🟫</span><div class="object-density">0.6</div>';
+            pool.appendChild(demoObj);
+
+            setTimeout(() => {
+                demoObj.style.transition = 'top 1s ease';
+                demoObj.style.top = '50%';
+                speak('你睇，木塊浮起喇！呢個就係浮力既作用！');
+            }, 300);
+        }
+
+        function simulateDemoCompare() {
+            const pool = document.getElementById('pool');
+            const objects = [
+                { icon: '🍎', density: '0.9', left: '30%' },
+                { icon: '🪨', density: '2.5', left: '70%' }
+            ];
+
+            objects.forEach((obj, i) => {
+                const el = document.createElement('div');
+                el.className = 'object-item';
+                el.style.cssText = `left:${obj.left};top:20%;transform:translateX(-50%);`;
+                el.innerHTML = `<span class="object-icon">${obj.icon}</span><div class="object-density">${obj.density}</div>`;
+                pool.appendChild(el);
+
+                setTimeout(() => {
+                    el.style.transition = 'top 1s ease';
+                    el.style.top = obj.density < 1 ? '45%' : '75%';
+                }, 300 + i * 200);
+            });
+
+            setTimeout(() => speak('你睇，蘋果浮起但石頭沉落去！'), 1200);
+        }
+
+        function completeTeacherDemo() {
+            speak('示範完成！');
+            objectiveCompletion[currentObjective] = Math.min(100, objectiveCompletion[currentObjective] + 30);
+            updateKnowledgeCards();
+            exitTeacherDemo();
+        }
+
+        // ============ Interactive Learning Objectives ============
+        function selectLearningObjective(num) {
+            document.querySelectorAll('.objective-btn').forEach(btn => {
+                btn.classList.toggle('selected', btn.dataset.objective === String(num));
+            });
+            currentObjective = num;
+            speak('你選擇了目標' + num + '，按開始實驗按鈕進行實驗');
+        }
+
+        // ============ Density Comparison Tool ============
+        function showCompareTool() {
+            const compareItems = getAllObjects().slice(0, 8);
+            const compareHtml = `
+                <div class="compare-tool" id="compareToolModal" style="position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);z-index:1000;display:flex;align-items:center;justify-content:center;">
+                    <div style="background:white;border-radius:20px;padding:20px;max-width:600px;width:90%;max-height:90vh;overflow-y:auto;">
+                        <h3 style="color:var(--primary);margin-bottom:15px;display:flex;align-items:center;gap:10px;">
+                            📊 密度比較工具
+                            <button onclick="closeCompareTool()" style="margin-left:auto;background:none;border:none;font-size:1.5em;cursor:pointer;">×</button>
+                        </h3>
+                        <p style="color:#666;margin-bottom:15px;">選擇2-4件物品進行密度比較</p>
+                        <div class="compare-selection">
+                            ${compareItems.map(obj => `
+                                <div class="compare-item" data-id="${obj.id}" onclick="toggleCompareSelection('${obj.id}')">
+                                    <span class="icon">${obj.icon}</span>
+                                    <span class="name">${obj.name}</span>
+                                    <span class="density-label">輕重: ${obj.density}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                        <button class="btn btn-primary btn-full" onclick="renderCompareChart()" style="margin-top:15px;">🔍 比較</button>
+                        <div class="compare-chart" id="compareChart" style="display:none;"></div>
+                    </div>
+                </div>
+            `;
+            document.body.insertAdjacentHTML('beforeend', compareHtml);
+        }
+
+        function closeCompareTool() {
+            const modal = document.getElementById('compareToolModal');
+            if (modal) modal.remove();
+        }
+
+        function toggleCompareSelection(id) {
+            const item = document.querySelector(`.compare-item[data-id="${id}"]`);
+            const idx = compareSelected.indexOf(id);
+
+            if (idx > -1) {
+                compareSelected.splice(idx, 1);
+                item.classList.remove('selected');
+            } else {
+                if (compareSelected.length >= 4) {
+                    speak('最多只能選擇4件物品');
+                    return;
+                }
+                compareSelected.push(id);
+                item.classList.add('selected');
+            }
+        }
+
+        function renderCompareChart() {
+            if (compareSelected.length < 2) {
+                speak('請選擇至少2件物品');
+                return;
+            }
+
+            const objects = compareSelected.map(id => getAllObjects().find(o => o.id === id));
+            const maxDensity = Math.max(...objects.map(o => o.density), 2);
+            const waterDensity = state.waterDensity;
+
+            const chart = document.getElementById('compareChart');
+            chart.style.display = 'flex';
+            chart.style.position = 'relative';
+            chart.innerHTML = `
+                <div class="water-line" style="top:${(1 - waterDensity / maxDensity) * 100}%"></div>
+                <div class="water-label" style="top:${(1 - waterDensity / maxDensity) * 100 - 5}%">💧 水(${waterDensity})</div>
+                ${objects.map(obj => {
+                    const willFloat = obj.density < waterDensity;
+                    const height = (obj.density / maxDensity) * 150;
+                    return `
+                        <div class="compare-bar ${willFloat ? 'floating' : 'sinking'}">
+                            <div class="bar-fill" style="height:${height}px;">
+                                <span class="bar-value">${obj.density}</span>
+                            </div>
+                            <span class="item-name">${obj.icon} ${obj.name}</span>
+                            <span class="item-result">${willFloat ? '🌊 浮' : '📉 沉'}</span>
+                        </div>
+                    `;
+                }).join('')}
+            `;
+
+            speak('密度比較圖已顯示！');
+        }
+
+        // ============ Knowledge Reinforcement Cards ============
+        function showKnowledgeCards() {
+            document.getElementById('knowledgeCards').style.display = 'grid';
+            updateKnowledgeCards();
+        }
+
+        function updateKnowledgeCards() {
+            const knowledgeTexts = {
+                1: {
+                    intro: '你學會了浮力既概念！',
+                    text: '水會向上推升物件，呢個力叫做浮力。物件密度細過水就會浮！'
+                },
+                2: {
+                    intro: '你學會了分辨浮沉！',
+                    text: '物品放入水中有兩種結果：浮或者沉。密度決定命運！'
+                },
+                3: {
+                    intro: '你認識了唔同物料既特性！',
+                    text: '木、膠、鐵各有唔同密度，所以佢哋係會浮定沉都唔同！'
+                }
+            };
+
+            [1, 2, 3].forEach(num => {
+                const card = document.getElementById(`knowledgeCard${num}`);
+                const mastery = document.getElementById(`mastery${num}`);
+                if (card && mastery) {
+                    const data = knowledgeTexts[num];
+                    card.innerHTML = `<strong>${data.intro}</strong><br>${data.text}`;
+                    mastery.style.width = objectiveCompletion[num] + '%';
+                }
+            });
+        }
+
         // ============ Initialization ============
         function init() {
             loadState();
@@ -2984,8 +3583,35 @@
             if (state.experiments.length === 1) unlockBadge('first_exp');
             
             showSoundBubble(willFloat ? '🌊 浮起了！' : '📉 下沉了...');
+
+            // Update objective completion based on what was learned
+            updateObjectiveProgress(obj, willFloat);
         }
-        
+
+        function updateObjectiveProgress(obj, willFloat) {
+            // Objective 1: Buoyancy concept - learned when any float happens
+            if (willFloat) {
+                objectiveCompletion[1] = Math.min(100, objectiveCompletion[1] + 20);
+            }
+
+            // Objective 2: Float vs sink - learned when both outcomes observed
+            if (state.objectStats[obj.id]) {
+                const stats = state.objectStats[obj.id];
+                if (stats.float > 0 && stats.sink > 0) {
+                    objectiveCompletion[2] = Math.min(100, objectiveCompletion[2] + 25);
+                } else if (stats.float > 0 || stats.sink > 0) {
+                    objectiveCompletion[2] = Math.min(50, objectiveCompletion[2] + 15);
+                }
+            }
+
+            // Objective 3: Material properties - learned when comparing different materials
+            if (Object.keys(state.objectStats).length >= 2) {
+                objectiveCompletion[3] = Math.min(100, objectiveCompletion[3] + 20);
+            }
+
+            showKnowledgeCards();
+        }
+
         function recordWrongAnswer(questionType, correctAnswer) {
             if (!state.wrongAnswers[questionType]) state.wrongAnswers[questionType] = { count: 0, lastTime: 0 };
             state.wrongAnswers[questionType].count++;
