@@ -223,16 +223,16 @@
     </div>
 
     <script>
-        // ============ Core Objects (8 items) ============
+        // ============ Core Objects (8 items with real images) ============
         const OBJECTS = [
-            { id: 'wood', name: '木塊', icon: '🟫', density: 0.6 },
-            { id: 'stone', name: '石頭', icon: '🪨', density: 2.5 },
-            { id: 'foam', name: '發泡膠', icon: '◻️', density: 0.3 },
-            { id: 'apple', name: '蘋果', icon: '🍎', density: 0.9 },
-            { id: 'can', name: '汽水罐', icon: '🥫', density: 1.1 },
-            { id: 'banana', name: '香蕉', icon: '🍌', density: 0.7 },
-            { id: 'grape', name: '葡萄', icon: '🍇', density: 1.0 },
-            { id: 'egg', name: '雞蛋', icon: '🥚', density: 1.1 }
+            { id: 'wood', name: '木塊', icon: 'wood-block.png', density: 0.6 },
+            { id: 'stone', name: '石頭', icon: 'stone.png', density: 2.5 },
+            { id: 'apple', name: '蘋果', icon: 'apple.png', density: 0.9 },
+            { id: 'coin', name: '硬幣', icon: 'coin.png', density: 7.0 },
+            { id: 'key', name: '鎖匙', icon: 'key.png', density: 7.8 },
+            { id: 'spoon', name: '匙羹', icon: 'spoon.png', density: 7.8 },
+            { id: 'balloon', name: '氣球', icon: 'balloon.png', density: 0.3 },
+            { id: 'duck', name: '膠鴨', icon: 'rubber-duck.png', density: 0.3 }
         ];
 
         // ============ State ============
@@ -306,7 +306,7 @@
             const shelf = document.getElementById('objectShelf');
             shelf.innerHTML = OBJECTS.map(obj => `
                 <div class="shelf-item" draggable="true" data-id="${obj.id}">
-                    <span class="icon">${obj.icon}</span>
+                    <img src="assets/images/${obj.icon}" alt="${obj.name}" style="width:48px;height:48px;object-fit:contain;" onerror="this.textContent='${obj.name}'">
                     <span class="name">${obj.name}</span>
                     <span class="density">輕: ${obj.density}</span>
                 </div>
@@ -425,7 +425,7 @@
             element.className = 'object-item';
             element.id = `pool-obj-${id}`;
             element.innerHTML = `
-                <span class="object-icon">${obj.icon}</span>
+                <img src="assets/images/${obj.icon}" alt="${obj.name}" style="width:52px;height:52px;object-fit:contain;" onerror="this.textContent='${obj.name}'">
                 <span class="object-density">${obj.density}</span>
             `;
             element.style.left = x + 'px';
