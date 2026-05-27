@@ -507,6 +507,179 @@
         .result-float { background: var(--secondary); color: white; }
         .result-sink { background: var(--danger); color: white; }
         
+        /* ============ TEACHER VERSION: LEARNING OBJECTIVES ============ */
+        .learning-objectives {
+            background: linear-gradient(135deg, #1565C0 0%, #1976D2 100%);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            color: white;
+            box-shadow: 0 4px 15px rgba(21, 101, 192, 0.3);
+        }
+
+        .learning-objectives-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 2px solid rgba(255,255,255,0.3);
+            padding-bottom: 10px;
+        }
+
+        .objective-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.15);
+        }
+
+        .objective-item:last-child { border-bottom: none; }
+
+        .objective-icon {
+            font-size: 1.5em;
+            flex-shrink: 0;
+        }
+
+        .objective-content {
+            flex: 1;
+        }
+
+        .objective-cantonese {
+            font-size: 1em;
+            margin-bottom: 4px;
+        }
+
+        .objective-english {
+            font-size: 0.8em;
+            opacity: 0.8;
+            font-style: italic;
+        }
+
+        /* ============ BUOYANCY VISUALIZATION ============ */
+        .buoyancy-arrow {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            pointer-events: none;
+            z-index: 50;
+            animation: buoyancyPulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes buoyancyPulse {
+            0%, 100% { transform: translateX(-50%) translateY(0); opacity: 1; }
+            50% { transform: translateX(-50%) translateY(-8px); opacity: 0.8; }
+        }
+
+        .buoyancy-arrow.gravity {
+            animation: gravityPulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes gravityPulse {
+            0%, 100% { transform: translateX(-50%) translateY(0); opacity: 1; }
+            50% { transform: translateX(-50%) translateY(8px); opacity: 0.8; }
+        }
+
+        .arrow-symbol {
+            font-size: 28px;
+            font-weight: bold;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+        }
+
+        .arrow-label {
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 0.85em;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .buoyancy-arrow.up .arrow-symbol { color: #f44336; }
+        .buoyancy-arrow.down .arrow-symbol { color: #2196F3; }
+
+        /* Density Color Indicator */
+        .density-indicator {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.75);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 10px;
+            font-size: 0.9em;
+            z-index: 40;
+        }
+
+        .density-low { border: 3px solid #4CAF50; }
+        .density-high { border: 3px solid #f44336; }
+
+        /* ============ KNOWLEDGE CARD ============ */
+        .knowledge-card {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            max-width: 90%;
+            width: 400px;
+            box-shadow: 0 10px 50px rgba(0,0,0,0.4);
+            z-index: 1000;
+            animation: knowledgePopup 0.4s ease-out;
+        }
+
+        @keyframes knowledgePopup {
+            0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
+            100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+        }
+
+        .knowledge-card-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+        }
+
+        .knowledge-card-title {
+            font-size: 1.3em;
+            color: var(--primary);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .knowledge-card-content {
+            font-size: 1.1em;
+            line-height: 1.6;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .knowledge-card-close {
+            width: 100%;
+            padding: 15px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .knowledge-card-close:active { transform: scale(0.98); }
+
+        /* Hide gamification elements */
+        .page-badges { display: none !important; }
+        .badge-item { display: none !important; }
+
         /* Footer */
         .footer {
             text-align: center;
@@ -1544,7 +1717,6 @@
         <button class="nav-tab" data-page="science-lab">🔬 估下佢</button>
 
         <button class="nav-tab" data-page="story">📚 故事</button>
-        <button class="nav-tab" data-page="badges">🏆 成就</button>
         <button class="nav-tab" data-page="parent">👨‍👩‍👧 家長</button>
         <button class="nav-tab" data-page="report">📋 報告</button>
         <button class="nav-tab" data-page="settings">⚙️ 設置</button>
@@ -1552,6 +1724,35 @@
     
     <!-- Page: Experiment -->
     <div class="page active" id="page-experiment">
+        <!-- Learning Objectives Banner -->
+        <div class="learning-objectives">
+            <div class="learning-objectives-title">📋 今日學習目標</div>
+            
+            <div class="objective-item">
+                <span class="objective-icon">💧</span>
+                <div class="objective-content">
+                    <div class="objective-cantonese">以水為例子，描述水對物體施加向上推升的力，稱為<strong>浮力</strong></div>
+                    <div class="objective-english">Buoyancy / Upward Force</div>
+                </div>
+            </div>
+            
+            <div class="objective-item">
+                <span class="objective-icon">🌊</span>
+                <div class="objective-content">
+                    <div class="objective-cantonese">辨別物體在水中的浮沉現象</div>
+                    <div class="objective-english">Float vs Sink</div>
+                </div>
+            </div>
+            
+            <div class="objective-item">
+                <span class="objective-icon">🧪</span>
+                <div class="objective-content">
+                    <div class="objective-cantonese">辨別不同物料的一些物理特性（例如：可否浮於水面）</div>
+                    <div class="objective-english">Physical Properties</div>
+                </div>
+            </div>
+        </div>
+
         <div class="card">
             <div class="card-title"><span>🌊</span><span>浮力實驗池</span></div>
             <p style="color:#666;margin-bottom:15px;">拖拽物品到水裡，睇下件嘢係會浮定會沉！</p>
@@ -1559,6 +1760,7 @@
             <div class="pool-container" id="pool">
                 <div class="water" id="water"><div class="water-surface"></div></div>
                 <div id="pool-objects"></div>
+                <div class="density-indicator" id="densityIndicator" style="display:none;"></div>
             </div>
             
             <div class="object-shelf" id="objectShelf"></div>
@@ -2505,6 +2707,12 @@
             setTimeout(() => {
                 recordExperiment(obj, willFloat);
                 element.style.transition = 'none';
+                
+                // Show buoyancy visualization after animation
+                showBuoyancyArrow(poolObjId, obj, willFloat);
+                
+                // Auto-show knowledge card after experiment
+                setTimeout(() => showKnowledgeCard(willFloat ? 'float' : 'sink', obj), 500);
             }, 1100);
         }
         
@@ -2568,6 +2776,91 @@
             bubble.textContent = text;
             bubble.style.display = 'block';
             setTimeout(() => bubble.style.display = 'none', 3000);
+        }
+
+        // ============ Buoyancy Visualization ============
+        function showBuoyancyArrow(poolObjId, obj, willFloat) {
+            const element = document.getElementById(`pool-obj-${poolObjId}`);
+            if (!element) return;
+
+            const pool = document.getElementById('pool');
+            const poolRect = pool.getBoundingClientRect();
+            const elemRect = element.getBoundingClientRect();
+            const x = elemRect.left - poolRect.left + elemRect.width / 2;
+            const y = elemRect.top - poolRect.top;
+
+            // Remove existing arrows
+            document.querySelectorAll('.buoyancy-arrow').forEach(el => el.remove());
+
+            // Create buoyancy arrow (up)
+            const buoyancyArrow = document.createElement('div');
+            buoyancyArrow.className = 'buoyancy-arrow up';
+            buoyancyArrow.innerHTML = `
+                <span class="arrow-symbol">↑</span>
+                <span class="arrow-label">浮力</span>
+            `;
+            buoyancyArrow.style.left = x + 'px';
+            buoyancyArrow.style.top = (y - 60) + 'px';
+            pool.appendChild(buoyancyArrow);
+
+            // Create gravity arrow (down) if sinks
+            if (!willFloat) {
+                const gravityArrow = document.createElement('div');
+                gravityArrow.className = 'buoyancy-arrow down gravity';
+                gravityArrow.innerHTML = `
+                    <span class="arrow-symbol">↓</span>
+                    <span class="arrow-label">重力</span>
+                `;
+                gravityArrow.style.left = x + 'px';
+                gravityArrow.style.top = (y + 60) + 'px';
+                pool.appendChild(gravityArrow);
+            }
+
+            // Show density indicator
+            const indicator = document.getElementById('densityIndicator');
+            indicator.style.display = 'block';
+            if (obj.density < 1) {
+                indicator.className = 'density-indicator density-low';
+                indicator.innerHTML = `🌊 輕定重: ${obj.density} <  1 (會浮)`;
+            } else {
+                indicator.className = 'density-indicator density-high';
+                indicator.innerHTML = `⚓ 輕定重: ${obj.density} ≥ 1 (會沉)`;
+            }
+        }
+
+        function removeBuoyancyArrows() {
+            document.querySelectorAll('.buoyancy-arrow').forEach(el => el.remove());
+        }
+
+        // ============ Knowledge Card ============
+        function showKnowledgeCard(type, obj) {
+            const overlay = document.createElement('div');
+            overlay.className = 'knowledge-card-overlay';
+            overlay.onclick = closeKnowledgeCard;
+            document.body.appendChild(overlay);
+
+            let title, content;
+            if (type === 'float') {
+                title = '💡 物品點解會浮？';
+                content = `水裡的物體受到一個向上既力叫做<strong>浮力</strong>。<br><br>物品既輕定重(${obj.density})細過水既輕定重(1.0)，所以會浮起身！`;
+            } else {
+                title = '💡 物品點解會沉？';
+                content = `物品既輕定重(${obj.density})大過水既輕定重(1.0)，重力大過浮力，所以會沉落水底。`;
+            }
+
+            const card = document.createElement('div');
+            card.className = 'knowledge-card';
+            card.innerHTML = `
+                <div class="knowledge-card-title">${title}</div>
+                <div class="knowledge-card-content">${content}</div>
+                <button class="knowledge-card-close" onclick="closeKnowledgeCard()">明白了！✅</button>
+            `;
+            document.body.appendChild(card);
+        }
+
+        function closeKnowledgeCard() {
+            document.querySelectorAll('.knowledge-card-overlay').forEach(el => el.remove());
+            document.querySelectorAll('.knowledge-card').forEach(el => el.remove());
         }
         
         // ============ Statistics ============
