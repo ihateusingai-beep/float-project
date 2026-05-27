@@ -163,11 +163,11 @@
             <div class="info-panel">
                 <div class="info-box">
                     <div class="value" id="densityValue">-</div>
-                    <div class="label">物品輕定重</div>
+                    <div class="label">物件夠唔夠力浮</div>
                 </div>
                 <div class="info-box">
                     <div class="value" id="waterDensity">1.0</div>
-                    <div class="label">水的輕定重</div>
+                    <div class="label">幾錘先浮</div>
                 </div>
                 <div class="info-box">
                     <div class="value" id="resultText">-</div>
@@ -205,7 +205,7 @@
             </div>
             
             <div class="setting-row">
-                <span class="setting-text">💧 水的輕定重</span>
+                <span class="setting-text">💧 幾錘先浮</span>
                 <input type="number" id="waterDensitySetting" value="1.0" min="0.5" max="2" step="0.1" style="width:70px;padding:8px;border-radius:8px;border:2px solid #ddd;" onchange="updateWaterDensity()">
             </div>
             
@@ -599,7 +599,7 @@
                 speak(prompts[Math.floor(Math.random() * prompts.length)]);
             }
 
-            showSoundBubble(willFloat ? '🌊 浮起了！' : '📉 下沉了...');
+            showSoundBubble(willFloat ? '✅ 夠力浮起了！' : '❌ 唔夠力沉下去了...');
         }
 
         function updateInfoPanel(obj) {
@@ -607,7 +607,7 @@
             const willFloat = obj.density < waterDensity;
             document.getElementById('densityValue').textContent = obj.density;
             document.getElementById('waterDensity').textContent = waterDensity.toFixed(1);
-            document.getElementById('resultText').textContent = willFloat ? '🌊 浮' : '📉 沉';
+            document.getElementById('resultText').textContent = willFloat ? '✅ 夠力浮' : '❌ 唔夠力沉';
         }
 
         function renderHistory() {
