@@ -2138,7 +2138,7 @@
         const OBJECTS = [
             { id: 'wood', name: '木塊', icon: '🟫', density: 0.6, color: 0x8B4513, geometry: 'box' },
             { id: 'stone', name: '石頭', icon: '🪨', density: 2.5, color: 0x808080, geometry: 'sphere' },
-            { id: 'foam', name: '保麗龍', icon: '◻️', density: 0.3, color: 0xFFFFFF, geometry: 'box' },
+            { id: 'foam', name: '發泡膠', icon: '◻️', density: 0.3, color: 0xFFFFFF, geometry: 'box' },
             { id: 'apple', name: '蘋果', icon: '🍎', density: 0.9, color: 0xFF0000, geometry: 'sphere' },
             { id: 'can', name: '汽水罐', icon: '🥫', density: 1.1, color: 0xFF0000, geometry: 'cylinder' },
             { id: 'banana', name: '香蕉', icon: '🍌', density: 0.7, color: 0xFFFF00, geometry: 'cylinder' },
@@ -2147,7 +2147,7 @@
         ];
         
         const ERROR_TYPES = [
-            { id: 'density_concept', name: '密度概念不清', desc: '不理解密度與浮沉的關係', recommendation: '多玩保麗龍🟫和石頭🪨的對比實驗，記住：密度小於水=浮，密度大於水=沉' },
+            { id: 'density_concept', name: '密度概念不清', desc: '不理解密度與浮沉的關係', recommendation: '多玩發泡膠🟫和石頭🪨的對比實驗，記住：密度小於水=浮，密度大於水=沉' },
             { id: 'reverse_judgment', name: '顛倒判斷', desc: '把浮的判斷成沉，沉的判斷成浮', recommendation: '練習「輕既野會浮，重既野會沉」的口訣' },
             { id: 'water_density', name: '忽略水的密度', desc: '忘記水密度可以是不同的', recommendation: '嘗試改變水的密度設置，觀察同一物品在不同水中的表現' },
             { id: 'similar_density', name: '相近密度混淆', desc: '密度接近1的物品判斷錯誤', recommendation: '重點練習蘋果🍎和葡萄🍇，它們的密度最接近水密度1.0' }
@@ -2163,7 +2163,7 @@
             float: ['物件浮起喇！好嘢！', '浮咗！真係估你唔到！', '夠晒輕，梗係浮啦！'],
             sink: ['物件沉咗落去...', '太重喇，沉咗...', '物件好重會沉落去...'],
             welcome: ['你好！歡迎嚟到浮力實驗室！', '等我哋一齊探索浮力嘅秘密！', '記住：密度細過水就會浮！'],
-            tryObject: ['試下拖件物件入水！', '邊件最輕呢？試下保麗龍！', '石頭好重，試下放落水！'],
+            tryObject: ['試下拖件物件入水！', '邊件最輕呢？試下發泡膠！', '石頭好重，試下放落水！'],
             battleTurn: ['到你喇！快啲答！', '時間到！準備好了嗎？', '一於Answer!'],
             hypothesisCorrect: ['恭喜你答對了！', '估中喇！你好叻！', '預測正確！繼續加油！'],
             hypothesisWrong: ['預測有誤，再想想！', '唔係呢樣...再試多次！', '唔緊要，再諗清楚！'],
@@ -3039,7 +3039,7 @@
             const objects = [
                 { name: '木塊', icon: '🟫', density: 0.6 },
                 { name: '石頭', icon: '🪨', density: 2.5 },
-                { name: '保麗龍', icon: '◻️', density: 0.3 },
+                { name: '發泡膠', icon: '◻️', density: 0.3 },
                 { name: '蘋果', icon: '🍎', density: 0.9 },
                 { name: '汽水罐', icon: '🥫', density: 1.1 },
                 { name: '葡萄', icon: '🍇', density: 1.0 }
@@ -3160,7 +3160,7 @@
             const objects = [
                 { name: '木塊', icon: '🟫', density: 0.6 },
                 { name: '石頭', icon: '🪨', density: 2.5 },
-                { name: '保麗龍', icon: '◻️', density: 0.3 },
+                { name: '發泡膠', icon: '◻️', density: 0.3 },
                 { name: '蘋果', icon: '🍎', density: 0.9 },
                 { name: '汽水罐', icon: '🥫', density: 1.1 },
                 { name: '香蕉', icon: '🍌', density: 0.7 },
@@ -3941,7 +3941,7 @@
             }
             
             if (q.includes('密度') || q.includes('咩')) {
-                return `密度係 substance【物質】既重要特性！簡單嚟講：\n\n📦 密度 = 質量 ÷ 體積\n\n就好似同一間屋仔，如果佢用鋼筋做就會好重（高密度），但如果用木做就會輕好多（低密度）。\n\n🌊 記住呢個規則：\n• 密度 < 1.0 = 浮（好似保麗龍🟫）\n• 密度 > 1.0 = 沉（好似石頭🪨）`;
+                return `密度係 substance【物質】既重要特性！簡單嚟講：\n\n📦 密度 = 質量 ÷ 體積\n\n就好似同一間屋仔，如果佢用鋼筋做就會好重（高密度），但如果用木做就會輕好多（低密度）。\n\n🌊 記住呢個規則：\n• 密度 < 1.0 = 浮（好似發泡膠🟫）\n• 密度 > 1.0 = 沉（好似石頭🪨）`;
             }
             
             if (q.includes('練習') || q.includes('建議')) {
