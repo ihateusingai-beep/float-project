@@ -2397,7 +2397,12 @@
         function loadState() {
             const saved = localStorage.getItem('floatProjectState');
             if (saved) {
-                state = { ...state, ...JSON.parse(saved) };
+                try {
+                    state = { ...state, ...JSON.parse(saved) };
+                } catch(e) {
+                    console.warn('載入狀態失敗，使用預設值');
+                    state = { voiceEnabled: true, cantoneseVoice: true, waterDensity: 1.0, showStudentName: true, experiments: [], objectStats: {}, wrongAnswers: {}, customObjects: [], tutorialProgress: {}, battleScores: {} };
+                }
                 document.getElementById('voiceEnabled').checked = state.voiceEnabled;
                 document.getElementById('cantoneseVoice').checked = state.cantoneseVoice;
                 document.getElementById('waterDensitySetting').value = state.waterDensity;
@@ -2723,7 +2728,10 @@
         }
         
         function saveStudentData(name) {
-            const allData = JSON.parse(localStorage.getItem('allStudentsData') || '{}');
+            let allData = {};
+            try {
+                allData = JSON.parse(localStorage.getItem('allStudentsData') || '{}');
+            } catch(e) {}
             if (!allData[name]) allData[name] = { experiments: [] };
             const latestExp = state.experiments[state.experiments.length - 1];
             if (latestExp && latestExp.student === name) {
@@ -2799,7 +2807,7 @@
         // ============ Settings ============
         function updateWaterDensity() {
             const value = parseFloat(document.getElementById('waterDensitySetting').value);
-            state.waterDensity = Math.max(0.1, Math.min(2, value));
+            state.waterDensity = Math.max(0.8, Math.min(1.2, value));
             saveState();
             updateWaterDensityDisplay();
         }
@@ -3372,7 +3380,11 @@
         }
         
         function answerChallengeObject(name, willFloat) {
-            const correct = (willFloat && state.waterDensity >= 1) || (!willFloat && state.waterDensity < 1);
+            // Get object density based on name
+            const densityMap = { '木塊': 0.6, '石頭': 2.5, '蘋果': 0.9, '汽水罐': 1.1 };
+            const objectDensity = densityMap[name] || 1.0;
+            // Correct: prediction matches actual physics with current water density
+            const correct = (willFloat && objectDensity < state.waterDensity) || (!willFloat && objectDensity >= state.waterDensity);
             if (correct) {
                 challengeScore += 15;
                 document.getElementById('challenge-score').textContent = challengeScore;
@@ -3602,8 +3614,9 @@
             const file = event.dataTransfer ? event.dataTransfer.files[0] : event.target.files[0];
             if (!file) return;
             
-            if (!file.type.startsWith('image/')) {
-                alert('請上傳圖片文件！');
+            const validTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+            if (!file.type.startsWith('image/') || !validTypes.includes(file.type)) {
+                alert('請上傳有效的圖片文件（JPEG、PNG、GIF、WebP）！');
                 return;
             }
             
@@ -3611,13 +3624,24 @@
             reader.onload = (e) => {
                 uploadedImageData = e.target.result;
                 document.getElementById('custom-form').style.display = 'block';
-                document.getElementById('custom-preview').innerHTML = `
-                    <img src="${uploadedImageData}" alt="預覽">
-                    <div>
-                        <p style="font-weight:bold;">圖片已上傳</p>
-                        <p style="color:#666;font-size:0.9em;">設定名稱和密度</p>
-                    </div>
-                `;
+                // Use textContent for safe DOM manipulation
+                const preview = document.getElementById('custom-preview');
+                preview.innerHTML = '';
+                const img = document.createElement('img');
+                img.src = uploadedImageData;
+                img.alt = '預覽';
+                const div = document.createElement('div');
+                const p1 = document.createElement('p');
+                p1.style.fontWeight = 'bold';
+                p1.textContent = '圖片已上傳';
+                const p2 = document.createElement('p');
+                p2.style.color = '#666';
+                p2.style.fontSize = '0.9em';
+                p2.textContent = '設定名稱和密度';
+                div.appendChild(p1);
+                div.appendChild(p2);
+                preview.appendChild(img);
+                preview.appendChild(div);
             };
             reader.readAsDataURL(file);
         }
@@ -3647,7 +3671,7 @@
             saveState();
             
             uploadedImageData = null;
-            document.getElementById('custom-form').style.display = 'nofne';
+            document.getElementById('custom-form').style.display = 'none';
             document.getElementById('custom-preview').innerHTML = '';
             document.getElementById('custom-name').value = '';
             document.getElementById('custom-density').value = '';
@@ -3669,14 +3693,34 @@
                 return;
             }
             
-            container.innerHTML = customObjs.map(obj => `
-                <div class="custom-item">
-                    <img src="${obj.image}" alt="${obj.name}">
-                    <div class="name">${obj.name}</div>
-                    <div class="density">密度: ${obj.density}</div>
-                    <button class="delete-btn" onclick="deleteCustomObject('${obj.id}')">刪除</button>
-                </div>
-            `).join('');
+            container.innerHTML = '';
+            customObjs.forEach(obj => {
+                const div = document.createElement('div');
+                div.className = 'custom-item';
+                
+                const img = document.createElement('img');
+                img.src = obj.image;
+                img.alt = obj.name;
+                
+                const nameDiv = document.createElement('div');
+                nameDiv.className = 'name';
+                nameDiv.textContent = obj.name;
+                
+                const densityDiv = document.createElement('div');
+                densityDiv.className = 'density';
+                densityDiv.textContent = '密度: ' + obj.density;
+                
+                const btn = document.createElement('button');
+                btn.className = 'delete-btn';
+                btn.textContent = '刪除';
+                btn.onclick = () => deleteCustomObject(obj.id);
+                
+                div.appendChild(img);
+                div.appendChild(nameDiv);
+                div.appendChild(densityDiv);
+                div.appendChild(btn);
+                container.appendChild(div);
+            });
         }
         
         function deleteCustomObject(id) {
@@ -4264,8 +4308,19 @@ ss="label">總實驗次數</div></div>
             // Salt effect: ρ = 1000 + 0.8 × salt_g / water_ml
             const saltDensity = saltGrams > 0 ? 1000 + 0.8 * saltGrams / waterML * 1000 : 1000;
             
-            // Combined water density
-            const waterDensity = saltGrams > 0 ? saltDensity : tempDensity;
+            // Combined water density - salt and temperature both affect density
+            // Temperature affects fresh water; salt adds additional density
+            let waterDensity = 1000; // base density in kg/m³
+            if (saltGrams > 0 && temp === 20) {
+                // Fresh water at 20°C with salt
+                waterDensity = tempDensity + (saltDensity - 1000);
+            } else if (saltGrams > 0) {
+                // Salt dominates when present
+                waterDensity = saltDensity;
+            } else {
+                // Fresh water, temperature effect only
+                waterDensity = tempDensity;
+            }
             
             // Calculate object density based on weight and size
             const sizeMultipliers = { small: 0.5, medium: 1, large: 2 };
@@ -4289,6 +4344,10 @@ ss="label">總實驗次數</div></div>
         }
         
         function startScienceExperiment() {
+            // Initialize scienceVars if not exists
+            if (typeof scienceVars === 'undefined' || !scienceVars) {
+                scienceVars = {};
+            }
             const result = calculateWaterDensity();
             showSoundBubble(result.willFloat ? '🌊 開始實驗！物體會浮！' : '📉 開始實驗！物體會沉！');
             
@@ -4366,7 +4425,7 @@ ss="label">總實驗次數</div></div>
             const lockedCount = Object.values(scienceVars).filter(v => v.locked).length;
             const indicator = document.getElementById('fair-mode-indicator');
             if (lockedCount >= 4) {
-                indicator.textContent = '✅ 公平實驗模式：只有一個變量在改變！';
+                indicator.textContent = '✅ 公平模式：1個變量改變，其他固定';
                 indicator.style.background = 'var(--secondary)';
             } else if (lockedCount > 0) {
                 indicator.textContent = `⚠️ ${5 - lockedCount}個變量可調整`;
@@ -4384,7 +4443,11 @@ ss="label">總實驗次數</div></div>
         function loadScienceRecords() {
             const saved = localStorage.getItem('scienceLabRecords');
             if (saved) {
-                scienceRecords = JSON.parse(saved);
+                try {
+                    scienceRecords = JSON.parse(saved);
+                } catch(e) {
+                    scienceRecords = [];
+                }
                 renderScienceRecords();
             }
         }
