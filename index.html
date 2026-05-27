@@ -235,6 +235,18 @@
             { id: 'duck', name: '膠鴨', icon: 'rubber-duck.png', density: 0.3 }
         ];
 
+        // ============ Voice prompts per object ============
+        const VOICE_PROMPTS = {
+            wood: { float: '木塊密度係0.6，遠低過水既1.0，梗係浮得起！', sink: null },
+            stone: { float: null, sink: '石頭密度係2.5，比水重好多，一放就沉晒！' },
+            apple: { float: '蘋果密度0.9，接近但低過水，夠力浮得起！', sink: null },
+            coin: { float: null, sink: '硬幣密度係7.0，超級重！比水重7倍，梗係沉晒！' },
+            key: { float: null, sink: '鎖匙密度7.8，金屬嚟㗎！重到痲痲，一放就沉晒！' },
+            spoon: { float: null, sink: '匙羹密度7.8，金屬嚟㗎！沉得好快！' },
+            balloon: { float: '氣球密度0.3，全部入面最輕！空氣充满氣體，梗係浮得起！', sink: null },
+            duck: { float: '膠鴨密度0.3，膠做嘅好輕！梗係浮得起，好得意！', sink: null }
+        };
+
         // ============ State ============
         let state = {
             voiceEnabled: true,
@@ -255,9 +267,9 @@
             updateWaterDensityDisplay();
             renderHistory();
             
-            // Welcome voice prompt
+            // Welcome voice prompt - science principle
             if (voiceOn && state.voiceEnabled) {
-                setTimeout(() => speak('你好！歡迎嚟到浮力實驗室！拖件物件落水試試！'), 1500);
+                setTimeout(() => speak('你好！歡迎嚟到浮力實驗室！物件放入水，如果佢密度細過水就會浮得起，密度大過水就會沉落去！試下啦！'), 1500);
             }
 
             // Service worker for offline
@@ -325,6 +337,13 @@
             if (!obj) return;
             selectedObject = obj;
             updateInfoPanel(obj);
+            // Preview voice hint
+            if (voiceOn && state.voiceEnabled) {
+                const waterDensity = state.waterDensity;
+                const willFloat = obj.density < waterDensity;
+                const hint = willFloat ? `試下${obj.name}，佢應該浮得起！` : `試下${obj.name}，佢會沉落去！`;
+                speak(hint);
+            }
         }
 
         function handleDragStart(e) {
@@ -589,12 +608,13 @@
             saveState();
             renderHistory();
 
-            // Voice feedback
+            // Voice feedback - object-specific
             if (voiceOn && state.voiceEnabled) {
-                const prompts = willFloat 
-                    ? ['物件浮起喇！好嘢！', '浮咗！真係估你唔到！', '夠晒輕，梗係浮啦！']
-                    : ['物件沉咗落去...', '太重喇，沉咗...', '物件好重會沉落去...'];
-                speak(prompts[Math.floor(Math.random() * prompts.length)]);
+                const prompts = VOICE_PROMPTS[obj.id];
+                if (prompts) {
+                    const msg = willFloat ? prompts.float : prompts.sink;
+                    if (msg) speak(msg);
+                }
             }
 
             showSoundBubble(willFloat ? '✅ 浮得起喇！' : '❌ 沉落去了...');
