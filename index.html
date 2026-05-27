@@ -577,14 +577,12 @@
 
         // ============ Record & Stats ============
         function recordExperiment(obj, willFloat) {
-            const result = willFloat ? '浮' : '沉';
-
             state.experiments.push({
                 objectId: obj.id,
                 objectName: obj.name,
                 objectIcon: obj.icon,
                 density: obj.density,
-                result: result,
+                isFloat: willFloat,
                 time: Date.now()
             });
 
@@ -621,8 +619,9 @@
 
             list.innerHTML = recent.map(exp => `
                 <div class="history-item">
-                    <span class="action">${exp.objectIcon} ${exp.objectName} (密度: ${exp.density})</span>
-                    <span class="result ${exp.result === '浮' ? 'result-float' : 'result-sink'}">${exp.result}</span>
+                    <img src="assets/images/${exp.objectIcon}" alt="${exp.objectName}" style="width:36px;height:36px;object-fit:contain;vertical-align:middle;margin-right:6px;" onerror="this.remove()">
+                    <span class="action">${exp.objectName} (密度: ${exp.density})</span>
+                    <span class="result ${exp.isFloat !== undefined ? (exp.isFloat ? 'result-float' : 'result-sink') : (exp.result === '浮' ? 'result-float' : 'result-sink')}">${exp.isFloat !== undefined ? (exp.isFloat ? '✅夠力浮' : '❌唔夠力沉') : exp.result}</span>
                 </div>
             `).join('');
         }
