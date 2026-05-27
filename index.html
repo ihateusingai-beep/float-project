@@ -49,7 +49,10 @@
             --bg: #f5f5f5;
             --purple: #9c27b0;
             --teal: #009688;
+            --font-scale: 1;
         }
+        
+        html { font-size: calc(16px * var(--font-scale)); }
         
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Microsoft JhengHei", sans-serif;
@@ -89,6 +92,32 @@
             flex-wrap: wrap;
             align-items: center;
         }
+        
+        /* Font Size Controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .font-btn {
+            width: 44px;
+            height: 44px;
+            border: none;
+            border-radius: 8px;
+            background: var(--light);
+            color: var(--primary);
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 44px;
+            touch-action: manipulation;
+        }
+        
+        .font-btn:active { background: var(--primary); color: white; }
         
         /* Buttons */
         .btn {
@@ -1708,6 +1737,9 @@
                 <span id="voiceText">語音</span>
             </button>
             <button class="btn btn-secondary" onclick="toggleProjection()">📺 投影</button>
+            <button class="font-btn" onclick="adjustFontSize(-0.1)" title="字體縮小">A-</button>
+            <button class="font-btn" onclick="adjustFontSize(0.1)" title="字體放大">A+</button>
+            <button class="btn btn-primary" onclick="toggleLanguage()" id="langToggle" style="min-width:60px;">中文</button>
         </div>
     </header>
     
@@ -2323,12 +2355,150 @@
             { id: 3, title: '🥚 雞蛋搞乜', desc: '雞蛋放入水會點？', locked: false, content: `廚房有隻雞蛋🥚，放入水就沉落去...\n\n\n問題：點樣可以令雞蛋浮起身？\n\nA) 加鹽落水\nB) 煮熟隻蛋\nC) 加糖落水` }
         ];
         
+        // ============ i18n ============
+        const i18n = {
+            zh: {
+                appTitle: '浮力大發現',
+                navExperiment: '🌊 浮沉實驗',
+                navScienceLab: '🔬 估下佢',
+                navStory: '📚 故事',
+                navParent: '👨‍👩‍👧 家長',
+                navReport: '📋 報告',
+                navSettings: '⚙️ 設置',
+                learningObjectives: '📋 今日學習目標',
+                obj1Cantonese: '以水為例子，描述水對物體施加向上推升的力，稱為<strong>浮力</strong>',
+                obj1English: 'Buoyancy / Upward Force',
+                obj2Cantonese: '辨別物體在水中的浮沉現象',
+                obj2English: 'Float vs Sink',
+                obj3Cantonese: '辨別不同物料的一些物理特性（例如：可否浮於水面）',
+                obj3English: 'Physical Properties',
+                poolTitle: '浮力實驗池',
+                poolDesc: '拖拽物品到水裡，睇下件嘢係會浮定會沉！',
+                densityValue: '物品輕定重',
+                waterDensityLabel: '水的輕定重',
+                resultLabel: '實驗結果',
+                historyTitle: '實驗紀錄',
+                noHistory: '還沒有實驗紀錄',
+                scienceLabTitle: '浮沉預測',
+                scienceLabDesc: '估下佢！然後試下驗證！',
+                hypothesisQuestion: '估下呢件嘢放落水會___？',
+                predictFloat: '🌊 浮',
+                predictSink: '📉 沉',
+                seeResult: '🔍 睇結果',
+                lab3dTitle: '3D 實驗室',
+                lab3dDesc: '立體實驗室！拖拽物品到水池，縮放旋轉視角',
+                arTitle: 'AR 實境實驗',
+                arDesc: '用相機掃描平面，放入虛擬物品觀察浮沉！',
+                storyTitle: '情境故事',
+                badgesTitle: '成就系統',
+                tutorialTitle: '微影片教程',
+                tutorialDesc: '學習實驗步驟，動畫引導完成挑戰！',
+                customTitle: '自定義物品',
+                customDesc: '上傳圖片 + 設定密度，創建自己的實驗物品！',
+                parentTitle: '家長報告系統',
+                parentDesc: '掃描QR Code查看子女學習進度！',
+                errorsTitle: '錯誤類型分析',
+                errorsDesc: '了解常見錯誤針對性訓練！',
+                reportTitle: '學習報告',
+                reportDesc: '生成並列印您的學習報告',
+                dashboardTitle: '數據分析儀表板',
+                classTitle: '班別統計',
+                syncTitle: '區域網絡同步',
+                aiTitle: 'AI 助教',
+                aiDesc: 'MiniMax AI 為你分析學習弱點！',
+                aiWelcome: '你好！我是AI助教！我可以幫你分析浮力實驗的學習情況。<br><br>你可以問我：<br>• 點解我成日估錯邊件會浮？<br>• 密度係咩意思？<br>• 我應該點樣進步？',
+                settingsTitle: '設置',
+                voiceSettings: '🔊 聲音設置',
+                voiceEnabled: '開啟語音提示',
+                cantoneseVoice: '粵語朗讀',
+                expSettings: '🎯 實驗設置',
+                waterDensitySetting: '水的輕定重',
+                displaySettings: '👤 顯示設置',
+                showStudentName: '顯示學生名字',
+                projectionMode: '📺 投影模式',
+                enterProjection: '進入投影模式',
+                clearData: '🗑️ 清除所有數據',
+                footer: '匡智張玉瓊晨輝學校 © 2024 | 浮力大發現',
+                footerTagline: '🌊 用心探索水的秘密',
+                noRecords: '仲未有任何記錄'
+            },
+            en: {
+                appTitle: 'Buoyancy Discovery',
+                navExperiment: '🌊 Float & Sink',
+                navScienceLab: '🔬 Guess It!',
+                navStory: '📚 Stories',
+                navParent: '👨‍👩‍👧 Parent',
+                navReport: '📋 Report',
+                navSettings: '⚙️ Settings',
+                learningObjectives: '📋 Today\'s Learning Objectives',
+                obj1Cantonese: 'Using water as an example, describe the upward force exerted by water on objects, called <strong>buoyancy</strong>',
+                obj1English: '浮力 / 向上推力',
+                obj2Cantonese: 'Identify whether objects float or sink in water',
+                obj2English: '浮 vs 沉',
+                obj3Cantonese: 'Identify physical properties of different materials (e.g., whether they can float on water)',
+                obj3English: '物理特性',
+                poolTitle: 'Buoyancy Pool',
+                poolDesc: 'Drag objects into water and see if they float or sink!',
+                densityValue: 'Object Density',
+                waterDensityLabel: 'Water Density',
+                resultLabel: 'Result',
+                historyTitle: 'Experiment Log',
+                noHistory: 'No experiment records yet',
+                scienceLabTitle: 'Float Prediction',
+                scienceLabDesc: 'Guess! Then verify!',
+                hypothesisQuestion: 'Will this object ___ when put in water?',
+                predictFloat: '🌊 Float',
+                predictSink: '📉 Sink',
+                seeResult: '🔍 See Result',
+                lab3dTitle: '3D Laboratory',
+                lab3dDesc: '3D lab! Drag objects into pool, zoom and rotate view',
+                arTitle: 'AR Experiment',
+                arDesc: 'Scan surfaces with camera, place virtual objects to observe buoyancy!',
+                storyTitle: 'Story Mode',
+                badgesTitle: 'Achievements',
+                tutorialTitle: 'Video Tutorials',
+                tutorialDesc: 'Learn experiment steps with animated guides!',
+                customTitle: 'Custom Objects',
+                customDesc: 'Upload images + set density to create your own experiment objects!',
+                parentTitle: 'Parent Report System',
+                parentDesc: 'Scan QR Code to view child\'s learning progress!',
+                errorsTitle: 'Error Analysis',
+                errorsDesc: 'Understand common mistakes for targeted practice!',
+                reportTitle: 'Learning Report',
+                reportDesc: 'Generate and print your learning report',
+                dashboardTitle: 'Analytics Dashboard',
+                classTitle: 'Class Statistics',
+                syncTitle: 'LAN Sync',
+                aiTitle: 'AI Tutor',
+                aiDesc: 'MiniMax AI analyzes your learning weaknesses!',
+                aiWelcome: 'Hello! I\'m your AI tutor! I can help you analyze your buoyancy experiment learning.<br><br>You can ask me:<br>• Why do I always guess wrong which objects float?<br>• What does density mean?<br>• How can I improve?',
+                settingsTitle: 'Settings',
+                voiceSettings: '🔊 Sound Settings',
+                voiceEnabled: 'Enable Voice Prompts',
+                cantoneseVoice: 'Cantonese Voice',
+                expSettings: '🎯 Experiment Settings',
+                waterDensitySetting: 'Water Density',
+                displaySettings: '👤 Display Settings',
+                showStudentName: 'Show Student Name',
+                projectionMode: '📺 Projection Mode',
+                enterProjection: 'Enter Projection Mode',
+                clearData: '🗑️ Clear All Data',
+                footer: '© 2024 CHYCHS | Buoyancy Discovery',
+                footerTagline: '🌊 Explore the secrets of water',
+                noRecords: 'No records yet'
+            }
+        };
+
+        let currentLang = 'zh';
+
         // ============ State ============
         let state = {
             voiceEnabled: true,
             cantoneseVoice: true,
             waterDensity: 1.0,
             showStudentName: true,
+            fontScale: 1,
+            language: 'zh',
             experiments: [],
             objectStats: {},
             wrongAnswers: {},
@@ -2402,7 +2572,7 @@
                     state = { ...state, ...JSON.parse(saved) };
                 } catch(e) {
                     console.warn('載入狀態失敗，使用預設值');
-                    state = { voiceEnabled: true, cantoneseVoice: true, waterDensity: 1.0, showStudentName: true, experiments: [], objectStats: {}, wrongAnswers: {}, customObjects: [], tutorialProgress: {}, battleScores: {} };
+                    state = { voiceEnabled: true, cantoneseVoice: true, waterDensity: 1.0, showStudentName: true, fontScale: 1, language: 'zh', experiments: [], objectStats: {}, wrongAnswers: {}, customObjects: [], tutorialProgress: {}, battleScores: {} };
                 }
                 document.getElementById('voiceEnabled').checked = state.voiceEnabled;
                 document.getElementById('cantoneseVoice').checked = state.cantoneseVoice;
@@ -2410,6 +2580,184 @@
                 document.getElementById('showStudentName').checked = state.showStudentName;
             }
             voiceOn = state.voiceEnabled;
+            currentLang = state.language || 'zh';
+            applyFontScale(state.fontScale || 1);
+            applyLanguage(currentLang);
+        }
+        
+        function applyFontScale(scale) {
+            scale = Math.max(0.7, Math.min(1.5, scale));
+            document.documentElement.style.setProperty('--font-scale', scale);
+            state.fontScale = scale;
+            saveState();
+        }
+        
+        function adjustFontSize(delta) {
+            applyFontScale((state.fontScale || 1) + delta);
+        }
+        
+        function applyLanguage(lang) {
+            currentLang = lang;
+            state.language = lang;
+            
+            const t = i18n[lang];
+            if (!t) return;
+            
+            // Update header
+            document.querySelector('.logo span:last-child').textContent = t.appTitle;
+            
+            // Update nav tabs
+            document.querySelector('[data-page="experiment"]').innerHTML = t.navExperiment;
+            document.querySelector('[data-page="science-lab"]').innerHTML = t.navScienceLab;
+            document.querySelector('[data-page="story"]').innerHTML = t.navStory;
+            document.querySelector('[data-page="parent"]').innerHTML = t.navParent;
+            document.querySelector('[data-page="report"]').innerHTML = t.navReport;
+            document.querySelector('[data-page="settings"]').innerHTML = t.navSettings;
+            
+            // Update learning objectives
+            document.querySelector('.learning-objectives-title').textContent = t.learningObjectives;
+            const objItems = document.querySelectorAll('.objective-item');
+            if (objItems[0]) objItems[0].querySelector('.objective-cantonese').innerHTML = t.obj1Cantonese;
+            if (objItems[0]) objItems[0].querySelector('.objective-english').textContent = t.obj1English;
+            if (objItems[1]) objItems[1].querySelector('.objective-cantonese').textContent = t.obj2Cantonese;
+            if (objItems[1]) objItems[1].querySelector('.objective-english').textContent = t.obj2English;
+            if (objItems[2]) objItems[2].querySelector('.objective-cantonese').innerHTML = t.obj3Cantonese;
+            if (objItems[2]) objItems[2].querySelector('.objective-english').textContent = t.obj3English;
+            
+            // Update experiment page
+            const experimentPage = document.getElementById('page-experiment');
+            if (experimentPage) {
+                experimentPage.querySelector('.card-title span:last-child').textContent = t.poolTitle;
+                experimentPage.querySelector('.pool-container').previousElementSibling.querySelector('p').textContent = t.poolDesc;
+                const infoLabels = experimentPage.querySelectorAll('.info-box .label');
+                if (infoLabels[0]) infoLabels[0].textContent = t.densityValue;
+                if (infoLabels[1]) infoLabels[1].textContent = t.waterDensityLabel;
+                if (infoLabels[2]) infoLabels[2].textContent = t.resultLabel;
+                const historyCard = experimentPage.querySelectorAll('.card')[1];
+                if (historyCard) historyCard.querySelector('.card-title span:last-child').textContent = t.historyTitle;
+                const noHistory = experimentPage.querySelector('.history-list p');
+                if (noHistory) noHistory.textContent = t.noHistory;
+            }
+            
+            // Update science lab page
+            const scienceLabPage = document.getElementById('page-science-lab');
+            if (scienceLabPage) {
+                scienceLabPage.querySelector('.card-title span:last-child').textContent = t.scienceLabTitle;
+                scienceLabPage.querySelector('p').textContent = t.scienceLabDesc;
+                const hypQuestion = document.getElementById('hypothesis-question');
+                if (hypQuestion) hypQuestion.textContent = t.hypothesisQuestion;
+                document.getElementById('predict-float').innerHTML = t.predictFloat;
+                document.getElementById('predict-sink').innerHTML = t.predictSink;
+                document.querySelector('.btn-accent').textContent = t.seeResult;
+            }
+            
+            // Update lab3d page
+            const lab3dPage = document.getElementById('page-lab3d');
+            if (lab3dPage) {
+                lab3dPage.querySelector('.card-title span:last-child').textContent = t.lab3dTitle;
+                lab3dPage.querySelector('p').textContent = t.lab3dDesc;
+            }
+            
+            // Update AR page
+            const arPage = document.getElementById('page-ar');
+            if (arPage) {
+                arPage.querySelector('.card-title span:last-child').textContent = t.arTitle;
+                arPage.querySelector('p').textContent = t.arDesc;
+            }
+            
+            // Update story page
+            const storyPage = document.getElementById('page-story');
+            if (storyPage) {
+                storyPage.querySelector('.card-title span:last-child').textContent = t.storyTitle;
+            }
+            
+            // Update badges page
+            const badgesPage = document.getElementById('page-badges');
+            if (badgesPage) {
+                badgesPage.querySelector('.card-title span:last-child').textContent = t.badgesTitle;
+            }
+            
+            // Update tutorial page
+            const tutorialPage = document.getElementById('page-tutorial');
+            if (tutorialPage) {
+                tutorialPage.querySelector('.card-title span:last-child').textContent = t.tutorialTitle;
+                tutorialPage.querySelector('p').textContent = t.tutorialDesc;
+            }
+            
+            // Update custom page
+            const customPage = document.getElementById('page-custom');
+            if (customPage) {
+                customPage.querySelector('.card-title span:last-child').textContent = t.customTitle;
+                customPage.querySelector('p').textContent = t.customDesc;
+            }
+            
+            // Update parent page
+            const parentPage = document.getElementById('page-parent');
+            if (parentPage) {
+                parentPage.querySelector('.card-title span:last-child').textContent = t.parentTitle;
+                parentPage.querySelector('p').textContent = t.parentDesc;
+            }
+            
+            // Update errors page
+            const errorsPage = document.getElementById('page-errors');
+            if (errorsPage) {
+                errorsPage.querySelector('.card-title span:last-child').textContent = t.errorsTitle;
+                errorsPage.querySelector('p').textContent = t.errorsDesc;
+            }
+            
+            // Update report page
+            const reportPage = document.getElementById('page-report');
+            if (reportPage) {
+                reportPage.querySelector('.card-title span:last-child').textContent = t.reportTitle;
+                reportPage.querySelector('p').textContent = t.reportDesc;
+            }
+            
+            // Update AI page
+            const aiPage = document.getElementById('page-ai');
+            if (aiPage) {
+                aiPage.querySelector('.card-title span:last-child').textContent = t.aiTitle;
+                aiPage.querySelector('p').textContent = t.aiDesc;
+                const aiBubble = aiPage.querySelector('.bubble');
+                if (aiBubble && aiBubble.innerHTML.includes('我是AI助教')) {
+                    aiBubble.innerHTML = t.aiWelcome;
+                }
+            }
+            
+            // Update settings page
+            const settingsPage = document.getElementById('page-settings');
+            if (settingsPage) {
+                settingsPage.querySelector('.card-title span:last-child').textContent = t.settingsTitle;
+                const labels = settingsPage.querySelectorAll('.settings-label');
+                if (labels[0]) labels[0].textContent = t.voiceSettings;
+                if (labels[1]) labels[1].textContent = t.expSettings;
+                if (labels[2]) labels[2].textContent = t.displaySettings;
+                if (labels[3]) labels[3].textContent = t.projectionMode;
+                
+                const settingRows = settingsPage.querySelectorAll('.setting-text');
+                if (settingRows[0]) settingRows[0].textContent = t.voiceEnabled;
+                if (settingRows[1]) settingRows[1].textContent = t.cantoneseVoice;
+                if (settingRows[2]) settingRows[2].textContent = t.showStudentName;
+                
+                // Update buttons
+                const projBtn = settingsPage.querySelector('[onclick="toggleProjection()"]');
+                if (projBtn) projBtn.textContent = t.enterProjection;
+                const clearBtn = settingsPage.querySelector('[onclick="clearAllData()"]');
+                if (clearBtn) clearBtn.textContent = t.clearData;
+            }
+            
+            // Update footer
+            document.querySelector('.footer p:first-child').textContent = t.footer;
+            document.querySelector('.footer p:last-child').textContent = t.footerTagline;
+            
+            // Update lang toggle button
+            const langBtn = document.getElementById('langToggle');
+            if (langBtn) langBtn.textContent = lang === 'zh' ? 'EN' : '中文';
+            
+            saveState();
+        }
+        
+        function toggleLanguage() {
+            applyLanguage(currentLang === 'zh' ? 'en' : 'zh');
         }
         
         function saveState() {
