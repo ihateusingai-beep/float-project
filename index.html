@@ -15,7 +15,7 @@
         @media print {
             * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
             body { background: white !important; font-size: 12pt; }
-            .header, .nav-tabs, .footer, .btn, .voice-btn, .sound-bubble, .object-shelf, .pool-container, .lab-objects, .lab-controls, .header-btns { display: none !important; }
+            .header, .nav-tabs, .footer, .btn, .voice-btn, .sound-bubble, .object-shelf, .pool-container, .lab-objects, .lab-controls, .header-btns, .modal { display: none !important; }
             .page { display: block !important; padding: 0 !important; max-width: 100% !important; }
             .card { box-shadow: none !important; border: 1px solid #ddd !important; break-inside: avoid; margin-bottom: 15mm; }
             .print-header { display: flex !important; justify-content: space-between; margin-bottom: 20px; border-bottom: 2px solid #667eea; padding-bottom: 15px; }
@@ -47,6 +47,8 @@
             --light: #E3F2FD;
             --text: #333;
             --bg: #f5f5f5;
+            --purple: #9c27b0;
+            --teal: #009688;
         }
         
         body {
@@ -79,14 +81,13 @@
             gap: 10px;
         }
         
-        .logo-icon {
-            font-size: 1.8em;
-        }
+        .logo-icon { font-size: 1.8em; }
         
         .header-btns {
             display: flex;
             gap: 10px;
             flex-wrap: wrap;
+            align-items: center;
         }
         
         /* Buttons */
@@ -105,38 +106,18 @@
             touch-action: manipulation;
         }
         
-        .btn-primary {
-            background: var(--primary);
-            color: white;
-        }
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-secondary { background: var(--secondary); color: white; }
+        .btn-accent { background: var(--accent); color: white; }
+        .btn-danger { background: var(--danger); color: white; }
+        .btn-purple { background: var(--purple); color: white; }
+        .btn-teal { background: var(--teal); color: white; }
         
-        .btn-secondary {
-            background: var(--secondary);
-            color: white;
-        }
+        .btn:hover, .btn:active { transform: scale(0.95); opacity: 0.9; }
+        .btn-large { padding: 18px 30px; font-size: 1.2em; min-height: 60px; }
+        .btn-full { width: 100%; justify-content: center; }
         
-        .btn-accent {
-            background: var(--accent);
-            color: white;
-        }
-        
-        .btn-danger {
-            background: var(--danger);
-            color: white;
-        }
-        
-        .btn:hover, .btn:active {
-            transform: scale(0.95);
-            opacity: 0.9;
-        }
-        
-        .btn-large {
-            padding: 18px 30px;
-            font-size: 1.2em;
-            min-height: 60px;
-        }
-        
-        /* Student Name Input */
+        /* Student Input */
         .student-input {
             padding: 12px 16px;
             border: 2px solid var(--primary);
@@ -168,27 +149,12 @@
             flex-shrink: 0;
         }
         
-        .nav-tab.active {
-            background: var(--primary);
-            color: white;
-        }
-        
-        .nav-tab:not(.active) {
-            background: white;
-            color: var(--text);
-        }
+        .nav-tab.active { background: var(--primary); color: white; }
+        .nav-tab:not(.active) { background: white; color: var(--text); }
         
         /* Pages */
-        .page {
-            display: none;
-            padding: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        .page.active {
-            display: block;
-        }
+        .page { display: none; padding: 20px; max-width: 1200px; margin: 0 auto; }
+        .page.active { display: block; }
         
         /* Card */
         .card {
@@ -262,22 +228,9 @@
             transition: transform 0.2s;
         }
         
-        .object-item:active {
-            cursor: grabbing;
-            transform: scale(1.1);
-        }
-        
-        .object-icon {
-            font-size: 40px;
-            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.3));
-        }
-        
-        .object-density {
-            background: rgba(0,0,0,0.5);
-            padding: 2px 6px;
-            border-radius: 6px;
-            margin-top: 4px;
-        }
+        .object-item:active { cursor: grabbing; transform: scale(1.1); }
+        .object-icon { font-size: 40px; filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.3)); }
+        .object-density { background: rgba(0,0,0,0.5); padding: 2px 6px; border-radius: 6px; margin-top: 4px; }
         
         /* Object Shelf */
         .object-shelf {
@@ -303,26 +256,10 @@
             gap: 8px;
         }
         
-        .shelf-item:active {
-            cursor: grabbing;
-            transform: scale(0.95);
-            border-color: var(--primary);
-        }
-        
-        .shelf-item .icon {
-            font-size: 36px;
-        }
-        
-        .shelf-item .name {
-            font-size: 0.9em;
-            font-weight: bold;
-            color: #333;
-        }
-        
-        .shelf-item .density {
-            font-size: 0.75em;
-            color: #666;
-        }
+        .shelf-item:active { cursor: grabbing; transform: scale(0.95); border-color: var(--primary); }
+        .shelf-item .icon { font-size: 36px; }
+        .shelf-item .name { font-size: 0.9em; font-weight: bold; color: #333; }
+        .shelf-item .density { font-size: 0.75em; color: #666; }
         
         /* Info Panel */
         .info-panel {
@@ -340,19 +277,11 @@
             border: 2px solid var(--primary);
         }
         
-        .info-box .value {
-            font-size: 1.8em;
-            font-weight: bold;
-            color: var(--primary);
-        }
-        
-        .info-box .label {
-            font-size: 0.85em;
-            color: #666;
-        }
+        .info-box .value { font-size: 1.8em; font-weight: bold; color: var(--primary); }
+        .info-box .label { font-size: 0.85em; color: #666; }
         
         /* 3D Lab */
-        #lab3d-container {
+        #lab3d-container, #ar-container {
             width: 100%;
             height: 400px;
             border-radius: 20px;
@@ -361,10 +290,7 @@
             position: relative;
         }
         
-        #lab3d-canvas {
-            width: 100%;
-            height: 100%;
-        }
+        #lab3d-canvas, #ar-canvas { width: 100%; height: 100%; }
         
         .lab-controls {
             position: absolute;
@@ -394,19 +320,9 @@
             border: 2px solid transparent;
         }
         
-        .lab-obj:hover, .lab-obj:active {
-            border-color: var(--accent);
-            transform: scale(0.95);
-        }
-        
-        .lab-obj .icon {
-            font-size: 32px;
-        }
-        
-        .lab-obj .info {
-            font-size: 0.8em;
-            margin-top: 5px;
-        }
+        .lab-obj:hover, .lab-obj:active { border-color: var(--accent); transform: scale(0.95); }
+        .lab-obj .icon { font-size: 32px; }
+        .lab-obj .info { font-size: 0.8em; margin-top: 5px; }
         
         .density-legend {
             position: absolute;
@@ -434,21 +350,9 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
         
-        .stat-card .icon {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-        }
-        
-        .stat-card .value {
-            font-size: 2em;
-            font-weight: bold;
-            color: var(--primary);
-        }
-        
-        .stat-card .label {
-            font-size: 0.9em;
-            color: #666;
-        }
+        .stat-card .icon { font-size: 2.5em; margin-bottom: 10px; }
+        .stat-card .value { font-size: 2em; font-weight: bold; color: var(--primary); }
+        .stat-card .label { font-size: 0.9em; color: #666; }
         
         .chart-container {
             background: white;
@@ -481,40 +385,14 @@
             min-height: 10px;
         }
         
-        .bar-label {
-            margin-top: 8px;
-            font-size: 0.8em;
-            text-align: center;
-            color: #666;
-        }
-        
-        .bar-value {
-            font-size: 0.9em;
-            font-weight: bold;
-            color: var(--primary);
-            margin-bottom: 5px;
-        }
+        .bar-label { margin-top: 8px; font-size: 0.8em; text-align: center; color: #666; }
+        .bar-value { font-size: 0.9em; font-weight: bold; color: var(--primary); margin-bottom: 5px; }
         
         /* Projection Mode */
-        .projection-mode .header,
-        .projection-mode .nav-tabs,
-        .projection-mode .footer {
-            display: none !important;
-        }
-        
-        .projection-mode .page {
-            padding: 10px;
-        }
-        
-        .projection-mode .pool-container {
-            max-width: 800px;
-        }
-        
-        .projection-mode .card {
-            box-shadow: none;
-            background: transparent;
-        }
-        
+        .projection-mode .header, .projection-mode .nav-tabs, .projection-mode .footer { display: none !important; }
+        .projection-mode .page { padding: 10px; }
+        .projection-mode .pool-container { max-width: 800px; }
+        .projection-mode .card { box-shadow: none; background: transparent; }
         .projection-exit {
             position: fixed;
             top: 20px;
@@ -528,10 +406,7 @@
         }
         
         /* Settings Panel */
-        .settings-group {
-            margin-bottom: 20px;
-        }
-        
+        .settings-group { margin-bottom: 20px; }
         .settings-label {
             font-size: 1.1em;
             font-weight: bold;
@@ -548,19 +423,12 @@
             height: 34px;
         }
         
-        .toggle-switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
+        .toggle-switch input { opacity: 0; width: 0; height: 0; }
         
         .toggle-slider {
             position: absolute;
             cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+            top: 0; left: 0; right: 0; bottom: 0;
             background-color: #ccc;
             transition: 0.4s;
             border-radius: 34px;
@@ -578,13 +446,8 @@
             border-radius: 50%;
         }
         
-        input:checked + .toggle-slider {
-            background-color: var(--primary);
-        }
-        
-        input:checked + .toggle-slider:before {
-            transform: translateX(26px);
-        }
+        input:checked + .toggle-slider { background-color: var(--primary); }
+        input:checked + .toggle-slider:before { transform: translateX(26px); }
         
         .setting-row {
             display: flex;
@@ -596,9 +459,7 @@
             margin-bottom: 10px;
         }
         
-        .setting-text {
-            font-size: 1em;
-        }
+        .setting-text { font-size: 1em; }
         
         /* Sound indicator */
         .sound-bubble {
@@ -626,11 +487,7 @@
         }
         
         /* History Log */
-        .history-list {
-            max-height: 300px;
-            overflow-y: auto;
-        }
-        
+        .history-list { max-height: 300px; overflow-y: auto; }
         .history-item {
             display: flex;
             align-items: center;
@@ -640,33 +497,16 @@
             border-radius: 12px;
             margin-bottom: 8px;
         }
-        
-        .history-item .student {
-            font-weight: bold;
-            color: var(--primary);
-            min-width: 80px;
-        }
-        
-        .history-item .action {
-            flex: 1;
-        }
-        
+        .history-item .student { font-weight: bold; color: var(--primary); min-width: 80px; }
+        .history-item .action { flex: 1; }
         .history-item .result {
             padding: 4px 12px;
             border-radius: 20px;
             font-size: 0.85em;
             font-weight: bold;
         }
-        
-        .result-float {
-            background: var(--secondary);
-            color: white;
-        }
-        
-        .result-sink {
-            background: var(--danger);
-            color: white;
-        }
+        .result-float { background: var(--secondary); color: white; }
+        .result-sink { background: var(--danger); color: white; }
         
         /* Footer */
         .footer {
@@ -676,24 +516,11 @@
             font-size: 0.9em;
         }
         
-        /* Voice Button Animation */
-        .voice-btn {
-            animation: pulse 2s infinite;
-        }
+        .voice-btn { animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+        .voice-btn:active { animation: pulse 0.3s ease; }
         
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-        
-        /* Loading */
-        .loading {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 200px;
-        }
-        
+        .loading { display: flex; justify-content: center; align-items: center; height: 200px; }
         .spinner {
             width: 50px;
             height: 50px;
@@ -702,12 +529,9 @@
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
+        @keyframes spin { to { transform: rotate(360deg); } }
         
-.voice-btn:active {
-            animation: pulse 0.3s ease;
-        }
-        
-        /* Challenge Mode Styles */
+        /* Challenge Mode */
         .challenge-timer {
             font-size: 3em;
             font-weight: bold;
@@ -715,14 +539,7 @@
             text-align: center;
             padding: 20px;
         }
-        
-        .challenge-score {
-            font-size: 1.5em;
-            text-align: center;
-            color: var(--primary);
-            margin-bottom: 20px;
-        }
-        
+        .challenge-score { font-size: 1.5em; text-align: center; color: var(--primary); margin-bottom: 20px; }
         .challenge-question {
             background: var(--light);
             padding: 20px;
@@ -731,7 +548,6 @@
             font-size: 1.2em;
             margin-bottom: 20px;
         }
-        
         .challenge-objects {
             display: flex;
             flex-wrap: wrap;
@@ -739,7 +555,6 @@
             justify-content: center;
             padding: 20px;
         }
-        
         .challenge-obj {
             padding: 15px 25px;
             background: white;
@@ -751,13 +566,9 @@
             text-align: center;
             transition: all 0.2s;
         }
+        .challenge-obj:active { transform: scale(0.95); background: var(--light); }
         
-        .challenge-obj:active {
-            transform: scale(0.95);
-            background: var(--light);
-        }
-        
-        /* Story Mode Styles */
+        /* Story Mode */
         .story-card {
             background: white;
             border-radius: 16px;
@@ -767,43 +578,18 @@
             cursor: pointer;
             transition: all 0.3s;
         }
-        
-        .story-card:active {
-            transform: scale(0.98);
-        }
-        
-        .story-card h3 {
-            color: var(--primary);
-            margin-bottom: 10px;
-        }
-        
-        .story-card p {
-            color: #666;
-            line-height: 1.6;
-        }
-        
-        .story-card.locked {
-            opacity: 0.6;
-        }
-        
-        .story-ending {
-            text-align: center;
-            padding: 30px;
-        }
-        
+        .story-card:active { transform: scale(0.98); }
+        .story-card h3 { color: var(--primary); margin-bottom: 10px; }
+        .story-card p { color: #666; line-height: 1.6; }
+        .story-card.locked { opacity: 0.6; }
+        .story-ending { text-align: center; padding: 30px; }
         .story-question {
             background: var(--light);
             padding: 20px;
             border-radius: 12px;
             margin: 20px 0;
         }
-        
-        .story-choices {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        
+        .story-choices { display: flex; flex-direction: column; gap: 10px; }
         .story-choice {
             padding: 15px;
             background: white;
@@ -812,11 +598,7 @@
             cursor: pointer;
             transition: all 0.2s;
         }
-        
-        .story-choice:active {
-            background: var(--primary);
-            color: white;
-        }
+        .story-choice:active { background: var(--primary); color: white; }
         
         /* Badge Styles */
         .badge-item {
@@ -826,33 +608,13 @@
             background: white;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
+        .badge-item .badge-icon { font-size: 3em; margin-bottom: 10px; }
+        .badge-item .badge-name { font-weight: bold; color: var(--text); margin-bottom: 5px; }
+        .badge-item .badge-desc { font-size: 0.85em; color: #666; }
+        .badge-item.locked { opacity: 0.5; background: #f0f0f0; }
+        .badge-item.locked .badge-icon { filter: grayscale(100%); }
         
-        .badge-item .badge-icon {
-            font-size: 3em;
-            margin-bottom: 10px;
-        }
-        
-        .badge-item .badge-name {
-            font-weight: bold;
-            color: var(--text);
-            margin-bottom: 5px;
-        }
-        
-        .badge-item .badge-desc {
-            font-size: 0.85em;
-            color: #666;
-        }
-        
-        .badge-item.locked {
-            opacity: 0.5;
-            background: #f0f0f0;
-        }
-        
-        .badge-item.locked .badge-icon {
-            filter: grayscale(100%);
-        }
-        
-        /* Class Stats Styles */
+        /* Class Stats */
         .student-row {
             display: flex;
             justify-content: space-between;
@@ -862,35 +624,642 @@
             border-radius: 10px;
             margin-bottom: 10px;
         }
+        .student-row .name { font-weight: bold; }
+        .student-row .stats { color: #666; font-size: 0.9em; }
         
-        .student-row .name {
-            font-weight: bold;
+        /* ============ NEW FEATURES STYLES ============ */
+        
+        /* AR Mode */
+        .ar-viewfinder {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+            aspect-ratio: 1;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 8px solid var(--purple);
         }
         
-        .student-row .stats {
+        .ar-overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .ar-target-indicator {
+            width: 100px;
+            height: 100px;
+            border: 4px dashed var(--accent);
+            border-radius: 50%;
+            animation: pulse-ar 2s infinite;
+        }
+        
+        @keyframes pulse-ar {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.5; }
+        }
+        
+        .ar-target-found {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            height: 60%;
+            border: 3px solid var(--secondary);
+            border-radius: 16px;
+            background: rgba(76, 175, 80, 0.1);
+        }
+        
+        .ar-water-virtual {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 50%;
+            background: linear-gradient(180deg, rgba(129, 212, 250, 0.6) 0%, rgba(41, 182, 246, 0.6) 100%);
+            border-radius: 0 0 12px 12px;
+        }
+        
+        .ar-obj {
+            position: absolute;
+            font-size: 48px;
+            cursor: grab;
+            filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.4));
+            transition: transform 0.2s;
+            user-select: none;
+            touch-action: none;
+        }
+        
+        .ar-obj:active { transform: scale(1.2); }
+        
+        /* Multiplayer Battle Mode */
+        .battle-arena {
+            background: linear-gradient(135deg, #1a237e 0%, #4a148c 100%);
+            border-radius: 20px;
+            padding: 20px;
+            min-height: 400px;
+            position: relative;
+        }
+        
+        .battle-players {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+        
+        .battle-player {
+            background: rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 15px 20px;
+            text-align: center;
+            min-width: 120px;
+        }
+        
+        .battle-player.active {
+            background: rgba(255,255,255,0.25);
+            border: 3px solid var(--accent);
+        }
+        
+        .battle-player .player-name {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 5px;
+        }
+        
+        .battle-player .player-score {
+            font-size: 2em;
+            font-weight: bold;
+            color: var(--accent);
+        }
+        
+        .battle-player .turn-indicator {
+            font-size: 0.8em;
+            color: #aaa;
+            margin-top: 5px;
+        }
+        
+        .battle-current-turn {
+            text-align: center;
+            color: white;
+            font-size: 1.3em;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 12px;
+        }
+        
+        .battle-question {
+            background: white;
+            padding: 25px;
+            border-radius: 16px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .battle-question .question-text {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: var(--dark);
+            margin-bottom: 15px;
+        }
+        
+        .battle-choices {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+        
+        .battle-choice {
+            padding: 20px;
+            font-size: 1.3em;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .battle-choice:active { transform: scale(0.95); }
+        
+        .battle-timer {
+            font-size: 3em;
+            font-weight: bold;
+            color: var(--accent);
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .battle-timer.warning { color: var(--danger); animation: blink 0.5s infinite; }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        
+        /* Parent Report / QR Code */
+        .qr-container {
+            text-align: center;
+            padding: 30px;
+            background: white;
+            border-radius: 16px;
+            margin: 20px auto;
+            max-width: 400px;
+        }
+        
+        .qr-code {
+            width: 200px;
+            height: 200px;
+            margin: 20px auto;
+            background: #f5f5f5;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .qr-code canvas {
+            max-width: 100%;
+            max-height: 100%;
+        }
+        
+        /* Error Analysis */
+        .error-chart {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .error-item {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            border-left: 5px solid var(--danger);
+        }
+        
+        .error-item .error-type {
+            font-weight: bold;
+            color: var(--text);
+            margin-bottom: 8px;
+        }
+        
+        .error-bar-container {
+            background: #eee;
+            border-radius: 8px;
+            height: 24px;
+            overflow: hidden;
+        }
+        
+        .error-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--danger), var(--accent));
+            border-radius: 8px;
+            transition: width 0.5s ease;
+        }
+        
+        .error-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 8px;
+            font-size: 0.9em;
+            color: #666;
+        }
+        
+        .recommendation-card {
+            background: linear-gradient(135deg, var(--light), white);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 15px;
+            border: 2px solid var(--primary);
+        }
+        
+        /* Video Tutorials */
+        .tutorial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        
+        .tutorial-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .tutorial-card:active { transform: scale(0.98); }
+        
+        .tutorial-preview {
+            height: 160px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4em;
+            cursor: pointer;
+        }
+        
+        .tutorial-content {
+            padding: 15px;
+        }
+        
+        .tutorial-content h4 {
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+        
+        .tutorial-content p {
             color: #666;
             font-size: 0.9em;
+            margin-bottom: 10px;
         }
+        
+        .tutorial-progress {
+            display: flex;
+            gap: 5px;
+            margin-top: 10px;
+        }
+        
+        .tutorial-step {
+            width: 30px;
+            height: 6px;
+            background: #ddd;
+            border-radius: 3px;
+        }
+        
+        .tutorial-step.completed { background: var(--secondary); }
+        .tutorial-step.current { background: var(--primary); }
+        
+        /* Custom Objects */
+        .custom-upload-zone {
+            border: 3px dashed var(--primary);
+            border-radius: 16px;
+            padding: 40px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: var(--light);
+        }
+        
+        .custom-upload-zone:hover, .custom-upload-zone.dragover {
+            border-color: var(--accent);
+            background: rgba(255, 152, 0, 0.1);
+        }
+        
+        .custom-upload-zone .icon { font-size: 3em; margin-bottom: 10px; }
+        
+        .custom-preview {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: white;
+            border-radius: 12px;
+            margin-top: 15px;
+        }
+        
+        .custom-preview img {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+        
+        .custom-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .custom-item {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            transition: all 0.2s;
+            border: 2px solid transparent;
+        }
+        
+        .custom-item:hover { border-color: var(--primary); }
+        .custom-item img { width: 50px; height: 50px; object-fit: contain; margin-bottom: 8px; }
+        .custom-item .name { font-size: 0.85em; font-weight: bold; }
+        .custom-item .density { font-size: 0.75em; color: #666; }
+        .custom-item .delete-btn {
+            margin-top: 8px;
+            padding: 5px 10px;
+            background: var(--danger);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.75em;
+        }
+        
+        /* Analytics Dashboard */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .heatmap-container {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            overflow-x: auto;
+        }
+        
+        .heatmap {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 4px;
+            min-width: 300px;
+        }
+        
+        .heatmap-cell {
+            aspect-ratio: 1;
+            border-radius: 4px;
+            background: #eee;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        
+        .heatmap-cell.level-1 { background: rgba(33, 150, 243, 0.2); }
+        .heatmap-cell.level-2 { background: rgba(33, 150, 243, 0.4); }
+        .heatmap-cell.level-3 { background: rgba(33, 150, 243, 0.6); }
+        .heatmap-cell.level-4 { background: rgba(33, 150, 243, 0.8); }
+        .heatmap-cell.level-5 { background: var(--primary); }
+        
+        .heatmap-cell:hover { transform: scale(1.1); }
+        
+        .heatmap-legend {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+            font-size: 0.8em;
+            color: #666;
+        }
+        
+        .progress-curve {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            height: 250px;
+        }
+        
+        .lagging-alert {
+            background: linear-gradient(135deg, #fff3e0, white);
+            border-radius: 12px;
+            padding: 20px;
+            border-left: 5px solid var(--accent);
+        }
+        
+        .lagging-alert h4 {
+            color: var(--accent);
+            margin-bottom: 10px;
+        }
+        
+        .lagging-student {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+        
+        /* LAN Sync */
+        .sync-status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px;
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 15px;
+        }
+        
+        .sync-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #ccc;
+        }
+        
+        .sync-indicator.connected { background: var(--secondary); animation: pulse-sync 1s infinite; }
+        .sync-indicator.searching { background: var(--accent); animation: pulse-sync 0.5s infinite; }
+        
+        @keyframes pulse-sync {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+        }
+        
+        .sync-devices {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+        }
+        
+        .sync-device {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+        }
+        
+        .sync-device .device-icon { font-size: 2em; margin-bottom: 8px; }
+        
+        /* AI Assistant */
+        .ai-chat {
+            background: white;
+            border-radius: 16px;
+            min-height: 350px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .ai-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            max-height: 300px;
+        }
+        
+        .ai-message {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .ai-message.user { flex-direction: row-reverse; }
+        
+        .ai-message .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2em;
+            flex-shrink: 0;
+        }
+        
+        .ai-message.user .avatar { background: var(--purple); }
+        
+        .ai-message .bubble {
+            max-width: 75%;
+            padding: 12px 16px;
+            border-radius: 16px;
+            background: var(--light);
+            line-height: 1.5;
+        }
+        
+        .ai-message.user .bubble {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .ai-input-bar {
+            display: flex;
+            gap: 10px;
+            padding: 15px;
+            border-top: 1px solid #eee;
+        }
+        
+        .ai-input-bar input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid #ddd;
+            border-radius: 25px;
+            font-size: 1em;
+        }
+        
+        .ai-input-bar input:focus { border-color: var(--primary); outline: none; }
+        
+        .ai-tip-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .ai-tip-card {
+            background: linear-gradient(135deg, var(--light), white);
+            border-radius: 12px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 2px solid transparent;
+        }
+        
+        .ai-tip-card:hover { border-color: var(--primary); transform: scale(0.98); }
+        .ai-tip-card .tip-icon { font-size: 2em; margin-bottom: 8px; }
+        .ai-tip-card .tip-title { font-weight: bold; color: var(--primary); margin-bottom: 5px; }
+        .ai-tip-card .tip-desc { font-size: 0.85em; color: #666; }
+        
+        /* Modal */
+        .modal {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.7);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 300;
+            padding: 20px;
+        }
+        
+        .modal.active { display: flex; }
+        
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            max-width: 500px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .modal-header h3 { color: var(--primary); }
+        
+        .modal-close {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(**light);
+            border: none;
+            font-size: 1.5em;
+            cursor: pointer;
+        }
+        
+        .modal-close:hover { background: #ddd; }
         
         /* Responsive */
         @media (max-width: 600px) {
-            .header {
-                flex-direction: column;
-                gap: 10px;
-            }
-            
-            .header-btns {
-                width: 100%;
-                justify-content: center;
-            }
-            
-            .student-input {
-                width: 100%;
-            }
-            
-            #lab3d-container {
-                height: 300px;
-            }
+            .header { flex-direction: column; gap: 10px; }
+            .header-btns { width: 100D%; justify-content: center; }
+            .student-input { width: 100%; }
+            #lab3d-container, #ar-container { height: 300px; }
+            .battle-choices { grid-template-columns: 1fr; }
+            .battle-players { flex-wrap: wrap; gap: 10px; }
         }
     </style>
 </head>
@@ -907,9 +1276,7 @@
                 <span id="voiceIcon">🔊</span>
                 <span id="voiceText">語音</span>
             </button>
-            <button class="btn btn-secondary" onclick="toggleProjection()">
-                📺 投影
-            </button>
+            <button class="btn btn-secondary" onclick="toggleProjection()">📺 投影</button>
         </div>
     </header>
     
@@ -917,34 +1284,35 @@
     <nav class="nav-tabs">
         <button class="nav-tab active" data-page="experiment">🧪 浮沉實驗</button>
         <button class="nav-tab" data-page="lab3d">🔬 3D Lab</button>
-        <button class="nav-tab" data-page="challenge">🎮 挑戰</button>
+        <button class="nav-tab" data-page="ar">📱 AR實境</button>
+        <button class="nav-tab" data-page="battle">🎮 對戰</button>
+        <button class="nav-tab" data-page="challenge">🎯 挑戰</button>
         <button class="nav-tab" data-page="story">📚 故事</button>
         <button class="nav-tab" data-page="badges">🏆 成就</button>
+        <button class="nav-tab" data-page="tutorial">🎬 教程</button>
+        <button class="nav-tab" data-page="custom">🖼️ 自定義</button>
+        <button class="nav-tab" data-page="parent">👨‍👩‍👧 家長</button>
+        <button class="nav-tab" data-page="errors">❌ 錯誤分析</button>
         <button class="nav-tab" data-page="report">📋 報告</button>
+        <button class="nav-tab" data-page="dashboard">📊 儀表板</button>
         <button class="nav-tab" data-page="class">📊 班別</button>
-        <button class="nav-tab" data-page="stats">📈 統計</button>
+        <button class="nav-tab" data-page="sync">🌐 同步</button>
+        <button class="nav-tab" data-page="ai">🤖 AI助教</button>
         <button class="nav-tab" data-page="settings">⚙️ 設置</button>
     </nav>
     
     <!-- Page: Experiment -->
     <div class="page active" id="page-experiment">
         <div class="card">
-            <div class="card-title">
-                <span>🌊</span>
-                <span>浮力實驗池</span>
-            </div>
+            <div class="card-title"><span>🌊</span><span>浮力實驗池</span></div>
             <p style="color:#666;margin-bottom:15px;">拖拽物品到水裡，觀察浮沉現象！水的密度是 1 g/cm³</p>
             
             <div class="pool-container" id="pool">
-                <div class="water" id="water">
-                    <div class="water-surface"></div>
-                </div>
+                <div class="water" id="water"><div class="water-surface"></div></div>
                 <div id="pool-objects"></div>
             </div>
             
-            <div class="object-shelf" id="objectShelf">
-                <!-- Objects will be generated by JS -->
-            </div>
+            <div class="object-shelf" id="objectShelf"></div>
             
             <div class="info-panel">
                 <div class="info-box">
@@ -963,10 +1331,7 @@
         </div>
         
         <div class="card">
-            <div class="card-title">
-                <span>📝</span>
-                <span>實驗紀錄</span>
-            </div>
+            <div class="card-title"><span>📝</span><span>實驗紀錄</span></div>
             <div class="history-list" id="historyList">
                 <p style="color:#999;text-align:center;">還沒有實驗紀錄</p>
             </div>
@@ -976,16 +1341,13 @@
     <!-- Page: 3D Lab -->
     <div class="page" id="page-lab3d">
         <div class="card">
-            <div class="card-title">
-                <span>🔬</span>
-                <span>3D 實驗室</span>
-            </div>
+            <div class="card-title"><span>🔬</span><span>3D 實驗室</span></div>
             <p style="color:#666;margin-bottom:15px;">立體實驗室！拖拽物品到水池，縮放旋轉視角</p>
             
             <div id="lab3d-container">
                 <canvas id="lab3d-canvas"></canvas>
                 <div class="density-legend">
-                    <div>💧 水的密度: 1.0</div>
+                    <div>💧 水的密度: <span id="lab-water-density">1.0</span></div>
                     <div id="lab-status">選擇一個物品</div>
                 </div>
                 <div class="lab-controls">
@@ -995,51 +1357,372 @@
                 </div>
             </div>
             
-            <div class="lab-objects" id="labObjects">
-                <!-- Generated by JS -->
+            <div class="lab-objects" id="labObjects"></div>
+        </div>
+    </div>
+    
+    <!-- Page: AR Mode -->
+    <div class="page" id="page-ar">
+        <div class="card">
+            <div class="card-title"><span>📱</span><span>AR 實境實驗</span></div>
+            <p style="color:#666;margin-bottom:15px;">用相機掃描平面，放入虛擬物品觀察浮沉！</p>
+            
+            <div class="ar-viewfinder" id="ar-viewfinder">
+                <video id="ar-video" autoplay playsinline style="width:100%;height:100%;object-fit:cover;border-radius:12px;"></video>
+                <div class="ar-overlay">
+                    <div class="ar-target-indicator" id="ar-indicator"></div>
+                </div>
+                <div class="ar-target-found" id="ar-target" style="display:none;"></div>
+                <canvas id="ar-canvas" style="position:absolute;top:0;left:0;width:100%;height:100%;"></canvas>
+                <div class="ar-water-virtual" id="ar-water" style="display:none;"></div>
+                <div id="ar-objects"></div>
+            </div>
+            
+            <div class="lab-objects" id="ar-objects-shelf" style="margin-top:20px;"></div>
+            
+            <div style="margin-top:20px;text-align:center;">
+                <button class="btn btn-purple btn-large" onclick="toggleARMode()" id="ar-toggle-btn">📱 啟動AR相機</button>
+                <button class="btn btn-secondary" onclick="resetARObjects()">🔄 重置</button>
+            </div>
+            
+            <p style="color:#666;margin-top:15px;font-size:0.9em;text-align:center;">
+                💡 提示：對準平坦表面，等待偵測完成後點擊物品加入
+            </p>
+        </div>
+    </div>
+    
+    <!-- Page: Multiplayer Battle -->
+    <div class="page" id="page-battle">
+        <div class="card">
+            <div class="card-title"><span>🎮</span><span>多人同屏對戰</span></div>
+            
+            <div id="battle-setup">
+                <p style="color:#666;margin-bottom:20px;text-align:center;">設定玩家人數（2-4人）</p>
+                <div style="display:flex;gap:15px;justify-content:center;margin-bottom:30px;flex-wrap:wrap;">
+                    <button class="btn btn-primary btn-large" onclick="setupBattle(2)">👥 2人</button>
+                    <button class="btn btn-primary btn-large" onclick="setupBattle(3)">👥👥 3人</button>
+                    <button class="btn btn-primary btn-large" onclick="setupBattle(4)">👥👥👥 4人</button>
+                </div>
+                
+                <div id="player-names-setup" style="display:none;">
+                    <h4 style="text-align:center;margin-bottom:15px;">輸入玩家名字</h4>
+                    <div id="names-inputs" style="max-width:400px;margin:0 auto;"></div>
+                    <button class="btn btn-accent btn-large btn-full" style="margin-top:20px;" onclick="startBattle()">▶️ 開始遊戲</button>
+                </div>
+            </div>
+            
+            <div id="battle-arena" style="display:none;">
+                <div class="battle-arena">
+                    <div class="battle-players" id="battle-players"></div>
+                    <div class="battle-current-turn" id="battle-turn-display"></div>
+                    <div class="battle-question" id="battle-question">
+                        <div class="question-text" id="battle-question-text"></div>
+                    </div>
+                    <div class="battle-timer" id="battle-timer">30</div>
+                    <div class="battle-choices" id="battle-choices"></div>
+                </div>
+                <button class="btn btn-danger btn-full" style="margin-top:15px;" onclick="endBattle()">🏳️ 結束遊戲</button>
+            </div>
+            
+            <div id="battle-results" style="display:none;text-align:center;">
+                <h2>🏆 遊戲結束！</h2>
+                <div id="battle-final-scores" style="margin:20px 0;"></div>
+                <button class="btn btn-primary" onclick="resetBattle()">🔄 再玩一次</button>
             </div>
         </div>
     </div>
     
-    <!-- Page: Statistics -->
-    <div class="page" id="page-stats">
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="icon">🔬</div>
-                <div class="value" id="totalExperiments">0</div>
-                <div class="label">總實驗次數</div>
-            </div>
-            <div class="stat-card">
-                <div class="icon">🌊</div>
-                <div class="value" id="floatCount">0</div>
-                <div class="label">浮起次數</div>
-            </div>
-            <div class="stat-card">
-                <div class="icon">📉</div>
-                <div class="value" id="sinkCount">0</div>
-                <div class="label">下沉次數</div>
-            </div>
-            <div class="stat-card">
-                <div class="icon">📈</div>
-                <div class="value" id="successRate">0%</div>
-                <div class="label">成功率</div>
-            </div>
-        </div>
-        
-        <div class="chart-container">
-            <h3 style="margin-bottom:15px;">📊 物品實驗統計</h3>
-            <div class="bar-chart" id="barChart">
-                <!-- Generated by JS -->
+    <!-- Page: Challenge Mode -->
+    <div class="page" id="page-challenge">
+        <div class="card">
+            <div class="card-title"><span>🎯</span><span>挑戰模式</span></div>
+            <div id="challenge-area">
+                <div id="challenge-start" style="text-align:center;padding:30px;">
+                    <p style="color:#666;margin-bottom:20px;">限時挑戰！看看你能取得多少分！</p>
+                    <button class="btn btn-primary btn-large" onclick="startChallenge()">🎯 開始挑戰</button>
+                    <div style="margin-top:20px;">
+                        <h4>🏆 排行榜</h4>
+                        <div id="leaderboard" style="margin-top:10px;text-align:left;max-width:300px;margin:10px auto;"></div>
+                    </div>
+                </div>
+                <div id="challenge-active" style="display:none;">
+                    <div class="challenge-timer" id="challenge-timer">60</div>
+                    <div class="challenge-score">分數: <span id="challenge-score">0</span></div>
+                    <div class="challenge-question" id="challenge-question"></div>
+                    <div class="challenge-objects" id="challenge-objects"></div>
+                </div>
+                <div id="challenge-result" style="display:none;text-align:center;padding:30px;">
+                    <h2>🎉 挑戰完成！</h2>
+                    <p style="font-size:2em;margin:20px 0;">得分: <span id="final-score">0</span></p>
+                    <input type="text" id="challenge-name" placeholder="輸入名字" style="padding:12px;border-radius:8px;border:2px solid #ddd;width:200px;margin-bottom:15px;">
+                    <button class="btn btn-primary" onclick="saveChallengeScore()">💾 保存分數</button>
+                    <button class="btn btn-secondary" onclick="resetChallenge()" style="margin-left:10px;">🔄 再玩一次</button>
+                </div>
             </div>
         </div>
-        
-        <div class="card" style="margin-top:20px;">
-            <div class="card-title">
-                <span>🏆</span>
-                <span>學習進度</span>
+    </div>
+    
+    <!-- Page: Story Mode -->
+    <div class="page" id="page-story">
+        <div class="card">
+            <div class="card-title"><span>📚</span><span>情境故事</span></div>
+            <div id="story-content" style="padding:20px 0;"></div>
+        </div>
+    </div>
+    
+    <!-- Page: Badges/Achievements -->
+    <div class="page" id="page-badges">
+        <div class="card">
+            <div class="card-title"><span>🏆</span><span>成就系統</span></div>
+            <div class="badge-grid" id="badge-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:15px;padding:10px 0;"></div>
+        </div>
+    </div>
+    
+    <!-- Page: Video Tutorials -->
+    <div class="page" id="page-tutorial">
+        <div class="card">
+            <div class="card-title"><span>🎬</span><span>微影片教程</span></div>
+            <p style="color:#666;margin-bottom:15px;">學習實驗步驟，動畫引導完成挑戰！</p>
+            
+            <div class="tutorial-grid" id="tutorial-grid"></div>
+        </div>
+    </div>
+    
+    <!-- Page: Custom Object Upload -->
+    <div class="page" id="page-custom">
+        <div class="card">
+            <div class="card-title"><span>🖼️</span><span>自定義物品</span></div>
+            <p style="color:#666;margin-bottom:15px;">上傳圖片 + 設定密度，創建自己的實驗物品！</p>
+            
+            <div class="custom-upload-zone" id="upload-zone" onclick="document.getElementById('image-upload').click()">
+                <div class="icon">📤</div>
+                <p>點擊或拖拽上傳圖片子</p>
+                <p style="font-size:0.85em;color:#999;">支援 PNG, JPG, WebP</p>
+                <input type="file" id="image-upload" accept="image/*" style="display:none;" onchange="handleImageUpload(event)">
             </div>
-            <div id="progressText" style="color:#666;text-align:center;padding:20px;">
-                加油！繼續實驗！
+            
+            <div id="custom-form" style="display:none;margin-top:20px;">
+                <div class="custom-preview" id="custom-preview"></div>
+                <div style="margin-top:15px;">
+                    <label style="font-weight:bold;display:block;margin-bottom:8px;">物品名稱：</label>
+                    <input type="text" id="custom-name" placeholder="例如：膠球" style="width:100%;padding:12px;border-radius:8px;border:2px solid #ddd;margin-bottom:15px;">
+                    
+                    <label style="font-weight:bold;display:block;margin-bottom:8px;">密度 (g/cm³)：</label>
+                    <input type="number" id="custom-density" placeholder="例如：0.8" min="0.1" max="5" step="0.1" style="width:100%;padding:12px;border-radius:8px;border:2px solid #ddd;margin-bottom:15px;">
+                    
+                    <button class="btn btn-primary btn-full" onclick="saveCustomObject()">💾 保存物品</button>
+                </div>
+            </div>
+            
+            <h4 style="margin-top:30px;color:var(--primary);">我的物品庫</h4>
+            <div class="custom-items" id="custom-items"></div>
+        </div>
+    </div>
+    
+    <!-- Page: Parent Report with QR -->
+    <div class="page" id="page-parent">
+        <div class="card">
+            <div class="card-title"><span>👨‍👩‍👧</span><span>家長報告系統</span></div>
+            <p style="color:#666;margin-bottom:20px;">掃描QR Code查看子女學習進度！</p>
+            
+            <div class="qr-container">
+                <h4>📱 分享連結</h4>
+                <div class="qr-code" id="qr-code">
+                    <canvas id="qr-canvas" width="200" height="200"></canvas>
+                </div>
+                <p style="margin-top:15px;font-size:0.9em;color:#666;">
+                    掃描上方QR Code或點擊按鈕複製連結
+                </p>
+                <button class="btn btn-primary btn-full" style="margin-top:15px;" style="margin-top:15px;" onclick="copyReportLink()">📋 複製連結</button>
+            </div>
+            
+            <div style="margin-top:20px;text-align:center;">
+                <h4>或輸入學生名字查看</h4>
+                <div style="display:flex;gap:10px;justify-content:center;margin-top:15px;">
+                    <input type="text" id="lookup-student" placeholder="輸入學生名字" style="padding:12px;border-radius:8px;border:2px solid #ddd;width:180px;">
+                    <button class="btn btn-secondary" onclick="lookupStudentReport()">🔍 查詢</button>
+                </div>
+            </div>
+            
+            <div id="parent-report-viewer" style="display:none;margin-top:20px;"></div>
+        </div>
+    </div>
+    
+    <!-- Page: Error Type Analysis -->
+    <div class="page" id="page-errors">
+        <div class="card">
+            <div class="card-title"><span>❌</span><span>錯誤類型分析</span></div>
+            <p style="color:#666;margin-bottom:20px;">了解常見錯誤針對性訓練！</p>
+            
+            <div class="error-chart" id="error-chart"></div>
+            
+            <div class="recommendation-card" id="recommendation-card">
+                <h4>📋 推薦訓練</h4>
+                <div id="recommendations"></div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Page: Learning Report -->
+    <div class="page" id="page-report">
+        <div class="card">
+            <div class="card-title"><span>📋</span><span>學習報告</span></div>
+            <div style="text-align:center;padding:20px;">
+                <p style="color:#666;margin-bottom:20px;">生成並列印您的學習報告</p>
+                <button class="btn btn-primary btn-large" onclick="generateReport()">🖨️ 生成報告</button>
+                <button class="btn btn-secondary btn-large" onclick="printReport()" style="margin-left:10px;">📄 列印報告</button>
+            </div>
+            <div id="report-content" style="display:none;">
+                <div class="print-header" style="display:none;">
+                    <div>
+                        <h2 style="color:#1565C0;">浮力大發現 - 學習報告</h2>
+                        <p id="report-student-name"></p>
+                    </div>
+                    <div style="text-align:right;"><p id="report-date"></p></div>
+                </div>
+                <div id="report-stats" style="margin:20px 0;"></div>
+                <div id="report-history" style="margin:20px 0;"></div>
+                <div id="report-badges" style="margin:20px 0;"></div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Page: Analytics Dashboard -->
+    <div class="page" id="page-dashboard">
+        <div class="card">
+            <div class="card-title"><span>📊</span><span>數據分析儀表板</span></div>
+            
+            <div class="dashboard-grid">
+                <div>
+                    <h4 style="margin-bottom:15px;">🔥 學習熱力圖（過去30天）</h4>
+                    <div class="heatmap-container">
+                        <div class="heatmap" id="heatmap"></div>
+                        <div class="heatmap-legend">
+                            <span>少</span>
+                            <div class="heatmap-cell level-1" style="width:20px;height:20px;"></div>
+                            <div class="heatmap-cell level-2" style="width:20px;height:20px;"></div>
+                            <div class="heatmap-cell level-3" style="width:20px;height:20px;"></div>
+                            <div class="heatmap-cell level-4" style="width:20px;height:20px;"></div>
+                            <div class="heatmap-cell level-5" style="width:20px;height:20px;"></div>
+                            <span>多</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 style="margin-bottom:15px;">📈 進度曲線</h4>
+                    <div class="progress-curve">
+                        <canvas id="progress-canvas"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="lagging-alert" style="margin-top:20px;">
+                <h4>⚠️ 需要關注的學生</h4>
+                <div id="lagging-students"></div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Page: Class Statistics -->
+    <div class="page" id="page-class">
+        <div class="card">
+            <div class="card-title"><span>📊</span><span>班別統計</span></div>
+            <div id="class-login" style="text-align:center;padding:30px;">
+                <p style="color:#666;margin-bottom:20px;">老師專區 - 需要密碼</p>
+                <input type="password" id="teacher-password" placeholder="輸入老師密碼" style="padding:12px;border-radius:8px;border:2px solid #ddd;width:200px;margin-bottom:15px;">
+                <br>
+                <button class="btn btn-primary" onclick="verifyTeacherPassword()">🔐 登入</button>
+                <p id="login-error" style="color:#f44336;margin-top:10px;display:none;">密碼錯誤！</p>
+            </div>
+            <div id="class-stats" style="display:none;">
+                <div style="margin-bottom:20px;">
+                    <button class="btn btn-secondary" onclick="exportClassData()">📤 匯出數據</button>
+                    <button class="btn btn-danger" onclick="logoutTeacher()">🚪 登出</button>
+                </div>
+                <h3>全班統計</h3>
+                <div class="stats-grid" style="margin-top:15px;">
+                    <div class="stat-card"><div class="icon">👥</div><div class="value" id="total-students">0</div><div class="label">學生人數</div></div>
+                    <div class="stat-card"><div class="icon">🔬</div><div class="value" id="class-experiments">0</div><div class="label">全班實驗次數</div></div>
+                    <div class="stat-card"><div class="icon">🌊</div><div class="value" id="class-float-rate">0%</div><div class="label">全班浮起率</div></div>
+                </div>
+                <h3 style="margin-top:20px;">學生列表</h3>
+                <div id="student-list" style="margin-top:15px;"></div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Page: LAN Sync -->
+    <div class="page" id="page-sync">
+        <div class="card">
+            <div class="card-title"><span>🌐</span><span>區域網絡同步</span></div>
+            <p style="color:#666;margin-bottom:20px;">多部設備同步實驗數據！</p>
+            
+            <div class="sync-status">
+                <div class="sync-indicator" id="sync-indicator"></div>
+                <span id="sync-status-text">搜索附近設備...</span>
+            </div>
+            
+            <div id="sync-controls" style="display:none;">
+                <button class="btn btn-teal btn-large btn-full" onclick="startSyncServer()">🚀 開啟服務器</button>
+                <button class="btn btn-secondary btn-large btn-full" style="margin-top:10px;" onclick="joinSyncServer()">🔗 加入服務器</button>
+                <input type="text" id="server-address" placeholder="輸入服務器地址" style="width:100%;padding:12px;border-radius:8px;border:2px solid #ddd;margin-top:15px;">
+            </div>
+            
+            <h4 style="margin-top:20px;">已連接設備</h4>
+            <div class="sync-devices" id="sync-devices">
+                <p style="color:#999;text-align:center;grid-column:1/-1;">暫無設備連接</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Page: AI Assistant -->
+    <div class="page" id="page-ai">
+        <div class="card">
+            <div class="card-title"><span>🤖</span><span>AI 助教</span></div>
+            <p style="color:#666;margin-bottom:20px;">MiniMax AI 為你分析學習弱點！</p>
+            
+            <div class="ai-chat">
+                <div class="ai-messages" id="ai-messages">
+                    <div class="ai-message">
+                        <div class="avatar">🤖</div>
+                        <div class="bubble">
+                            你好！我是AI助教！我可以幫你分析浮力實驗的學習情況。<br><br>
+                            你可以問我：<br>
+                            • 點解我成日估錯邊件會浮？<br>
+                            • 密度係咩意思？<br>
+                            • 我應該點樣進步？
+                        </div>
+                    </div>
+                </div>
+                <div class="ai-input-bar">
+                    <input type="text" id="ai-input" placeholder="輸入問題..." onkeypress="if(event.key==='Enter')sendAIMessage()">
+                    <button class="btn btn-primary" onclick="sendAIMessage()">➤</button>
+                </div>
+            </div>
+            
+            <h4 style="margin-top:20px;">快捷提問</h4>
+            <div class="ai-tip-cards">
+                <div class="ai-tip-card" onclick="askAI('我經常搞錯什麼？')">
+                    <div class="tip-icon">❓</div>
+                    <div class="tip-title">我的弱點</div>
+                    <div class="tip-desc">分析我常犯的錯誤</div>
+                </div>
+                <div class="ai-tip-card" onclick="askAI('密度是什麼？')">
+                    <div class="tip-icon">📚</div>
+                    <div class="tip-title">密度概念</div>
+                    <div class="tip-desc">用簡單例子解釋</div>
+                </div>
+                <div class="ai-tip-card" onclick="askAI('給我個人化練習')">
+                    <div class="tip-icon">📝</div>
+                    <div class="tip-title">練習建議</div>
+                    <div class="tip-desc">根據我的水平推薦</div>
+                </div>
+                <div class="ai-tip-card" onclick="askAI('學習進度如何？')">
+                    <div class="tip-icon">📊</div>
+                    <div class="tip-title">進度評估</div>
+                    <div class="tip-desc">看看我的表現</div>
+                </div>
             </div>
         </div>
     </div>
@@ -1047,10 +1730,7 @@
     <!-- Page: Settings -->
     <div class="page" id="page-settings">
         <div class="card">
-            <div class="card-title">
-                <span>⚙️</span>
-                <span>設置</span>
-            </div>
+            <div class="card-title"><span>⚙️</span><span>設置</span></div>
             
             <div class="settings-group">
                 <div class="settings-label">🔊 聲音設置</div>
@@ -1074,14 +1754,12 @@
                 <div class="settings-label">🎯 實驗設置</div>
                 <div class="setting-row">
                     <span class="setting-text">水密度 (g/cm³)</span>
-                    <input type="number" id="waterDensitySetting" value="1.0" min="0.1" max="2" step="0.1" 
-                           style="width:80px;padding:8px;border-radius:8px;border:2px solid #ddd;" 
-                           onchange="updateWaterDensity()">
+                    <input type="number" id="waterDensitySetting" value="1.0" min="0.1" max="2" step="0.1" style="width:80px;padding:8px;border-radius:8px;border:2px solid #ddd;" onchange="updateWaterDensity()">
                 </div>
             </div>
             
             <div class="settings-group">
-                <div class="settings-label">👤 友誼模式</div>
+                <div class="settings-label">👤 顯示設置</div>
                 <div class="setting-row">
                     <span class="setting-text">顯示學生名字</span>
                     <label class="toggle-switch">
@@ -1093,147 +1771,11 @@
             
             <div class="settings-group">
                 <div class="settings-label">📺 投影模式</div>
-                <button class="btn btn-secondary btn-large" onclick="toggleProjection()" style="width:100%;">
-                    📺 進入投影模式
-                </button>
+                <button class="btn btn-secondary btn-large" onclick="toggleProjection()" style="width:100%;">📺 進入投影模式</button>
             </div>
             
             <div class="settings-group">
-                <button class="btn btn-danger" onclick="clearAllData()" style="width:100%;">
-                    🗑️ 清除所有數據
-                </button>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Page: Challenge Mode -->
-    <div class="page" id="page-challenge">
-        <div class="card">
-            <div class="card-title">
-                <span>🎮</span>
-                <span>挑戰模式</span>
-            </div>
-            <div id="challenge-area">
-                <div id="challenge-start" style="text-align:center;padding:30px;">
-                    <p style="color:#666;margin-bottom:20px;">限時挑戰！看看你能取得多少分！</p>
-                    <button class="btn btn-primary btn-large" onclick="startChallenge()">🎯 開始挑戰</button>
-                    <div style="margin-top:20px;">
-                        <h4>🏆 排行榜</h4>
-                        <div id="leaderboard" style="margin-top:10px;text-align:left;max-width:300px;margin:10px auto;">
-                            <!-- Generated by JS -->
-                        </div>
-                    </div>
-                </div>
-                <div id="challenge-active" style="display:none;">
-                    <div class="challenge-timer" id="challenge-timer">60</div>
-                    <div class="challenge-score">分數: <span id="challenge-score">0</span></div>
-                    <div class="challenge-question" id="challenge-question"></div>
-                    <div class="challenge-objects" id="challenge-objects"></div>
-                </div>
-                <div id="challenge-result" style="display:none;text-align:center;padding:30px;">
-                    <h2>🎉 挑戰完成！</h2>
-                    <p style="font-size:2em;margin:20px 0;">得分: <span id="final-score">0</span></p>
-                    <input type="text" id="challenge-name" placeholder="輸入名字" style="padding:12px;border-radius:8px;border:2px solid #ddd;width:200px;margin-bottom:15px;">
-                    <button class="btn btn-primary" onclick="saveChallengeScore()">💾 保存分數</button>
-                    <button class="btn btn-secondary" onclick="resetChallenge()" style="margin-left:10px;">🔄 再玩一次</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Page: Story Mode -->
-    <div class="page" id="page-story">
-        <div class="card">
-            <div class="card-title">
-                <span>📚</span>
-                <span>情境故事</span>
-            </div>
-            <div id="story-content" style="padding:20px 0;">
-                <!-- Story content generated by JS -->
-            </div>
-        </div>
-    </div>
-    
-    <!-- Page: Badges/Achievements -->
-    <div class="page" id="page-badges">
-        <div class="card">
-            <div class="card-title">
-                <span>🏆</span>
-                <span>成就系統</span>
-            </div>
-            <div class="badge-grid" id="badge-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:15px;padding:10px 0;">
-                <!-- Badges generated by JS -->
-            </div>
-        </div>
-    </div>
-    
-    <!-- Page: Learning Report -->
-    <div class="page" id="page-report">
-        <div class="card">
-            <div class="card-title">
-                <span>📋</span>
-                <span>學習報告</span>
-            </div>
-            <div style="text-align:center;padding:20px;">
-                <p style="color:#666;margin-bottom:20px;">生成並列印您的學習報告</p>
-                <button class="btn btn-primary btn-large" onclick="generateReport()">🖨️ 生成報告</button>
-                <button class="btn btn-secondary btn-large" onclick="printReport()" style="margin-left:10px;">📄 列印報告</button>
-            </div>
-            <div id="report-content" style="display:none;">
-                <div class="print-header" style="display:none;">
-                    <div>
-                        <h2 style="color:#1565C0;">浮力大發現 - 學習報告</h2>
-                        <p id="report-student-name"></p>
-                    </div>
-                    <div style="text-align:right;">
-                        <p id="report-date"></p>
-                    </div>
-                </div>
-                <div id="report-stats" style="margin:20px 0;"></div>
-                <div id="report-history" style="margin:20px 0;"></div>
-                <div id="report-badges" style="margin:20px 0;"></div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Page: Class Statistics (Teacher) -->
-    <div class="page" id="page-class">
-        <div class="card">
-            <div class="card-title">
-                <span>📊</span>
-                <span>班別統計</span>
-            </div>
-            <div id="class-login" style="text-align:center;padding:30px;">
-                <p style="color:#666;margin-bottom:20px;">老師專區 - 需要密碼</p>
-                <input type="password" id="teacher-password" placeholder="輸入老師密碼" style="padding:12px;border-radius:8px;border:2px solid #ddd;width:200px;margin-bottom:15px;">
-                <button class="btn btn-primary" onclick="verifyTeacherPassword()">🔐 登入</button>
-                <p id="login-error" style="color:#f44336;margin-top:10px;display:none;">密碼錯誤！</p>
-            </div>
-            <div id="class-stats" style="display:none;">
-                <div style="margin-bottom:20px;">
-                    <button class="btn btn-secondary" onclick="exportClassData()">📤 匯出數據</button>
-                    <button class="btn btn-danger" onclick="logoutTeacher()">🚪 登出</button>
-                </div>
-                <h3>全班統計</h3>
-                <div class="stats-grid" style="margin-top:15px;">
-                    <div class="stat-card">
-                        <div class="icon">👥</div>
-                        <div class="value" id="total-students">0</div>
-                        <div class="label">學生人數</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="icon">🔬</div>
-                        <div class="value" id="class-experiments">0</div>
-                        <div class="label">全班實驗次數</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="icon">🌊</div>
-                        <div class="value" id="class-float-rate">0%</div>
-                        <div class="label">全班浮起率</div>
-                    </div>
-                </div>
-                <h3 style="margin-top:20px;">學生列表</h3>
-                <div id="student-list" style="margin-top:15px;"></div>
+                <button class="btn btn-danger" onclick="clearAllData()" style="width:100%;">🗑️ 清除所有數據</button>
             </div>
         </div>
     </div>
@@ -1247,8 +1789,31 @@
     <!-- Sound Bubble -->
     <div class="sound-bubble" id="soundBubble"></div>
     
+    <!-- Modals -->
+    <div class="modal" id="tutorial-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="tutorial-modal-title">教程</h3>
+                <button class="modal-close" onclick="closeTutorialModal()">×</button>
+            </div>
+            <div id="tutorial-modal-content" style="text-align:center;"></div>
+        </div>
+    </div>
+    
+    <div class="modal" id="qr-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>家長報告</h3>
+                <button class="modal-close" onclick="closeQRModal()">×</button>
+            </div>
+            <div id="qr-modal-content"></div>
+        </div>
+    </div>
+    
     <!-- Three.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- QRCode.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     
     <script>
         // ============ Configuration ============
@@ -1263,29 +1828,43 @@
             { id: 'egg', name: '雞蛋', icon: '🥚', density: 1.1, color: 0xFFFFDD, geometry: 'sphere' }
         ];
         
-        // Cantonese voice prompts
+        const ERROR_TYPES = [
+            { id: 'density_concept', name: '密度概念不清', desc: '不理解密度與浮沉的關係', recommendation: '多玩保麗龍🟫和石頭🪨的對比實驗，記住：密度小於水=浮，密度大於水=沉' },
+            { id: 'reverse_judgment', name: '顛倒判斷', desc: '把浮的判斷成沉，沉的判斷成浮', recommendation: '練習「輕既野會浮，重既野會沉」的口訣' },
+            { id: 'water_density', name: '忽略水的密度', desc: '忘記水密度可以是不同的', recommendation: '嘗試改變水的密度設置，觀察同一物品在不同水中的表現' },
+            { id: 'similar_density', name: '相近密度混淆', desc: '密度接近1的物品判斷錯誤', recommendation: '重點練習蘋果🍎和葡萄🍇，它們的密度最接近水密度1.0' }
+        ];
+        
+        const TUTORIALS = [
+            { id: 1, title: '實驗一：認識浮力', icon: '🌊', steps: ['拖動物品到水池', '觀察浮沉結果', '記錄實驗數據'] },
+            { id: 2, title: '實驗二：密度對比', icon: '⚖️', steps: ['選擇兩個物品', '比較它們的密度', '預測並驗證'] },
+            { id: 3, title: '實驗三：改變水密度', icon: '💧', steps: ['進入設置更改水密度', '觀察同一物品的變化', '總結規律'] }
+        ];
+        
         const VOICE_PROMPTS = {
-            float: [
-                '物件浮起喇！好嘢！',
-                '浮咗！真係估你唔到！',
-                '夠晒輕，梗係浮啦！'
-            ],
-            sink: [
-                '物件沉咗落去...',
-                '太重喇，沉咗...',
-                '物件好重會沉，落少少水試試'
-            ],
-            welcome: [
-                '你好！歡迎嚟到浮力實驗室！',
-                '等我哋一齊探索浮力嘅秘密！',
-                '記住：密度細過水就會浮！'
-            ],
-            tryObject: [
-                '試下拖件物件入水！',
-                '邊件最輕呢？試下保麗龍！',
-                '石頭好重，試下放落水！'
-            ]
+            float: ['物件浮起喇！好嘢！', '浮咗！真係估你唔到！', '夠晒輕，梗係浮啦！'],
+            sink: ['物件沉咗落去...', '太重喇，沉咗...', '物件好重會沉落去...'],
+            welcome: ['你好！歡迎嚟到浮力實驗室！', '等我哋一齊探索浮力嘅秘密！', '記住：密度細過水就會浮！'],
+            tryObject: ['試下拖件物件入水！', '邊件最輕呢？試下保麗龍！', '石頭好重，試下放落水！'],
+            battleTurn: ['到你喇！快啲答！', '時間到！準備好了嗎？', '一於Answer!}
         };
+        
+        const BADGES = [
+            { id: 'first_exp', name: '初試身手', icon: '🔬', desc: '完成第一個實驗', unlocked: false },
+            { id: 'float_5', name: '浮出水面', icon: '🌊', desc: '讓5個物品浮起', unlocked: false },
+            { id: 'sink_5', name: '沉著應對', icon: '📉', desc: '讓5個物品下沉', unlocked: false },
+            { id: 'all_objects', name: '全能科學家', icon: '🧪', desc: '實驗所有物品', unlocked: false },
+            { id: 'story_all', name: '故事達人', icon: '📚', desc: '完成所有故事', unlocked: false },
+            { id: 'challenge_100', name: '挑戰高手', icon: '🏆', desc: '挑戰模式取得100分', unlocked: false },
+            { id: 'battle_winner', name: '對戰冠軍', icon: '👑', desc: '在對戰模式獲得第一名', unlocked: false },
+            { id: 'ar_explorer', name: 'AR探索者', icon: '📱', desc: '使用AR模式完成實驗', unlocked: false }
+        ];
+        
+        const STORIES = [
+            { id: 1, title: '🏠 小木屋的秘密', desc: '小明的木屋為什麼能浮在水面上？', locked: false, content: `小明住在海邊的木屋裡。一天，狂風暴雨來襲，木屋竟然漂流了起來！\n\n問題：為什麼木屋能浮在水上？\n\nA) 木頭很輕，密度小\nB) 木頭很大\nC) 水會推動木頭` },
+            { id: 2, title: '🚢 船為何不沉？', desc: '這麼大的船為什麼不會沉下去？', locked: false, content: `碼頭邊停著一艘大貨船，它裝滿了貨物，但仍然浮在水面上。\n\n問題：大船那麼重，為什麼不沉？\n\nA) 船中間是空的\nB) 船是用特殊材料做的\nC) 海水比較鹹` },
+            { id: 3, title: '🥚 雞蛋的沉浮', desc: '如何讓雞蛋浮起來？', locked: false, content: `廚房裡有一個雞蛋，它放到水裡就沉下去了...\n\n問題：如何讓雞蛋浮起來？\n\nA) 加鹽到水裡\nB) 把雞蛋煮熟\nC) 把水加點糖` }
+        ];
         
         // ============ State ============
         let state = {
@@ -1294,7 +1873,11 @@
             waterDensity: 1.0,
             showStudentName: true,
             experiments: [],
-            objectStats: {}
+            objectStats: {},
+            wrongAnswers: {},
+            customObjects: [],
+            tutorialProgress: {},
+            battleScores: {}
         };
         
         let currentPage = 'experiment';
@@ -1302,13 +1885,25 @@
         let voiceOn = true;
         let poolObjects = [];
         let poolObjectIdCounter = 0;
+        let arActive = false;
+        let arStream = null;
         
         // 3D Lab State
-        let scene, camera, renderer, controls;
+        let scene, camera, renderer;
         let labObjects = [];
-        let labWater;
         let isRotating = false;
-        let labSelectedObj = null;
+        
+        // Battle State
+        let battlePlayers = [];
+        let battleCurrentPlayer = 0;
+        let battleTimer = null;
+        let battleTimeLeft = 30;
+        let battleScores = [];
+        
+        // LAN Sync State
+        let syncPeers = [];
+        let isServer = false;
+        let wsServer = null;
         
         // ============ Initialization ============
         function init() {
@@ -1323,12 +1918,17 @@
             renderStories();
             renderBadges();
             showLeaderboard();
+            renderTutorials();
+            renderCustomObjects();
+            renderErrorAnalysis();
+            renderHeatmap();
+            renderProgressChart();
+            generateQRCode();
             
             if (voiceOn && state.voiceEnabled) {
                 setTimeout(() => speak(VOICE_PROMPTS.welcome[Math.floor(Math.random() * 3)]), 1000);
             }
             
-            // Register service worker for PWA
             if ('serviceWorker' in navigator) {
                 navigator.serviceWorker.register('service-worker.js')
                     .then(reg => console.log('Service Worker registered'))
@@ -1353,15 +1953,10 @@
         }
         
         function setupEventListeners() {
-            // Navigation
             document.querySelectorAll('.nav-tab').forEach(tab => {
-                tab.addEventListener('click', () => {
-                    const page = tab.dataset.page;
-                    showPage(page);
-                });
+                tab.addEventListener('click', () => showPage(tab.dataset.page));
             });
             
-            // Settings
             document.getElementById('voiceEnabled').addEventListener('change', (e) => {
                 state.voiceEnabled = e.target.checked;
                 voiceOn = e.target.checked;
@@ -1378,13 +1973,17 @@
                 saveState();
             });
             
-            // Pool drag and drop
             const pool = document.getElementById('pool');
             pool.addEventListener('dragover', (e) => e.preventDefault());
             pool.addEventListener('drop', handlePoolDrop);
             
-            // Student name
             document.getElementById('studentName').addEventListener('change', saveStudentName);
+            
+            // Upload zone drag and drop
+            const uploadZone = document.getElementById('upload-zone');
+            uploadZone.addEventListener('dragover', (e) => { e.preventDefault(); uploadZone.classList.add('dragover'); });
+            uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('dragover'));
+            uploadZone.addEventListener('drop', (e) => { e.preventDefault(); uploadZone.classList.remove('dragover'); handleImageUpload(e); });
         }
         
         function saveStudentName() {
@@ -1399,16 +1998,20 @@
             document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
             document.querySelector(`[data-page="${pageName}"]`).classList.add('active');
             
-            if (pageName === 'lab3d') {
-                setTimeout(resize3DLab, 100);
-            }
+            if (pageName === 'lab3d') setTimeout(resize3DLab, 100);
+            if (pageName === 'errors') renderErrorAnalysis();
+            if (pageName === 'parent') generateQRCode();
         }
         
         // ============ Object Shelf ============
+        function getAllObjects() {
+            return [...OBJECTS, ...(state.customObjects || [])];
+        }
+        
         function renderObjectShelf() {
             const shelf = document.getElementById('objectShelf');
-            shelf.innerHTML = OBJECTS.map(obj => `
-                <div class="shelf-item" draggable="true" data-id="${obj.id}">
+            shelf.innerHTML = getAllObjects().map(obj => `
+                <div class="shelf-item" draggable="true" data-id="${obj.id}" data-custom="${obj.custom ? 'true' : 'false'}">
                     <span class="icon">${obj.icon}</span>
                     <span class="name">${obj.name}</span>
                     <span class="density">密度: ${obj.density}</span>
@@ -1422,10 +2025,12 @@
         }
         
         function handleDragStart(e) {
-            e.dataTransfer.setData('text/plain', e.target.dataset.id);
+            e.dataTransfer.setData('text/plain', JSON.stringify({
+                id: e.target.dataset.id,
+                custom: e.target.dataset.custom === 'true'
+            }));
         }
         
-        // Touch handling for iPad
         let touchDragObject = null;
         let touchClone = null;
         
@@ -1433,9 +2038,11 @@
             e.preventDefault();
             const touch = e.touches[0];
             const target = e.currentTarget;
-            touchDragObject = target;
+            touchDragObject = {
+                id: target.dataset.id,
+                custom: target.dataset.custom === 'true'
+            };
             
-            // Create visual clone
             touchClone = target.cloneNode(true);
             touchClone.style.position = 'fixed';
             touchClone.style.pointerEvents = 'none';
@@ -1445,15 +2052,13 @@
             document.body.appendChild(touchClone);
             
             updateClonePosition(touch);
-            
             document.addEventListener('touchmove', handleTouchMove, { passive: false });
             document.addEventListener('touchend', handleTouchEnd);
         }
         
         function handleTouchMove(e) {
             e.preventDefault();
-            const touch = e.touches[0];
-            updateClonePosition(touch);
+            updateClonePosition(e.touches[0]);
         }
         
         function updateClonePosition(touch) {
@@ -1479,7 +2084,7 @@
             if (touch.clientX >= poolRect.left && touch.clientX <= poolRect.right &&
                 touch.clientY >= poolRect.top && touch.clientY <= poolRect.bottom) {
                 if (touchDragObject) {
-                    addObjectToPool(touchDragObject.dataset.id, touch.clientX - poolRect.left, touch.clientY - poolRect.top);
+                    addObjectToPool(touchDragObject.id, touch.clientX - poolRect.left, touch.clientY - poolRect.top, touchDragObject.custom);
                 }
             }
             
@@ -1489,22 +2094,28 @@
         // ============ Pool Experiment ============
         function handlePoolDrop(e) {
             e.preventDefault();
-            const objectId = e.dataTransfer.getData('text/plain');
+            const data = JSON.parse(e.dataTransfer.getData('text/plain'));
             const rect = e.currentTarget.getBoundingClientRect();
             const x = e.clientX - rect.left;
             const y = e.clientY - rect.top;
-            addObjectToPool(objectId, x, y);
+            addObjectToPool(data.id, x, y, data.custom === 'true');
         }
         
-        function addObjectToPool(objectId, x, y) {
-            const obj = OBJECTS.find(o => o.id === objectId);
+        function findObject(id, isCustom) {
+            if (isCustom && state.customObjects) {
+                return state.customObjects.find(o => o.id === id);
+            }
+            return OBJECTS.find(o => o.id === id);
+        }
+        
+        function addObjectToPool(objectId, x, y, isCustom = false) {
+            const obj = findObject(objectId, isCustom);
             if (!obj) return;
             
             const id = poolObjectIdCounter++;
             const pool = document.getElementById('pool');
             const poolRect = pool.getBoundingClientRect();
             
-            // Clamp position
             x = Math.max(30, Math.min(poolRect.width - 30, x));
             y = Math.max(30, Math.min(poolRect.height - 30, y));
             
@@ -1519,23 +2130,16 @@
             element.style.top = y + 'px';
             element.style.transform = 'translate(-50%, -50%)';
             
-            // Make draggable in pool
             element.addEventListener('mousedown', startDragInPool);
             element.addEventListener('touchstart', startDragInPoolTouch, { passive: false });
             
             pool.appendChild(element);
             
-            // Animate to water level
-            setTimeout(() => {
-                animateObjectSink(id, obj);
-            }, 300);
+            setTimeout(() => animateObjectSink(id, obj), 300);
             
-            // Show voice prompt
             if (voiceOn && state.voiceEnabled) {
                 setTimeout(() => {
-                    speak(state.cantoneseVoice ? 
-                        VOICE_PROMPTS.tryObject[Math.floor(Math.random() * 3)] : 
-                        'Try dropping the object in water!');
+                    speak(state.cantoneseVoice ? VOICE_PROMPTS.tryObject[Math.floor(Math.random() * 3)] : 'Try dropping the object in water!');
                 }, 500);
             }
         }
@@ -1549,7 +2153,6 @@
             const rect = dragInPool.getBoundingClientRect();
             dragOffset.x = e.clientX - rect.left;
             dragOffset.y = e.clientY - rect.top;
-            
             document.addEventListener('mousemove', dragInPoolMove);
             document.addEventListener('mouseup', stopDragInPool);
         }
@@ -1561,7 +2164,6 @@
             const rect = dragInPool.getBoundingClientRect();
             dragOffset.x = touch.clientX - rect.left;
             dragOffset.y = touch.clientY - rect.top;
-            
             document.addEventListener('touchmove', dragInPoolMoveTouch, { passive: false });
             document.addEventListener('touchend', stopDragInPoolTouch);
         }
@@ -1607,8 +2209,6 @@
             const pool = document.getElementById('pool');
             const poolHeight = pool.offsetHeight;
             const waterLevel = poolHeight * 0.3;
-            
-            // Calculate final position based on density
             const waterDensity = state.waterDensity;
             const willFloat = obj.density < waterDensity;
             const finalY = willFloat ? waterLevel : poolHeight - 30;
@@ -1616,18 +2216,16 @@
             element.style.transition = 'top 1s ease-in-out';
             element.style.top = finalY + 'px';
             
-            // Record experiment after animation
             setTimeout(() => {
                 recordExperiment(obj, willFloat);
                 element.style.transition = 'none';
             }, 1100);
         }
         
-function recordExperiment(obj, willFloat) {
+        function recordExperiment(obj, willFloat) {
             const studentName = document.getElementById('studentName').value.trim() || '匿名學生';
             const result = willFloat ? '浮' : '沉';
             
-            // Update stats
             state.experiments.push({
                 objectId: obj.id,
                 objectName: obj.name,
@@ -1635,16 +2233,13 @@ function recordExperiment(obj, willFloat) {
                 density: obj.density,
                 result: result,
                 student: studentName,
-                time: Date.now()
+                time: Date.now(),
+                wrong: false
             });
             
-            // Save to class data
             saveStudentData(studentName);
             
-            // Update object stats
-            if (!state.objectStats[obj.id]) {
-                state.objectStats[obj.id] = { float: 0, sink: 0 };
-            }
+            if (!state.objectStats[obj.id]) state.objectStats[obj.id] = { float: 0, sink: 0 };
             state.objectStats[obj.id][willFloat ? 'float' : 'sink']++;
             
             saveState();
@@ -1652,25 +2247,26 @@ function recordExperiment(obj, willFloat) {
             renderHistory();
             checkBadgeConditions();
             
-            // Show voice
             if (voiceOn && state.voiceEnabled) {
                 const prompts = willFloat ? VOICE_PROMPTS.float : VOICE_PROMPTS.sink;
                 speak(prompts[Math.floor(Math.random() * prompts.length)]);
             }
             
-            // Unlock badge if first experiment
-            if (state.experiments.length === 1) {
-                unlockBadge('first_exp');
-            }
+            if (state.experiments.length === 1) unlockBadge('first_exp');
             
             showSoundBubble(willFloat ? '🌊 浮起了！' : '📉 下沉了...');
         }
         
+        function recordWrongAnswer(questionType, correctAnswer) {
+            if (!state.wrongAnswers[questionType]) state.wrongAnswers[questionType] = { count: 0, lastTime: 0 };
+            state.wrongAnswers[questionType].count++;
+            state.wrongAnswers[questionType].lastTime = Date.now();
+            saveState();
+        }
+        
         function saveStudentData(name) {
             const allData = JSON.parse(localStorage.getItem('allStudentsData') || '{}');
-            if (!allData[name]) {
-                allData[name] = { experiments: [] };
-            }
+            if (!allData[name]) allData[name] = { experiments: [] };
             const latestExp = state.experiments[state.experiments.length - 1];
             if (latestExp && latestExp.student === name) {
                 allData[name].experiments.push(latestExp);
@@ -1682,9 +2278,7 @@ function recordExperiment(obj, willFloat) {
             const bubble = document.getElementById('soundBubble');
             bubble.textContent = text;
             bubble.style.display = 'block';
-            setTimeout(() => {
-                bubble.style.display = 'none';
-            }, 3000);
+            setTimeout(() => bubble.style.display = 'none', 3000);
         }
         
         // ============ Statistics ============
@@ -1699,17 +2293,11 @@ function recordExperiment(obj, willFloat) {
             document.getElementById('sinkCount').textContent = sinks;
             document.getElementById('successRate').textContent = rate + '%';
             
-            // Update progress text
             const progressText = document.getElementById('progressText');
-            if (total === 0) {
-                progressText.textContent = '開始你的第一個實驗吧！🌟';
-            } else if (total < 5) {
-                progressText.textContent = '做得很好！繼續探索！💪';
-            } else if (total < 10) {
-                progressText.textContent = '你已經完成 ' + total + ' 個實驗！太棒了！🎉';
-            } else {
-                progressText.textContent = '你是浮力小達人了！🏆';
-            }
+            if (total === 0) progressText.textContent = '開始你的第一個實驗吧！🌟';
+            else if (total < 5) progressText.textContent = '做得很好！繼續探索！💪';
+            else if (total < 10) progressText.textContent = `你已經完成 ${total} 個實驗！太棒了！🎉`;
+            else progressText.textContent = '你是浮力小達人了！🏆';
             
             renderBarChart();
         }
@@ -1760,18 +2348,12 @@ function recordExperiment(obj, willFloat) {
         
         function updateWaterDensityDisplay() {
             document.getElementById('waterDensity').textContent = state.waterDensity.toFixed(1);
+            document.getElementById('lab-water-density').textContent = state.waterDensity.toFixed(1);
         }
         
         function clearAllData() {
             if (confirm('確定要清除所有數據嗎？')) {
-                state = {
-                    voiceEnabled: true,
-                    cantoneseVoice: true,
-                    waterDensity: 1.0,
-                    showStudentName: true,
-                    experiments: [],
-                    objectStats: {}
-                };
+                state = { voiceEnabled: true, cantoneseVoice: true, waterDensity: 1.0, showStudentName: true, experiments: [], objectStats: {}, wrongAnswers: {}, customObjects: [], tutorialProgress: {}, battleScores: {} };
                 saveState();
                 location.reload();
             }
@@ -1782,7 +2364,6 @@ function recordExperiment(obj, willFloat) {
             const btn = document.querySelector('[onclick="toggleProjection()"]');
             if (document.body.classList.contains('projection-mode')) {
                 btn.innerHTML = '❌ 退出投影';
-                // Add exit button
                 if (!document.querySelector('.projection-exit')) {
                     const exitBtn = document.createElement('button');
                     exitBtn.className = 'btn projection-exit';
@@ -1803,17 +2384,11 @@ function recordExperiment(obj, willFloat) {
             document.getElementById('voiceIcon').textContent = voiceOn ? '🔊' : '🔇';
             document.getElementById('voiceText').textContent = voiceOn ? '語音' : '靜音';
             saveState();
-            
-            if (voiceOn && state.voiceEnabled) {
-                speak('語音開啟喇！');
-            }
+            if (voiceOn && state.voiceEnabled) speak('語音開啟喇！');
         }
         
-        // ============ Voice ============
         function speak(text) {
             if (!voiceOn || !state.voiceEnabled) return;
-            
-            // Use Web Speech API
             if ('speechSynthesis' in window) {
                 const utterance = new SpeechSynthesisUtterance(text);
                 utterance.lang = state.cantoneseVoice ? 'zh-HK' : 'zh-CN';
@@ -1821,7 +2396,6 @@ function recordExperiment(obj, willFloat) {
                 utterance.pitch = 1.1;
                 speechSynthesis.speak(utterance);
             }
-            
             showSoundBubble(text);
         }
         
@@ -1830,21 +2404,17 @@ function recordExperiment(obj, willFloat) {
             const container = document.getElementById('lab3d-container');
             const canvas = document.getElementById('lab3d-canvas');
             
-            // Scene
             scene = new THREE.Scene();
             scene.background = new THREE.Color(0x1a237e);
             
-            // Camera
             camera = new THREE.PerspectiveCamera(60, container.clientWidth / container.clientHeight, 0.1, 1000);
             camera.position.set(0, 8, 12);
             camera.lookAt(0, 0, 0);
             
-            // Renderer
             renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
             renderer.setSize(container.clientWidth, container.clientHeight);
             renderer.setPixelRatio(window.devicePixelRatio);
             
-            // Lights
             const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
             scene.add(ambientLight);
             
@@ -1852,114 +2422,72 @@ function recordExperiment(obj, willFloat) {
             directionalLight.position.set(5, 10, 5);
             scene.add(directionalLight);
             
-            // Pool
             const poolGeometry = new THREE.BoxGeometry(10, 4, 10);
-            const poolMaterial = new THREE.MeshPhongMaterial({ 
-                color: 0x1565C0, 
-                transparent: true, 
-                opacity: 0.7,
-                side: THREE.DoubleSide
-            });
+            const poolMaterial = new THREE.MeshPhongMaterial({ color: 0x1565C0, transparent: true, opacity: 0.7, side: THREE.DoubleSide });
             const pool = new THREE.Mesh(poolGeometry, poolMaterial);
             pool.position.y = -2;
             scene.add(pool);
             
-            // Water surface
             const waterGeometry = new THREE.PlaneGeometry(9.5, 9.5);
-            const waterMaterial = new THREE.MeshPhongMaterial({ 
-                color: 0x42A5F5, 
-                transparent: true, 
-                opacity: 0.5,
-                side: THREE.DoubleSide
-            });
-            labWater = new THREE.Mesh(waterGeometry, waterMaterial);
+            const waterMaterial = new THREE.MeshPhongMaterial({ color: 0x42A5F5, transparent: true, opacity: 0.5, side: THREE.DoubleSide });
+            const labWater = new THREE.Mesh(waterGeometry, waterMaterial);
             labWater.rotation.x = -Math.PI / 2;
             labWater.position.y = -0.5;
+            labWater.userData.isWater = true;
             scene.add(labWater);
             
-            // Grid helper
             const gridHelper = new THREE.GridHelper(12, 12, 0xffffff, 0x444444);
             scene.add(gridHelper);
             
-            // Touch controls
             let isDragging = false;
             let previousTouch = null;
             
             canvas.addEventListener('touchstart', (e) => {
-                if (e.touches.length === 1) {
-                    isDragging = true;
-                    previousTouch = { x: e.touches[0].clientX, y: e.touches[0].clientY };
-                }
+                if (e.touches.length === 1) { isDragging = true; previousTouch = { x: e.touches[0].clientX, y: e.touches[0].clientY }; }
             });
             
             canvas.addEventListener('touchmove', (e) => {
                 if (!isDragging) return;
                 e.preventDefault();
-                
                 const touch = e.touches[0];
                 const deltaX = touch.clientX - previousTouch.x;
                 const deltaY = touch.clientY - previousTouch.y;
-                
                 camera.position.x += deltaX * 0.05;
                 camera.position.y += deltaY * 0.05;
                 camera.lookAt(0, 0, 0);
-                
                 previousTouch = { x: touch.clientX, y: touch.clientY };
             });
             
-            canvas.addEventListener('touchend', () => {
-                isDragging = false;
-                previousTouch = null;
-            });
-            
-            // Mouse controls
-            canvas.addEventListener('mousedown', (e) => {
-                isDragging = true;
-                previousTouch = { x: e.clientX, y: e.clientY };
-            });
-            
+            canvas.addEventListener('touchend', () => { isDragging = false; previousTouch = null; });
+            canvas.addEventListener('mousedown', (e) => { isDragging = true; previousTouch = { x: e.clientX, y: e.clientY }; });
             canvas.addEventListener('mousemove', (e) => {
                 if (!isDragging) return;
-                
                 const deltaX = e.clientX - previousTouch.x;
                 const deltaY = e.clientY - previousTouch.y;
-                
                 camera.position.x += deltaX * 0.05;
                 camera.position.y += deltaY * 0.05;
                 camera.lookAt(0, 0, 0);
-                
-                previousTouch = { x: e.clientX, y: e.clientY };
+                previousTouch = {x: e.clientX, y: e.clientY };
             });
-            
-            canvas.addEventListener('mouseup', () => {
-                isDragging = false;
-                previousTouch = null;
-            });
-            
-            // Mouse wheel zoom
+            canvas.addEventListener('mouseup', () => { isDragging = false; previousTouch = null; });
             canvas.addEventListener('wheel', (e) => {
                 e.preventDefault();
                 camera.position.z += e.deltaY * 0.01;
                 camera.position.z = Math.max(5, Math.min(25, camera.position.z));
             });
             
-            // Animation loop
             function animate() {
                 requestAnimationFrame(animate);
-                
                 if (isRotating) {
                     camera.position.x = Math.sin(Date.now() * 0.001) * 12;
                     camera.position.z = Math.cos(Date.now() * 0.001) * 12;
                     camera.lookAt(0, 0, 0);
                 }
-                
-                // Animate lab objects
                 labObjects.forEach(obj => {
                     if (obj.userData.floating !== undefined) {
                         obj.position.y = obj.userData.targetY + Math.sin(Date.now() * 0.003 + obj.userData.phase) * 0.2;
                     }
                 });
-                
                 renderer.render(scene, camera);
             }
             animate();
@@ -1967,8 +2495,8 @@ function recordExperiment(obj, willFloat) {
         
         function renderLabObjects() {
             const container = document.getElementById('labObjects');
-            container.innerHTML = OBJECTS.map(obj => `
-                <div class="lab-obj" data-id="${obj.id}" ontouchstart="labSelectObject('${obj.id}')" onclick="labSelectObject('${obj.id}')">
+            container.innerHTML = getAllObjects().map(obj => `
+                <div class="lab-obj" data-id="${obj.id}" data-custom="${obj.custom ? 'true' : 'false'}" ontouchstart="labSelectObject('${obj.id}', ${obj.custom ? 'true' : 'false'})" onclick="labSelectObject('${obj.id}', ${obj.custom ? 'true' : 'false'})">
                     <span class="icon">${obj.icon}</span>
                     <div class="info">
                         <div>${obj.name}</div>
@@ -1978,90 +2506,52 @@ function recordExperiment(obj, willFloat) {
             `).join('');
         }
         
-        function labSelectObject(objectId) {
-            const obj = OBJECTS.find(o => o.id === objectId);
+        function labSelectObject(objectId, isCustom) {
+            const obj = findObject(objectId, isCustom);
             if (!obj) return;
             
-            labSelectedObj = obj;
             document.getElementById('lab-status').textContent = `已選擇: ${obj.name} (密度: ${obj.density})`;
             
-            // Create 3D object
             let geometry;
             switch (obj.geometry) {
-                case 'box':
-                    geometry = new THREE.BoxGeometry(1, 1, 1);
-                    break;
-                case 'sphere':
-                    geometry = new THREE.SphereGeometry(0.6, 32, 32);
-                    break;
-                case 'cylinder':
-                    geometry = new THREE.CylinderGeometry(0.4, 0.4, 1.2, 32);
-                    break;
-                default:
-                    geometry = new THREE.BoxGeometry(1, 1, 1);
+                case 'box': geometry = new THREE.BoxGeometry(1, 1, 1); break;
+                case 'sphere': geometry = new THREE.SphereGeometry(0.6, 32, 32); break;
+                case 'cylinder': geometry = new THREE.CylinderGeometry(0.4, 0.4, 1.2, 32); break;
+                default: geometry = new THREE.BoxGeometry(1, 1, 1);
             }
             
-            const material = new THREE.MeshPhongMaterial({ color: obj.color });
+            const color = obj.custom ? 0x9C27B0 : obj.color;
+            const material = new THREE.MeshPhongMaterial({ color });
             const mesh = new THREE.Mesh(geometry, material);
             
-            // Position based on density
             const waterDensity = state.waterDensity;
             const willFloat = obj.density < waterDensity;
             const targetY = willFloat ? 0 : -1.5;
             
-            mesh.position.set(
-                (Math.random() - 0.5) * 6,
-                2,
-                (Math.random() - 0.5) * 6
-            );
-            
-            mesh.userData = {
-                objectId: obj.id,
-                density: obj.density,
-                floating: willFloat,
-                targetY: targetY,
-                phase: Math.random() * Math.PI * 2
-            };
+            mesh.position.set((Math.random() - 0.5) * 6, 2, (Math.random() - 0.5) * 6);
+            mesh.userData = { objectId: obj.id, density: obj.density, floating: willFloat, targetY, phase: Math.random() * Math.PI * 2 };
             
             scene.add(mesh);
             labObjects.push(mesh);
             
-            // Animate drop
             const startY = mesh.position.y;
             const dropAnimation = () => {
-                if (mesh.position.y > targetY) {
-                    mesh.position.y -= 0.1;
-                    requestAnimationFrame(dropAnimation);
-                } else {
+                if (mesh.position.y > targetY) { mesh.position.y -= 0.1; requestAnimationFrame(dropAnimation); }
+                else {
                     mesh.position.y = targetY;
-                    // Record experiment
-                    setTimeout(() => {
-                        recordExperiment(obj, willFloat);
-                    }, 500);
+                    setTimeout(() => recordExperiment(obj, willFloat), 500);
                 }
             };
             setTimeout(dropAnimation, 100);
             
-            document.getElementById('lab-status').textContent = willFloat ? 
-                `🌊 ${obj.name} 浮起了！` : 
-                `📉 ${obj.name} 下沉了...`;
+            document.getElementById('lab-status').textContent = willFloat ? `🌊 ${obj.name} 浮起了！` : `📉 ${obj.name} 下沉了...`;
         }
         
-        function labResetView() {
-            camera.position.set(0, 8, 12);
-            camera.lookAt(0, 0, 0);
-        }
-        
-        function labToggleRotate() {
-            isRotating = !isRotating;
-        }
+        function labResetView() { camera.position.set(0, 8, 12); camera.lookAt(0, 0, 0); }
+        function labToggleRotate() { isRotating = !isRotating; }
         
         function labClearPool() {
-            labObjects.forEach(obj => {
-                scene.remove(obj);
-                obj.geometry.dispose();
-                obj.material.dispose();
-            });
+            labObjects.forEach(obj => { scene.remove(obj); obj.geometry.dispose(); obj.material.dispose(); });
             labObjects = [];
             document.getElementById('lab-status').textContent = '已清除，選擇一件物品';
         }
@@ -2073,6 +2563,234 @@ function recordExperiment(obj, willFloat) {
                 camera.updateProjectionMatrix();
                 renderer.setSize(container.clientWidth, container.clientHeight);
             }
+        }
+        
+        // ============ AR Mode ============
+        async function toggleARMode() {
+            if (arActive) {
+                stopARMode();
+            } else {
+                await startARMode();
+            }
+        }
+        
+        async function startARMode() {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
+                arStream = stream;
+                const video = document.getElementById('ar-video');
+                video.srcObject = stream;
+                await video.play();
+                
+                document.getElementById('ar-target').style.display = 'block';
+                document.getElementById('ar-water').style.display = 'block';
+                document.getElementById('ar-toggle-btn').textContent = '📱 停止AR';
+                arActive = true;
+                
+                // Simulate surface detection after 2 seconds
+                setTimeout(() => {
+                    document.getElementById('ar-indicator').style.display = 'none';
+                    speak('已偵測到平面！可以放入物品了！');
+                }, 2000);
+                
+            } catch (err) {
+                alert('無法啟動相機，請確認已授權相機權限。\n' + err.message);
+            }
+        }
+        
+        function stopARMode() {
+            if (arStream) {
+                arStream.getTracks().forEach(track => track.stop());
+                arStream = null;
+            }
+            document.getElementById('ar-video').srcObject = null;
+            document.getElementById('ar-target').style.display = 'none';
+            document.getElementById('ar-water').style.display = 'none';
+            document.getElementById('ar-toggle-btn').textContent = '📱 啟動AR相機';
+            document.getElementById('ar-indicator').style.display = 'block';
+            arActive = false;
+        }
+        
+        function resetARObjects() {
+            document.getElementById('ar-objects').innerHTML = '';
+        }
+        
+        // ============ Multiplayer Battle Mode ============
+        function setupBattle(numPlayers) {
+            battlePlayers = [];
+            document.getElementById('player-names-setup').style.display = 'block';
+            const namesInputs = document.getElementById('names-inputs');
+            namesInputs.innerHTML = '';
+            
+            for (let i = 0; i < numPlayers; i++) {
+                namesInputs.innerHTML += `
+                    <div style="margin-bottom:15px;">
+                        <label style="display:block;margin-bottom:5px;">玩家 ${i + 1} 名字：</label>
+                        <input type="text" id="player-name-${i}" placeholder="玩家 ${i + 1}" style="width:100%;padding:12px;border-radius:8px;border:2px solid #ddd;">
+                    </div>
+                `;
+            }
+        }
+        
+        function startBattle() {
+            const numPlayers = document.querySelectorAll('#names-inputs input').length;
+            battlePlayers = [];
+            
+            for (let i = 0; i < numPlayers; i++) {
+                const name = document.getElementById(`player-name-${i}`).value.trim() || `玩家${i + 1}`;
+                battlePlayers.push({ name, score: 0 });
+            }
+            
+            battleScores = battlePlayers.map(() => 0);
+            battleCurrentPlayer = 0;
+            
+            document.getElementById('battle-setup').style.display = 'none';
+            document.getElementById('battle-arena').style.display = 'block';
+            document.getElementById('battle-results').style.display = 'none';
+            
+            updateBattleDisplay();
+            nextBattleQuestion();
+        }
+        
+        function updateBattleDisplay() {
+            const playersDiv = document.getElementById('battle-players');
+            playersDiv.innerHTML = battlePlayers.map((p, i) => `
+                <div class="battle-player ${i === battleCurrentPlayer ? 'active' : ''}">
+                    <div class="player-name">${p.name}</div>
+                    <div class="player-score">${p.score}</div>
+                    <div class="turn-indicator">${i === battleCurrentPlayer ? '➡️' : ''}</div>
+                </div>
+            `).join('');
+            
+            document.getElementById('battle-turn-display').textContent = `第 ${battleCurrentPlayer + 1} 位：${battlePlayers[battleCurrentPlayer].name} 的回合！`;
+        }
+        
+        function nextBattleQuestion() {
+            const q = generateBattleQuestion();
+            document.getElementById('battle-question-text').textContent = q.text;
+            
+            const container = document.getElementById('battle-choices');
+            if (q.type === 'float') {
+                container.innerHTML = `
+                    <div class="battle-choice" style="background:#E3F2FD;border:3px solid var(--primary);" onclick="answerBattle('浮', ${q.correct})">🌊 浮</div>
+                    <div class="battle-choice" style="background:#FFEBEE;border:3px solid var(--danger);" onclick="answerBattle('沉', ${!q.correct})">📉 沉</div>
+                `;
+            } else {
+                container.innerHTML = q.options.map((opt, i) => `
+                    <div class="battle-choice" style="background:white;border:3px solid #ddd;" onclick="answerBattle('${opt.name}', ${opt.correct})">${opt.icon}</div>
+                `).join('');
+            }
+            
+            battleTimeLeft = 30;
+            document.getElementById('battle-timer').textContent = battleTimeLeft;
+            document.getElementById('battle-timer').classList.remove('warning');
+            
+            if (battleTimer) clearInterval(battleTimer);
+            battleTimer = setInterval(() => {
+                battleTimeLeft--;
+                document.getElementById('battle-timer').textContent = battleTimeLeft;
+                if (battleTimeLeft <= 10) document.getElementById('battle-timer').classList.add('warning');
+                if (battleTimeLeft <= 0) {
+                    clearInterval(battleTimer);
+                    // Time's up, move to next player
+                    battleCurrentPlayer = (battleCurrentPlayer + 1) % battlePlayers.length;
+                    updateBattleDisplay();
+                    nextBattleQuestion();
+                }
+            }, 1000);
+            
+            if (voiceOn && state.voiceEnabled) {
+                speak(VOICE_PROMPTS.battleTurn[Math.floor(Math.random() * 3)]);
+            }
+        }
+        
+        function generateBattleQuestion() {
+            const objects = [
+                { name: '木塊', icon: '🟫', density: 0.6 },
+                { name: '石頭', icon: '🪨', density: 2.5 },
+                { name: '保麗龍', icon: '◻️', density: 0.3 },
+                { name: '蘋果', icon: '🍎', density: 0.9 },
+                { name: '汽水罐', icon: '🥫', density: 1.1 },
+                { name: '葡萄', icon: '🍇', density: 1.0 }
+            ];
+            
+            const type = Math.floor(Math.random() * 2);
+            if (type === 0) {
+                const obj = objects[Math.floor(Math.random() * objects.length)];
+                return {
+                    type: 'float',
+                    text: `${obj.icon} ${obj.name}會浮起身嗎？`,
+                    answer: obj.density < 1 ? '浮' : '沉',
+                    correct: obj.density < 1
+                };
+            } else {
+                const shuffled = [...objects].sort(() => Math.random() - 0.5).slice(0, 4);
+                const floaters = shuffled.filter(o => o.density < 1);
+                return {
+                    type: 'which',
+                    text: '邊個會浮起身？',
+                    options: shuffled.map(o => ({ name: o.name, icon: o.icon, correct: o.density < 1 }))
+                };
+            }
+        }
+        
+        function answerBattle(answer, correct) {
+            clearInterval(battleTimer);
+            
+            if (correct) {
+                battlePlayers[battleCurrentPlayer].score += 10;
+                playSound('success');
+                showSoundBubble(`✅ 正確！+10分`);
+            } else {
+                playSound('error');
+                showSoundBubble('❌ 錯誤！');
+            }
+            
+            updateBattleDisplay();
+            
+            // Move to next player
+            battleCurrentPlayer = (battleCurrentPlayer + 1) % battlePlayers.length;
+            updateBattleDisplay();
+            
+            setTimeout(nextBattleQuestion, 50);
+        }
+        
+        function endBattle() {
+            clearInterval(battleTimer);
+            document.getElementById('battle-arena').style.display = 'none';
+            document.getElementById('battle-results').style.display = 'block';
+            
+            const sorted = [...battlePlayers].sort((a, b) => b.score - a.score);
+            document.getElementById('battle-final-scores').innerHTML = sorted.map((p, i) => `
+                <div style="padding:15px;background:${i === 0 ? '#FFD700' : i === 1 ? '#C0C0C0' : i === 2 ? '#CD7F32' : '#f5f5f5'};border-radius:12px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;">
+                    <span style="font-size:1.5em;">${i === 0 ? '👑' : i === 1 ? '🥈' : i === 2 ? '🥉' : ''} ${p.name}</span>
+                    <span style="font-size:1.5em;font-weight:bold;">${p.score}分</span>
+                </div>
+            `).join('');
+            
+            if (sorted[0].score > 0) unlockBadge('battle_winner');
+        }
+        
+        function resetBattle() {
+            battlePlayers = [];
+            battleCurrentPlayer = 0;
+            document.getElementById('battle-setup').style.display = 'block';
+            document.getElementById('battle-arena').style.display = 'none';
+            document.getElementById('battle-results').style.display = 'none';
+            document.getElementById('player-names-setup').style.display = 'none';
+        }
+        
+        function playSound(type) {
+            if (!state.voiceEnabled) return;
+            const ctx = new (window.AudioContext || window.webkitAudioContext)();
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            if (type === 'success') { osc.frequency.value = 880; gain.gain.value = 0.3; }
+            else { osc.frequency.value = 220; gain.gain.value = 0.3; }
+            osc.start();
+            setTimeout(() => osc.stop(), 200);
         }
         
         // ============ Challenge Mode ============
@@ -2093,7 +2811,6 @@ function recordExperiment(obj, willFloat) {
             document.getElementById('challenge-score').textContent = '0';
             document.getElementById('challenge-timer').textContent = CHALLENGE_TIME;
             
-            // Generate questions
             challengeQuestions = generateChallengeQuestions(10);
             currentChallengeIndex = 0;
             
@@ -2102,14 +2819,8 @@ function recordExperiment(obj, willFloat) {
             challengeTimer = setInterval(() => {
                 challengeTimeLeft--;
                 document.getElementById('challenge-timer').textContent = challengeTimeLeft;
-                
-                if (challengeTimeLeft <= 10) {
-                    document.getElementById('challenge-timer').style.color = '#f44336';
-                }
-                
-                if (challengeTimeLeft <= 0) {
-                    endChallenge();
-                }
+                if (challengeTimeLeft <= 10) document.getElementById('challenge-timer').style.color = '#f44336';
+                if (challengeTimeLeft <= 0) endChallenge();
             }, 1000);
         }
         
@@ -2127,19 +2838,17 @@ function recordExperiment(obj, willFloat) {
             ];
             
             for (let i = 0; i < count; i++) {
-                const q = i % 3; // 3 question types
+                const q = i % 3;
                 if (q === 0) {
-                    // "Will it float?" question
                     const obj = objects[Math.floor(Math.random() * objects.length)];
                     questions.push({
                         type: 'float',
                         text: `${obj.icon} ${obj.name}會浮起嗎？`,
                         answer: obj.density < 1 ? '浮' : '沉',
                         correct: obj.density < 1,
-                        obj: obj
+                        obj
                     });
                 } else if (q === 1) {
-                    // "Which floats?" question
                     const shuffled = [...objects].sort(() => Math.random() - 0.5).slice(0, 4);
                     const floaters = shuffled.filter(o => o.density < 1);
                     if (floaters.length > 0) {
@@ -2151,17 +2860,8 @@ function recordExperiment(obj, willFloat) {
                             correct: floaters[0],
                             obj: floaters[0]
                         });
-                    } else {
-                        questions.push({
-                            type: 'float',
-                            text: `${shuffled[0].icon} ${shuffled[0].name}會浮起嗎？`,
-                            answer: '沉',
-                            correct: false,
-                            obj: shuffled[0]
-                        });
                     }
                 } else {
-                    // Sort by density
                     const sorted = [...objects].sort((a, b) => a.density - b.density);
                     questions.push({
                         type: 'sort',
@@ -2177,10 +2877,7 @@ function recordExperiment(obj, willFloat) {
         }
         
         function showChallengeQuestion() {
-            if (currentChallengeIndex >= challengeQuestions.length) {
-                currentChallengeIndex = 0;
-            }
-            
+            if (currentChallengeIndex >= challengeQuestions.length) currentChallengeIndex = 0;
             const q = challengeQuestions[currentChallengeIndex];
             document.getElementById('challenge-question').textContent = q.text;
             
@@ -2217,7 +2914,6 @@ function recordExperiment(obj, willFloat) {
         }
         
         function answerChallengeObject(name, willFloat) {
-            // Check if correct
             const correct = (willFloat && state.waterDensity >= 1) || (!willFloat && state.waterDensity < 1);
             if (correct) {
                 challengeScore += 15;
@@ -2242,13 +2938,9 @@ function recordExperiment(obj, willFloat) {
             const studentName = document.getElementById('studentName').value.trim() || name;
             
             const scores = JSON.parse(localStorage.getItem('challengeScores') || '[]');
-            scores.push({
-                name: studentName,
-                score: challengeScore,
-                date: new Date().toISOString()
-            });
+            scores.push({ name: studentName, score: challengeScore, date: new Date().toISOString() });
             scores.sort((a, b) => b.score - a.score);
-            scores.splice(10); // Keep top 10
+            scores.splice(10);
             localStorage.setItem('challengeScores', JSON.stringify(scores));
             
             alert('已保存分數！');
@@ -2280,69 +2972,7 @@ function recordExperiment(obj, willFloat) {
             showLeaderboard();
         }
         
-        function playSound(type) {
-            if (!state.voiceEnabled) return;
-            const ctx = new (window.AudioContext || window.webkitAudioContext)();
-            const osc = ctx.createOscillator();
-            const gain = ctx.createGain();
-            osc.connect(gain);
-            gain.connect(ctx.destination);
-            
-            if (type === 'success') {
-                osc.frequency.value = 880;
-                gain.gain.value = 0.3;
-            } else {
-                osc.frequency.value = 220;
-                gain.gain.value = 0.3;
-            }
-            
-            osc.start();
-            setTimeout(() => { osc.stop(); }, 200);
-        }
-        
         // ============ Story Mode ============
-        const STORIES = [
-            {
-                id: 1,
-                title: '🏠 小木屋的秘密',
-                desc: '小明的木屋為什麼能浮在水面上？',
-                locked: false,
-                content: `小明住在海邊的木屋裡。一天，狂風暴雨來襲，木屋竟然漂流了起來！
-                
-問題：為什麼木屋能浮在水上？
-
-A) 木頭很輕，密度小
-B) 木頭很大
-C) 水會推動木頭`
-            },
-            {
-                id: 2,
-                title: '🚢 船為何不沉？',
-                desc: '這麼大的船為什麼不會沉下去？',
-                locked: false,
-                content: `碼頭邊停著一艘大貨船，它裝滿了貨物，但仍然浮在水面上。
-                
-問題：大船那麼重，為什麼不沉？
-
-A) 船中間是空的
-B) 船是用特殊材料做的
-C) 海水比較鹹`
-            },
-            {
-                id: 3,
-                title: '🥚 雞蛋的沉浮',
-                desc: '如何讓雞蛋浮起來？',
-                locked: false,
-                content: `廚房裡有一個雞蛋，它放到水裡就沉下去了...
-                
-問題：如何讓雞蛋浮起來？
-
-A) 加鹽到水裡
-B) 把雞蛋煮熟
-C) 把水加點糖`
-            }
-        ];
-        
         let currentStory = null;
         let currentStoryStep = 0;
         
@@ -2360,7 +2990,6 @@ C) 把水加點糖`
         function loadStory(id) {
             const story = STORIES.find(s => s.id === id);
             if (!story) return;
-            
             currentStory = story;
             currentStoryStep = 0;
             showStoryStep();
@@ -2368,10 +2997,7 @@ C) 把水加點糖`
         
         function showStoryStep() {
             const container = document.getElementById('story-content');
-            if (!currentStory) {
-                renderStories();
-                return;
-            }
+            if (!currentStory) { renderStories(); return; }
             
             if (currentStoryStep === 0) {
                 container.innerHTML = `
@@ -2390,7 +3016,6 @@ C) 把水加點糖`
                     <button class="btn btn-secondary" onclick="resetStory()">↩️ 返回</button>
                 `;
             } else {
-                // Story ending
                 container.innerHTML = `
                     <div class="story-ending">
                         <h2 style="color:#4CAF50;">🎉 故事完成！</h2>
@@ -2398,16 +3023,12 @@ C) 把水加點糖`
                         <button class="btn btn-primary" onclick="resetStory()">🔄 再讀一次</button>
                     </div>
                 `;
-                
-                // Unlock badge
-                if (currentStoryStep === 1) {
-                    unlockBadge('explorer');
-                }
+                if (currentStoryStep === 1) unlockBadge('story_all');
             }
         }
         
         function answerStory(choice) {
-            currentStoryStep = 1; // Correct answer for demo
+            currentStoryStep = 1;
             showStoryStep();
         }
         
@@ -2417,25 +3038,11 @@ C) 把水加點糖`
             renderStories();
         }
         
-        // ============ Badges/Achievements ============
-        const BADGES = [
-            { id: 'first_exp', name: '初試身手', icon: '🔬', desc: '完成第一個實驗', unlocked: false },
-            { id: 'float_5', name: '浮出水面', icon: '🌊', desc: '讓5個物品浮起', unlocked: false },
-            { id: 'sink_5', name: '沉著應對', icon: '📉', desc: '讓5個物品下沉', unlocked: false },
-            { id: 'all_objects', name: '全能科學家', icon: '🧪', desc: '實驗所有物品', unlocked: false },
-            { id: 'story_all', name: '故事達人', icon: '📚', desc: '完成所有故事', unlocked: false },
-            { id: 'challenge_100', name: '挑戰高手', icon: '🏆', desc: '挑戰模式取得100分', unlocked: false }
-        ];
-        
+        // ============ Badges ============
         function renderBadges() {
             const container = document.getElementById('badge-grid');
             const userBadges = JSON.parse(localStorage.getItem('userBadges') || '[]');
-            
-            // Update badge unlock status
-            const badges = BADGES.map(b => ({
-                ...b,
-                unlocked: userBadges.includes(b.id)
-            }));
+            const badges = BADGES.map(b => ({ ...b, unlocked: userBadges.includes(b.id) }));
             
             container.innerHTML = badges.map(b => `
                 <div class="badge-item ${b.unlocked ? '' : 'locked'}">
@@ -2457,24 +3064,533 @@ C) 把水加點糖`
         }
         
         function checkBadgeConditions() {
-            // Check first experiment
             if (state.experiments.length >= 1) unlockBadge('first_exp');
-            
-            // Check float count
             const floatCount = state.experiments.filter(e => e.result === '浮').length;
             if (floatCount >= 5) unlockBadge('float_5');
-            
-            // Check sink count
             const sinkCount = state.experiments.filter(e => e.result === '沉').length;
             if (sinkCount >= 5) unlockBadge('sink_5');
-            
-            // Check all objects
             const uniqueObjects = [...new Set(state.experiments.map(e => e.objectId))];
             if (uniqueObjects.length >= OBJECTS.length) unlockBadge('all_objects');
-            
-            // Check challenge score
             const scores = JSON.parse(localStorage.getItem('challengeScores') || '[]');
             if (scores.some(s => s.score >= 100)) unlockBadge('challenge_100');
+        }
+        
+        // ============ Tutorials ============
+        function renderTutorials() {
+            const grid = document.getElementById('tutorial-grid');
+            grid.innerHTML = TUTORIALS.map(t => `
+                <div class="tutorial-card">
+                    <div class="tutorial-preview" onclick="openTutorial(${t.id})">${t.icon}</div>
+                    <div class="tutorial-content">
+                        <h4>${t.title}</h4>
+                        <p>跟著步驟學習浮力知識</p>
+                        <div class="tutorial-progress">
+                            ${t.steps.map((_, i) => `<div class="tutorial-step ${(state.tutorialProgress[t.id] || 0) > i ? 'completed' : ''} ${(state.tutorialProgress[t.id] || 0) === i ? 'current' : ''}"></div>`).join('')}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function openTutorial(id) {
+            const t = TUTORIALS.find(t => t.id === id);
+            if (!t) return;
+            
+            document.getElementById('tutorial-modal-title').textContent = t.title;
+            
+            const progress = state.tutorialProgress[id] || 0;
+            const currentStep = t.steps[Math.min(progress, t.steps.length - 1)];
+            
+            document.getElementById('tutorial-modal-content').innerHTML = `
+                <div style="font-size:4em;margin:20px 0;">${t.icon}</div>
+                <p style="font-size:1.2em;margin-bottom:20px;">步驟 ${progress + 1}：${currentStep}</p>
+                <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+                    ${t.steps.map((s, i) => `
+                        <div style="padding:8px 15px;background:${i < progress ? '#4CAF50' : i === progress ? 'var(--primary)' : '#ddd'};color:${i <= progress ? 'white' : '#666'};border-radius:20px;font-size:0.9em;">
+                            ${i < progress ? '✓' : i + 1}
+                        </div>
+                    `).join('')}
+                </div>
+                <button class="btn btn-primary btn-large" style="margin-top:20px;" onclick="completeTutorialStep(${id})">${progress >= t.steps.length ? '完成！✅' : '下一步 ➡️'}</button>
+            `;
+            
+            document.getElementById('tutorial-modal').classList.add('active');
+        }
+        
+        function completeTutorialStep(id) {
+            if (!state.tutorialProgress[id]) state.tutorialProgress[id] = 0;
+            state.tutorialProgress[id]++;
+            saveState();
+            
+            const t = TUTORIALS.find(t => t.id === id);
+            if (state.tutorialProgress[id] >= t.steps.length) {
+                document.getElementById('tutorial-modal').classList.remove('active');
+                speak('太棒了！你完成咗' + t.title + '！');
+            } else {
+                closeTutorialModal();
+                openTutorial(id);
+            }
+            renderTutorials();
+        }
+        
+        function closeTutorialModal() {
+            document.getElementById('tutorial-modal').classList.remove('active');
+        }
+        
+        // ============ Custom Objects ============
+        let uploadedImageData = null;
+        
+        function handleImageUpload(event) {
+            const file = event.dataTransfer ? event.dataTransfer.files[0] : event.target.files[0];
+            if (!file) return;
+            
+            if (!file.type.startsWith('image/')) {
+                alert('請上傳圖片文件！');
+                return;
+            }
+            
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                uploadedImageData = e.target.result;
+                document.getElementById('custom-form').style.display = 'block';
+                document.getElementById('custom-preview').innerHTML = `
+                    <img src="${uploadedImageData}" alt="預覽">
+                    <div>
+                        <p style="font-weight:bold;">圖片已上傳</p>
+                        <p style="color:#666;font-size:0.9em;">設定名稱和密度</p>
+                    </div>
+                `;
+            };
+            reader.readAsDataURL(file);
+        }
+        
+        function saveCustomObject() {
+            const name = document.getElementById('custom-name').value.trim();
+            const density = parseFloat(document.getElementById('custom-density').value);
+            
+            if (!name) { alert('請輸入物品名稱！'); return; }
+            if (!density || density <= 0) { alert('請輸入有效的密度值！'); return; }
+            if (!uploadedImageData) { alert('請上傳圖片！'); return; }
+            
+            const id = 'custom_' + Date.now();
+            const newObj = {
+                id,
+                name,
+                icon: '🖼️',
+                density,
+                color: 0x9C27B0,
+                geometry: 'box',
+                custom: true,
+                image: uploadedImageData
+            };
+            
+            if (!state.customObjects) state.customObjects = [];
+            state.customObjects.push(newObj);
+            saveState();
+            
+            uploadedImageData = null;
+            document.getElementById('custom-form').style.display = 'nofne';
+            document.getElementById('custom-preview').innerHTML = '';
+            document.getElementById('custom-name').value = '';
+            document.getElementById('custom-density').value = '';
+            document.getElementById('image-upload').value = '';
+            
+            renderCustomObjects();
+            renderObjectShelf();
+            renderLabObjects();
+            
+            speak('已新增' + name + '！');
+        }
+        
+        function renderCustomObjects() {
+            const container = document.getElementById('custom-items');
+            const customObjs = state.customObjects || [];
+            
+            if (customObjs.length === 0) {
+                container.innerHTML = '<p style="color:#999;text-align:center;grid-column:1/-1;">尚未新增任何物品</p>';
+                return;
+            }
+            
+            container.innerHTML = customObjs.map(obj => `
+                <div class="custom-item">
+                    <img src="${obj.image}" alt="${obj.name}">
+                    <div class="name">${obj.name}</div>
+                    <div class="density">密度: ${obj.density}</div>
+                    <button class="delete-btn" onclick="deleteCustomObject('${obj.id}')">刪除</button>
+                </div>
+            `).join('');
+        }
+        
+        function deleteCustomObject(id) {
+            if (!confirm('確定刪除這個物品？')) return;
+            state.customObjects = state.customObjects.filter(o => o.id !== id);
+            saveState();
+            renderCustomObjects();
+            renderObjectShelf();
+            renderLabObjects();
+        }
+        
+        // ============ Parent Report with QR Code ============
+        function generateQRCode() {
+            const canvas = document.getElementById('qr-canvas');
+            const studentName = document.getElementById('studentName').value.trim() || '學生';
+            const reportUrl = window.location.origin + '?report=' + encodeURIComponent(studentName);
+            
+            canvas.innerHTML = '';
+            new QRCode(canvas, {
+                text: reportUrl,
+                width: 180,
+                height: 180,
+                colorDark: '#1565C0',
+                colorLight: '#ffffff'
+            });
+        }
+        
+        function copyReportLink() {
+            const studentName = document.getElementById('studentName').value.trim() || '學生';
+            const reportUrl = window.location.origin + '?report=' + encodeURIComponent(studentName);
+            navigator.clipboard.writeText(reportUrl).then(() => {
+                alert('連結已複製到剪貼板！');
+            });
+        }
+        
+        function lookupStudentReport() {
+            const name = document.getElementById('lookup-student').value.trim();
+            if (!name) { alert('請輸入學生名字！'); return; }
+            
+            const allData = JSON.parse(localStorage.getItem('allStudentsData') || '{}');
+            const studentData = allData[name];
+            
+            const container = document.getElementById('parent-report-viewer');
+            container.style.display = 'block';
+            
+            if (!studentData || !studentData.experiments || studentData.experiments.length === 0) {
+                container.innerHTML = '<p style="color:#f44336;text-align:center;">找不到這個學生的數據</p>';
+                return;
+            }
+            
+            const experiments = studentData.experiments;
+            const total = experiments.length;
+            const floatCount = experiments.filter(e => e.result === '浮').length;
+            const rate = total > 0 ? Math.round((floatCount / total) * 100) : 0;
+            
+            container.innerHTML = `
+                <h4 style="color:var(--primary);margin-bottom:15px;">📋 ${name} 的學習報告</h4>
+                <div class="stats-grid" style="grid-template-columns:repeat(2,1fr);">
+                    <div class="stat-card"><div class="icon">🔬</div><div class="value">${total}</div><div class="label">實驗次數</div></div>
+                    <div class="stat-card"><div class="icon">📈</div><div class="value">${rate}%</div><div class="label">成功率</div></div>
+                </div>
+                <h5 style="margin-top:15px;">最近實驗：</h5>
+                <div style="max-height:200px;overflow-y:auto;">
+                    ${experiments.slice(-10).reverse().map(e => `
+                        <div style="display:flex;justify-content:space-between;padding:8px;border-bottom:1px solid #eee;">
+                            <span>${e.objectName}</span>
+                            <span class="result-${e.result === '浮' ? 'float' : 'sink'}" style="padding:2px 8px;border-radius:10px;">${e.result}</span>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+        
+        function closeQRModal() {
+            document.getElementById('qr-modal').classList.remove('active');
+        }
+        
+        // ============ Error Analysis ============
+        function renderErrorAnalysis() {
+            const chart = document.getElementById('error-chart');
+            const totalWrong = Object.values(state.wrongAnswers).reduce((sum, e) => sum + e.count, 0);
+            const maxWrong = Math.max(1, ...Object.values(state.wrongAnswers).map(e => e.count));
+            
+            chart.innerHTML = ERROR_TYPES.map(err => {
+                const wrongData = state.wrongAnswers[err.id] || { count: 0 };
+                const percentage = totalWrong > 0 ? Math.round((wrongData.count / totalWrong) * 100) : 0;
+                const barWidth = maxWrong > 0 ? (wrongData.count / maxWrong) * 100 : 0;
+                
+                return `
+                    <div class="error-item">
+                        <div class="error-type">${err.name}</div>
+                        <div class="error-bar-container">
+                            <div class="error-bar" style="width:${barWidth}%;"></div>
+                        </div>
+                        <div class="error-stats">
+                            <span>${wrongData.count}次錯誤</span>
+                            <span>${percentage}%</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            // Generate recommendations based on error patterns
+            const recContainer = document.getElementById('recommendations');
+            const topErrors = Object.entries(state.wrongAnswers)
+                .sort((a, b) => b[1].count - a[1].count)
+                .slice(0, 2)
+                .map(([id]) => ERROR_TYPES.find(e => e.id === id))
+                .filter(Boolean);
+            
+            recContainer.innerHTML = topErrors.length > 0 ? topErrors.map(err => `
+                <div style="padding:10px;background:white;border-radius:8px;margin-bottom:10px;">
+                    <strong>${err.name}:</strong> ${err.recommendation}
+                </div>
+            `).join('') : '<p style="color:#666;">做實驗後會有針對性建議！</p>';
+        }
+        
+        // ============ Learning Dashboard ============
+        function renderHeatmap() {
+            const container = document.getElementById('heatmap');
+            container.innerHTML = '';
+            
+            const today = new Date();
+            for (let i = 29; i >= 0; i--) {
+                const date = new Date(today);
+                date.setDate(date.getDate() - i);
+                const dateStr = date.toISOString().split('T')[0];
+                
+                const count = state.experiments.filter(e => {
+                    const expDate = new Date(e.time).toISOString().split('T')[0];
+                    return expDate === dateStr;
+                }).length;
+                
+                const level = count === 0 ? 0 : count <= 2 ? 1 : count <= 4 ? 2 : count <= 6 ? 3 : count <= 8 ? 4 : 5;
+                
+                const cell = document.createElement('div');
+                cell.className = `heatmap-cell level-${level}`;
+                cell.title = `${dateStr}: ${count}次實驗`;
+                container.appendChild(cell);
+            }
+        }
+        
+        function renderProgressChart() {
+            const canvas = document.getElementById('progress-canvas');
+            const ctx = canvas.getContext('2d');
+            const parent = canvas.parentElement;
+            
+            canvas.width = parent.clientWidth;
+            canvas.height = parent.clientHeight || 200;
+            
+            const data = [];
+            const last30 = state.experiments.slice(-30);
+            last30.forEach((exp, i) => {
+                const day = new Date(exp.time).toLocaleDateString('zh-Hant', { month: 'numeric', day: 'numeric' });
+                const existing = data.find(d => d.day === day);
+                if (existing) existing.value++;
+                else data.push({ day, value: 1 });
+            });
+            
+            if (data.length === 0) {
+                ctx.fillStyle = '#999';
+                ctx.font = '14px sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('繼續實驗以查看進度曲線', canvas.width / 2, canvas.height / 2);
+                return;
+            }
+            
+            const maxVal = Math.max(...data.map(d => d.value));
+            const stepX = canvas.width / Math.max(data.length - 1, 1);
+            
+            ctx.strokeStyle = '#2196F3';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            
+            data.forEach((d, i) => {
+                const x = i * stepX;
+                const y = canvas.height - (d.value / maxVal) * (canvas.height - 30) - 15;
+                if (i === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            });
+            
+            ctx.stroke();
+            
+            // Draw points
+            ctx.fillStyle = '#2196F3';
+            data.forEach((d, i) => {
+                const x = i * stepX;
+                const y = canvas.height - (d.value / maxVal) * (canvas.height - 30) - 15;
+                ctx.beginPath();
+                ctx.arc(x, y, 4, 0, Math.PI * 2);
+                ctx.fill();
+            });
+        }
+        
+        function renderLaggingStudents() {
+            const container = document.getElementById('lagging-students');
+            const allData = JSON.parse(localStorage.getItem('allStudentsData') || '{}');
+            const students = Object.entries(allData);
+            
+            const lagging = students.filter(([name, data]) => {
+                const lastExp = data.experiments?.slice(-1)[0];
+                if (!lastExp) return false;
+                const daysSince = (Date.now() - lastExp.time) / (1000 * 60 * 60 * 24);
+                return daysSince > 3 || (data.experiments?.length || 0) < 3;
+            });
+            
+            if (lagging.length === 0) {
+                container.innerHTML = '<p style="color:#4CAF50;text-align:center;">暫無需要關注的學生 🎉</p>';
+                return;
+            }
+            
+            container.innerHTML = lagging.map(([name, data]) => `
+                <div class="lagging-student">
+                    <span>👤</span>
+                    <span style="flex:1;font-weight:bold;">${name}</span>
+                    <span style="color:#666;font-size:0.9em;">實驗 ${data.experiments?.length || 0} 次</span>
+                </div>
+            `).join('');
+        }
+        
+        // ============ LAN Sync ============
+        function updateSyncStatus(status) {
+            const indicator = document.getElementById('sync-indicator');
+            const text = document.getElementById('sync-status-text');
+            
+            indicator.className = 'sync-indicator ' + status;
+            switch (status) {
+                case 'connected':
+                    text.textContent = '已連接';
+                    break;
+                case 'searching':
+                    text.textContent = '搜索附近設備...';
+                    break;
+                default:
+                    text.textContent = '未連接';
+            }
+        }
+        
+        async function startSyncServer() {
+            if (!('BroadcastChannel' in window)) {
+                alert('您的瀏覽器不支援區域網絡同步功能！');
+                return;
+            }
+            
+            isServer = true;
+            updateSyncStatus('connected');
+            document.getElementById('sync-controls').innerHTML = '<p style="text-align:center;color:#4CAF50;">👌 服務器已啟動！等待其他設備加入...</p>';
+            
+            const channel = new BroadcastChannel('float-sync');
+            channel.onmessage = (e) => {
+                if (e.data.type === 'join') {
+                    addSyncDevice(e.data.name);
+                }
+                if (e.data.type === 'experiment') {
+                    // Receive experiment from peer
+                    const exp = e.data.experiment;
+                    exp.student = e.data.name;
+                    state.experiments.push(exp);
+                    saveState();
+                    updateStats();
+                }
+            };
+            
+            speak('區域網絡同步服務已啟動！');
+        }
+        
+        function addSyncDevice(name) {
+            const container = document.getElementById('sync-devices');
+            const existing = container.querySelector(`[data-device="${name}"]`);
+            if (existing) return;
+            
+            const device = document.createElement('div');
+            device.className = 'sync-device';
+            device.dataset.device = name;
+            device.innerHTML = `
+                <div class="device-icon">📱</div>
+                <div>${name}</div>
+            `;
+            container.appendChild(device);
+        }
+        
+        function joinSyncServer() {
+            const address = document.getElementById('server-address').value.trim();
+            if (!address) { alert('請輸入服務器地址！'); return; }
+            
+            updateSyncStatus('searching');
+            const studentName = document.getElementById('studentName').value.trim() || '匿名';
+            
+            try {
+                const channel = new BroadcastChannel('float-sync');
+                channel.postMessage({ type: 'join', name: studentName });
+                
+                setTimeout(() => {
+                    updateSyncStatus('connected');
+                    addSyncDevice('服務器');
+                    speak('已連接到服務器！');
+                }, 1000);
+            } catch (err) {
+                updateSyncStatus('disconnected');
+                alert('無法連接到服務器！');
+            }
+        }
+        
+        function broadcastExperiment(exp) {
+            if (isServer) return;
+            const channel = new BroadcastChannel('float-sync');
+            const studentName = document.getElementById('studentName').value.trim() || '匿名';
+            channel.postMessage({ type: 'experiment', name: studentName, experiment: exp });
+        }
+        
+        // ============ AI Assistant ============
+        function sendAIMessage() {
+            const input = document.getElementById('ai-input');
+            const text = input.value.trim();
+            if (!text) return;
+            
+            addAIMessage(text, 'user');
+            input.value = '';
+            
+            setTimeout(() => {
+                const response = generateAIResponse(text);
+                addAIMessage(response, 'ai');
+            }, 1000);
+        }
+        
+        function addAIMessage(text, type) {
+            const container = document.getElementById('ai-messages');
+            const div = document.createElement('div');
+            div.className = `ai-message ${type}`;
+            div.innerHTML = `
+                <div class="avatar">${type === 'ai' ? '🤖' : '👤'}</div>
+                <div class="bubble">${text}</div>
+            `;
+            container.appendChild(div);
+            container.scrollTop = container.scrollHeight;
+        }
+        
+        function generateAIResponse(question) {
+            const q = question.toLowerCase();
+            
+            // Analyze user's experiment history
+            const total = state.experiments.length;
+            const floatRate = total > 0 ? (state.experiments.filter(e => e.result === '浮').length / total * 100).toFixed(0) : 0;
+            const wrongTypes = Object.keys(state.wrongAnswers);
+            
+            if (q.includes('弱點') || q.includes('常錯') || q.includes('犯')) {
+                if (wrongTypes.length > 0) {
+                    const topError = wrongTypes.sort((a, b) => state.wrongAnswers[b].count - state.wrongAnswers[a].count)[0];
+                    const err = ERROR_TYPES.find(e => e.id === topError);
+                    return `根據你的學習記錄，你最常犯的錯誤是「${err.name}」。${err.recommendation}`;
+                }
+                return '你目前還沒有錯誤記錄，繼續實驗我就能分析你的弱點了！';
+            }
+            
+            if (q.includes('密度') || q.includes('咩')) {
+                return `密度係 substance【物質】既重要特性！簡單嚟講：\n\n📦 密度 = 質量 ÷ 體積\n\n就好似同一間屋仔，如果佢用鋼筋做就會好重（高密度），但如果用木做就會輕好多（低密度）。\n\n🌊 記住呢個規則：\n• 密度 < 1.0 = 浮（好似保麗龍🟫）\n• 密度 > 1.0 = 沉（好似石頭🪨）`;
+            }
+            
+            if (q.includes('練習') || q.includes('建議')) {
+                return `我建議你練習以下題目：\n\n1️⃣ 蘋果🍎密度係0.9，會浮定沉？\n2️⃣ 邊個最輕：木塊🟫定香蕉🍌？\n3️⃣ 汽水罐🥫點解有時浮有時沉？\n\n多做實驗，你會慢慢掌握規律！`;
+            }
+            
+            if (q.includes('進度') || q.includes('表現')) {
+                return `你目前嘅表現：\n\n📊 實驗次數：${total}次\n🌊 浮起成功率：${floatRate}%\n\n${total < 5 ? '繼續加油！多做幾個實驗我就可以分析你既學習模式了！' : total < 10 ? '做得唔錯！你已經開始理解浮力嘅原理了！' : '太棒了！你已經係浮力小達人了！'}`;
+            }
+            
+            return `你問既問題好有意思！我可以幫你分析浮力實驗。不過我建議你：\n\n1️⃣ 先做幾個實驗熟悉操作\n2️⃣ 試下改變水既密度\n3️⃣ 留意邊件物品最難判斷\n\n有問題隨時問我！😊`;
+        }
+        
+        function askAI(question) {
+            document.getElementById('ai-input').value = question;
+            sendAIMessage();
         }
         
         // ============ Learning Report ============
@@ -2482,34 +3598,30 @@ C) 把水加點糖`
             const name = document.getElementById('studentName').value.trim() || '學生';
             const date = new Date().toLocaleDateString('zh-Hant');
             
-            // Stats
             const total = state.experiments.length;
             const floatCount = state.experiments.filter(e => e.result === '浮').length;
             const sinkCount = state.experiments.filter(e => e.result === '沉').length;
             const rate = total > 0 ? Math.round((floatCount / total) * 100) : 0;
             
-            // Object stats
             const objectStats = {};
             state.experiments.forEach(exp => {
-                if (!objectStats[exp.objectId]) {
-                    objectStats[exp.objectId] = { float: 0, sink: 0 };
-                }
+                if (!objectStats[exp.objectId]) objectStats[exp.objectId] = { float: 0, sink: 0 };
                 objectStats[exp.objectId][exp.result === '浮' ? 'float' : 'sink']++;
             });
             
-            const reportStats = document.getElementById('report-stats');
-            reportStats.innerHTML = `
+            document.getElementById('report-stats').innerHTML = `
                 <h3>📊 學習統計</h3>
                 <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:15px;">
-                    <div class="stat-card"><div class="icon">🔬</div><div class="value">${total}</div><div class="label">總實驗次數</div></div>
+                    <div class="stat-card"><div class="icon">🔬</div><div class="value">${total}</div><div cla
+
+ss="label">總實驗次數</div></div>
                     <div class="stat-card"><div class="icon">🌊</div><div class="value">${floatCount}</div><div class="label">浮起次數</div></div>
                     <div class="stat-card"><div class="icon">📉</div><div class="value">${sinkCount}</div><div class="label">下沉次數</div></div>
                     <div class="stat-card"><div class="icon">📈</div><div class="value">${rate}%</div><div class="label">成功率</div></div>
                 </div>
             `;
             
-            const reportHistory = document.getElementById('report-history');
-            reportHistory.innerHTML = `
+            document.getElementById('report-history').innerHTML = `
                 <h3>📝 實驗記錄</h3>
                 <table style="margin-top:15px;width:100%;">
                     <tr><th>物品</th><th>結果</th><th>時間</th></tr>
@@ -2523,11 +3635,10 @@ C) 把水加點糖`
                 </table>
             `;
             
-            const reportBadges = document.getElementById('report-badges');
             const userBadges = JSON.parse(localStorage.getItem('userBadges') || '[]');
             const badges = BADGES.map(b => ({ ...b, unlocked: userBadges.includes(b.id) }));
             
-            reportBadges.innerHTML = `
+            document.getElementById('report-badges').innerHTML = `
                 <h3>🏆 成就</h3>
                 <div class="badge-grid" style="margin-top:15px;">
                     ${badges.map(b => `
@@ -2553,7 +3664,7 @@ C) 把水加點糖`
         
         // ============ Class Statistics ============
         let isTeacherLoggedIn = false;
-        const TEACHER_PASSWORD = 'teacher2024'; // In production, use server-side auth
+        const TEACHER_PASSWORD = 'teacher2024';
         
         function verifyTeacherPassword() {
             const pw = document.getElementById('teacher-password').value;
@@ -2564,14 +3675,11 @@ C) 把水加點糖`
                 loadClassStats();
             } else {
                 document.getElementById('login-error').style.display = 'block';
-                setTimeout(() => {
-                    document.getElementById('login-error').style.display = 'none';
-                }, 3000);
+                setTimeout(() => document.getElementById('login-error').style.display = 'none', 3000);
             }
         }
         
         function loadClassStats() {
-            // Load all students' data
             const allData = JSON.parse(localStorage.getItem('allStudentsData') || '{}');
             const students = Object.keys(allData);
             
@@ -2586,10 +3694,8 @@ C) 把水加點糖`
             
             document.getElementById('total-students').textContent = students.length;
             document.getElementById('class-experiments').textContent = totalExperiments;
-            document.getElementById('class-float-rate').textContent = 
-                totalExperiments > 0 ? Math.round((totalFloat / totalExperiments) * 100) + '%' : '0%';
+            document.getElementById('class-float-rate').textContent = totalExperiments > 0 ? Math.round((totalFloat / totalExperiments) * 100) + '%' : '0%';
             
-            // Student list
             const listContainer = document.getElementById('student-list');
             listContainer.innerHTML = students.map(name => {
                 const data = allData[name];
@@ -2599,7 +3705,7 @@ C) 把水加點糖`
                         <span class="stats">實驗 ${data.experiments?.length || 0} 次</span>
                     </div>
                 `;
-            }).join('') || '<p style="color:#666;text-align:center;">還沒有學生數據</p>';
+            }).join('') || '<p style="color:#666;text-align:center;">暫無學生數據</p>';
         }
         
         function exportClassData() {
@@ -2622,11 +3728,9 @@ C) 把水加點糖`
         // ============ Start ============
         init();
         
-        // Handle resize
         window.addEventListener('resize', () => {
-            if (currentPage === 'lab3d') {
-                resize3DLab();
-            }
+            if (currentPage === 'lab3d') resize3DLab();
+            if (currentPage === 'dashboard') renderProgressChart();
         });
     </script>
 </body>

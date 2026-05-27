@@ -1,10 +1,11 @@
-const CACHE_NAME = 'float-project-v2';
+const CACHE_NAME = 'float-project-v3';
 const urlsToCache = [
   '/',
   '/index.html',
   '/offline.html',
   '/manifest.json',
-  'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js'
+  'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js',
+  'https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js'
 ];
 
 // Install event
