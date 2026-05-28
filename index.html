@@ -8,6 +8,9 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><rect fill='%23667eea' width='180' height='180' rx='40'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-size='100'>🌊</text></svg>">
     <title>浮力大發現 - 匡智張玉瓊晨暉學校</title>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    <script src="firebase-config.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         :root { --primary: #2196F3; --secondary: #4CAF50; --accent: #FF9800; --danger: #f44336; --dark: #1565C0; --light: #E3F2FD; --text: #333; --font-scale: 1; }
@@ -54,6 +57,7 @@
         .shelf-item .icon { font-size: 32px; }
         .shelf-item .name { font-size: 0.85em; font-weight: bold; color: #333; }
         .shelf-item .density { font-size: 0.7em; color: #666; }
+        .shelf-item .density.ultra-light { color: #4CAF50; font-weight: bold; }
 
         /* Info Panel */
         .info-panel { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 15px; }
@@ -223,7 +227,7 @@
     </div>
 
     <script>
-        // ============ Core Objects (8 items with real images) ============
+        // ============ Core Objects (12 items with real images) ============
         const OBJECTS = [
             { id: 'wood', name: '木塊', icon: 'wood-block.png', density: 0.6 },
             { id: 'stone', name: '石頭', icon: 'stone.png', density: 2.5 },
@@ -232,7 +236,11 @@
             { id: 'key', name: '鎖匙', icon: 'key.png', density: 7.8 },
             { id: 'spoon', name: '匙羹', icon: 'spoon.png', density: 7.8 },
             { id: 'balloon', name: '氣球', icon: 'balloon.png', density: 0.3 },
-            { id: 'duck', name: '膠鴨', icon: 'rubber-duck.png', density: 0.3 }
+            { id: 'duck', name: '膠鴨', icon: 'rubber-duck.png', density: 0.3 },
+            { id: 'feather', name: '羽毛', icon: 'feather.png', density: 0.002 },
+            { id: 'glass-bead', name: '玻璃珠', icon: 'glass-bead.png', density: 2.5 },
+            { id: 'iron-nail', name: '鐵釘', icon: 'iron-nail.png', density: 7.8 },
+            { id: 'boat', name: '小船', icon: 'boat.png', density: 0.4 }
         ];
 
         // ============ Voice prompts per object ============
@@ -244,17 +252,57 @@
             key: { float: null, sink: '鎖匙密度7.8，金屬嚟㗎！重到痲痲，一放就沉晒！' },
             spoon: { float: null, sink: '匙羹密度7.8，金屬嚟㗎！沉得好快！' },
             balloon: { float: '氣球密度0.3，全部入面最輕！空氣充满氣體，梗係浮得起！', sink: null },
-            duck: { float: '膠鴨密度0.3，膠做嘅好輕！梗係浮得起，好得意！', sink: null }
+            duck: { float: '膠鴨密度0.3，膠做嘅好輕！梗係浮得起，好得意！', sink: null },
+            feather: { float: '羽毛密度0.002，空氣咁多！超級輕，梗係浮得起！', sink: null },
+            glass: { float: null, sink: '玻璃珠密度2.5，幾錘下！一放就沉晒！' },
+            iron: { float: null, sink: '鐵釘密度7.8，係金屬嚟㗎！重到痲痲，梗係沉晒！' },
+            boat: { float: '小船密度0.4，空心設計！可以浮得起，幾得意！', sink: null }
         };
+
+// ============ Firebase (初期化) ============
+        let db = null;
+        function initFirebase() {
+            if (typeof firebase === 'undefined') return;
+            try {
+                firebase.initializeApp(FIREBASE_CONFIG);
+                db = firebase.firestore();
+                console.log('Firebase 已連接');
+            } catch(e) {
+                console.warn('Firebase 初始化失敗:', e);
+            }
+        }
 
         // ============ State ============
         let state = {
             voiceEnabled: true,
             waterDensity: 1.0,
             fontScale: 1,
-            experiments: []
+            experiments: [],
+            studentId: localStorage.getItem('floatStudentId') || ('student_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6)),
+            studentName: localStorage.getItem('floatStudentName') || ''
         };
+        localStorage.setItem('floatStudentId', state.studentId);
 
+        // ============ Firebase 實驗記錄 ============
+        async function saveExperimentToFirebase(obj, willFloat) {
+            if (!db) return;
+            try {
+                await db.collection('experiments').add({
+                    studentId: state.studentId,
+                    studentName: state.studentName || '未知學生',
+                    objectId: obj.id,
+                    objectName: obj.name,
+                    density: obj.density,
+                    isFloat: willFloat,
+                    waterDensity: state.waterDensity,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                });
+            } catch(e) {
+                console.warn('Firebase 寫入失敗:', e);
+            }
+        }
+
+        // ============ Initialization ============
         let voiceOn = true;
         let poolObjects = [];
         let poolObjectIdCounter = 0;
@@ -262,6 +310,7 @@
 
         // ============ Initialization ============
         function init() {
+            initFirebase();
             loadState();
             renderObjectShelf();
             updateWaterDensityDisplay();
@@ -316,13 +365,16 @@
         // ============ Object Shelf ============
         function renderObjectShelf() {
             const shelf = document.getElementById('objectShelf');
-            shelf.innerHTML = OBJECTS.map(obj => `
+            shelf.innerHTML = OBJECTS.map(obj => {
+                const isUltraLight = obj.density < 0.1;
+                const densityLabel = isUltraLight ? `極輕: ${obj.density}` : `輕: ${obj.density}`;
+                return `
                 <div class="shelf-item" draggable="true" data-id="${obj.id}">
                     <img src="assets/images/${obj.icon}" alt="${obj.name}" style="width:48px;height:48px;object-fit:contain;" onerror="this.textContent='${obj.name}'">
                     <span class="name">${obj.name}</span>
-                    <span class="density">輕: ${obj.density}</span>
+                    <span class="density ${isUltraLight ? 'ultra-light' : ''}">${densityLabel}</span>
                 </div>
-            `).join('');
+            `}).join('');
 
             shelf.querySelectorAll('.shelf-item').forEach(item => {
                 item.addEventListener('dragstart', handleDragStart);
@@ -618,6 +670,9 @@
             }
 
             showSoundBubble(willFloat ? '✅ 浮得起喇！' : '❌ 沉落去了...');
+
+            // Firebase 同步（非阻塞）
+            saveExperimentToFirebase(obj, willFloat);
         }
 
         function updateInfoPanel(obj) {

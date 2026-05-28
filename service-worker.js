@@ -1,11 +1,13 @@
-const CACHE_NAME = 'float-project-v3';
+const CACHE_NAME = 'float-project-v4';
 const urlsToCache = [
   '/',
   '/index.html',
+  '/teacher.html',
   '/offline.html',
   '/manifest.json',
-  'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js',
-  'https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js'
+  '/firebase-config.js',
+  'https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js',
+  'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js'
 ];
 
 // Install event
